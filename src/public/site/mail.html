@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đơn hàng thành công - LTC Lighting</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 antialiased">
+
+    <!-- Wrapper chính -->
+    <div class="max-w-4xl mx-auto bg-white min-h-screen shadow-sm flex flex-col justify-between">
+        
+        <div>
+            <!-- Header Logo -->
+            <div class="px-6 sm:px-10 py-5 flex items-center justify-between border-b border-slate-100">
+                <div class="flex items-center space-x-2">
+                    <span class="text-blue-700 font-black text-2xl sm:text-3xl tracking-tight">LTC</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-800 tracking-wider uppercase block leading-tight">LIGHTING THE FUTURE</span>
+                </div>
+                <!-- Biểu tượng góc phải header -->
+                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 relative">
+                    <i class="fa-solid fa-box text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center text-[9px] text-white">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Banner Xác Nhận Thành Công -->
+            <div class="relative bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white overflow-hidden">
+                <!-- Hình nền nền mờ nội thất -->
+                <div class="absolute inset-0 opacity-25 bg-cover bg-center mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&auto=format&fit=crop&q=80');"></div>
+                
+                <div class="relative px-6 sm:px-12 py-10 sm:py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div class="space-y-3 max-w-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-full border-2 border-white/80 flex items-center justify-center text-white bg-white/10 backdrop-blur-sm">
+                                <i class="fa-solid fa-check text-xl"></i>
+                            </div>
+                            <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide">XÁC NHẬN ĐƠN HÀNG THÀNH CÔNG!</h1>
+                        </div>
+                        <p class="text-slate-200 text-xs sm:text-sm leading-relaxed">
+                            Cảm ơn bạn đã mua sắm tại LTC Lighting.<br>
+                            Đơn hàng của bạn đã được tiếp nhận và đang được xử lý.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nội dung chi tiết đơn hàng -->
+            <div class="p-6 sm:p-10 space-y-8">
+
+                <!-- 1. Thông tin tổng quan đơn hàng (4 ô trên cùng) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-slate-50/70 rounded-2xl border border-slate-100">
+                    <!-- Mã đơn hàng -->
+                    <div class="flex items-start space-x-3 p-2">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-file-lines text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-semibold text-slate-400 uppercase">Mã đơn hàng</p>
+                            <p class="text-xs sm:text-sm font-bold text-blue-600 mt-0.5">LTC240518-000123</p>
+                        </div>
+                    </div>
+                    <!-- Ngày đặt hàng -->
+                    <div class="flex items-start space-x-3 p-2">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                            <i class="fa-regular fa-calendar text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-semibold text-slate-400 uppercase">Ngày đặt hàng</p>
+                            <p class="text-xs sm:text-sm font-medium text-slate-800 mt-0.5">18/05/2024 - 10:30</p>
+                        </div>
+                    </div>
+                    <!-- Phương thức thanh toán -->
+                    <div class="flex items-start space-x-3 p-2">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-wallet text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-semibold text-slate-400 uppercase">Phương thức thanh toán</p>
+                            <p class="text-xs sm:text-sm font-medium text-slate-800 mt-0.5">Thanh toán khi nhận hàng (COD)</p>
+                        </div>
+                    </div>
+                    <!-- Phương thức giao hàng -->
+                    <div class="flex items-start space-x-3 p-2">
+                        <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-truck-fast text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-[11px] font-semibold text-slate-400 uppercase">Phương thức giao hàng</p>
+                            <p class="text-xs sm:text-sm font-medium text-slate-800 mt-0.5">Giao hàng tiêu chuẩn (1 - 3 ngày)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Thông tin nhận hàng -->
+                <div class="border border-slate-100 rounded-2xl p-5 sm:p-6 space-y-4">
+                    <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase flex items-center space-x-2 tracking-wider">
+                        <i class="fa-solid fa-user text-blue-600"></i>
+                        <span>Thông tin nhận hàng</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="space-y-2">
+                            <div class="flex">
+                                <span class="w-28 text-slate-400 font-medium">Họ và tên:</span>
+                                <span class="text-slate-800 font-medium">Nguyễn Văn A</span>
+                            </div>
+                            <div class="flex">
+                                <span class="w-28 text-slate-400 font-medium">Số điện thoại:</span>
+                                <span class="text-slate-800 font-medium">0901 234 567</span>
+                            </div>
+                            <div class="flex">
+                                <span class="w-28 text-slate-400 font-medium">Email:</span>
+                                <span class="text-slate-800 font-medium">nguyenvana@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-start">
+                                <span class="w-32 text-slate-400 font-medium shrink-0">Địa chỉ giao hàng:</span>
+                                <span class="text-slate-800 font-medium leading-relaxed">123 Đường Cầu Giấy, Phường Dịch Vọng, Quận Cầu Giấy, Hà Nội</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Sản phẩm đã đặt -->
+                <div class="border border-slate-100 rounded-2xl overflow-hidden">
+                    <div class="bg-slate-50 px-5 py-3 border-b border-slate-100 grid grid-cols-12 text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        <div class="col-span-6 sm:col-span-7">Sản phẩm</div>
+                        <div class="col-span-3 sm:col-span-2 text-center">Đơn giá</div>
+                        <div class="hidden sm:block sm:col-span-1 text-center">Số lượng</div>
+                        <div class="col-span-3 sm:col-span-2 text-right">Thành tiền</div>
+                    </div>
+
+                    <div class="divide-y divide-slate-100">
+                        <!-- Item 1 -->
+                        <div class="px-5 py-4 grid grid-cols-12 items-center gap-2">
+                            <div class="col-span-6 sm:col-span-7 flex items-center space-x-3">
+                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center p-1 shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=200&auto=format&fit=crop&q=80" alt="Bóng LED Bulb" class="max-h-full object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900">Bóng LED Bulb A60 12W</h4>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                                </div>
+                            </div>
+                            <div class="col-span-3 sm:col-span-2 text-center text-xs sm:text-sm text-slate-600">48.000đ</div>
+                            <div class="hidden sm:block sm:col-span-1 text-center text-xs sm:text-sm text-slate-600">2</div>
+                            <div class="col-span-3 sm:col-span-2 text-right text-xs sm:text-sm font-bold text-blue-600">96.000đ</div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="px-5 py-4 grid grid-cols-12 items-center gap-2">
+                            <div class="col-span-6 sm:col-span-7 flex items-center space-x-3">
+                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center p-1 shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=200&auto=format&fit=crop&q=80" alt="Đèn LED Downlight" class="max-h-full object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900">Đèn LED Downlight Âm Trần 9W</h4>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng vàng (3000K)</p>
+                                </div>
+                            </div>
+                            <div class="col-span-3 sm:col-span-2 text-center text-xs sm:text-sm text-slate-600">85.000đ</div>
+                            <div class="hidden sm:block sm:col-span-1 text-center text-xs sm:text-sm text-slate-600">1</div>
+                            <div class="col-span-3 sm:col-span-2 text-right text-xs sm:text-sm font-bold text-blue-600">85.000đ</div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="px-5 py-4 grid grid-cols-12 items-center gap-2">
+                            <div class="col-span-6 sm:col-span-7 flex items-center space-x-3">
+                                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center p-1 shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=200&auto=format&fit=crop&q=80" alt="Đèn LED Tuýp T8" class="max-h-full object-contain">
+                                </div>
+                                <div>
+                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900">Đèn LED Tuýp T8 18W</h4>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                                </div>
+                            </div>
+                            <div class="col-span-3 sm:col-span-2 text-center text-xs sm:text-sm text-slate-600">62.000đ</div>
+                            <div class="hidden sm:block sm:col-span-1 text-center text-xs sm:text-sm text-slate-600">3</div>
+                            <div class="col-span-3 sm:col-span-2 text-right text-xs sm:text-sm font-bold text-blue-600">186.000đ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Tóm tắt thanh toán -->
+                <div class="border border-slate-100 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <i class="fa-solid fa-receipt text-base"></i>
+                        </div>
+                        <span class="font-bold text-sm text-slate-800">TÓM TẮT THANH TOÁN</span>
+                    </div>
+
+                    <div class="w-full sm:w-80 space-y-2 text-xs sm:text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Tạm tính</span>
+                            <span class="font-medium text-slate-800">367.000đ</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Giảm giá</span>
+                            <span class="font-medium text-emerald-600">- 36.700đ</span>
+                        </div>
+                        <div class="flex justify-between pb-2 border-b border-slate-100">
+                            <span class="text-slate-500">Phí vận chuyển</span>
+                            <span class="font-medium text-emerald-600">Miễn phí</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-1">
+                            <span class="font-bold text-slate-900">TỔNG THANH TOÁN</span>
+                            <span class="text-base sm:text-lg font-extrabold text-blue-600">330.300đ</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 text-right italic">(Đã bao gồm VAT)</p>
+                    </div>
+                </div>
+
+                <!-- 5. Trạng thái tiến trình xử lý đơn hàng -->
+                <div class="border border-slate-100 rounded-2xl p-6 sm:p-8 space-y-6">
+                    <h3 class="text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider text-center sm:text-left">ĐƠN HÀNG SẼ ĐƯỢC XỬ LÝ NHƯ SAU</h3>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-between relative gap-6 sm:gap-0">
+                        <!-- Bước 1 -->
+                        <div class="flex flex-col items-center text-center space-y-2 z-10">
+                            <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm border border-blue-100">
+                                <i class="fa-solid fa-file-invoice text-sm"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-700">Xác nhận đơn hàng</span>
+                        </div>
+                        <!-- Mũi tên 1 -->
+                        <div class="hidden sm:flex text-slate-300 text-xs">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <!-- Bước 2 -->
+                        <div class="flex flex-col items-center text-center space-y-2 z-10">
+                            <div class="w-12 h-12 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center border border-slate-100">
+                                <i class="fa-solid fa-box text-sm"></i>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500">Đóng gói sản phẩm</span>
+                        </div>
+                        <!-- Mũi tên 2 -->
+                        <div class="hidden sm:flex text-slate-300 text-xs">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <!-- Bước 3 -->
+                        <div class="flex flex-col items-center text-center space-y-2 z-10">
+                            <div class="w-12 h-12 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center border border-slate-100">
+                                <i class="fa-solid fa-truck text-sm"></i>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500">Bàn giao vận chuyển</span>
+                        </div>
+                        <!-- Mũi tên 3 -->
+                        <div class="hidden sm:flex text-slate-300 text-xs">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <!-- Bước 4 -->
+                        <div class="flex flex-col items-center text-center space-y-2 z-10">
+                            <div class="w-12 h-12 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center border border-slate-100">
+                                <i class="fa-solid fa-house text-sm"></i>
+                            </div>
+                            <span class="text-xs font-medium text-slate-500">Giao hàng đến bạn</span>
+                        </div>
+                    </div>
+
+                    <p class="text-center text-[11px] text-slate-400 pt-2">Bạn sẽ nhận được email hoặc tin nhắn SMS khi trạng thái đơn hàng được cập nhật.</p>
+                </div>
+
+                <!-- 6. Cần hỗ trợ & Liên hệ -->
+                <div class="border border-slate-100 rounded-2xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <i class="fa-solid fa-headset text-base"></i>
+                            </div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 uppercase">CẦN HỖ TRỢ?</h4>
+                        </div>
+                        <div class="space-y-2 text-xs sm:text-sm">
+                            <div class="flex items-center space-x-3 text-slate-700">
+                                <i class="fa-solid fa-phone text-blue-600 w-4"></i>
+                                <div>
+                                    <span class="font-bold text-slate-900 text-sm">1900 1234</span>
+                                    <span class="text-[11px] text-slate-400 block">(8:00 - 22:00, T2 - CN)</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 text-slate-700">
+                                <i class="fa-regular fa-envelope text-blue-600 w-4"></i>
+                                <span class="font-medium">hotro@ltc-lighting.vn</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-slate-700">
+                                <i class="fa-solid fa-globe text-blue-600 w-4"></i>
+                                <span class="font-medium">www.ltc-lighting.vn</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 text-xs sm:text-sm border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6 text-slate-600">
+                        <p>Cảm ơn bạn đã tin tưởng lựa chọn LTC Lighting.</p>
+                        <p>Chúng tôi luôn sẵn sàng đồng hành cùng bạn với những giải pháp chiếu sáng chất lượng, tiết kiệm và bền vững.</p>
+                        <div class="pt-2">
+                            <p class="font-medium text-slate-800">Trân trọng,</p>
+                            <p class="font-bold text-blue-900 text-sm tracking-wide">LTC LIGHTING</p>
+                            <p class="text-[11px] text-slate-400 italic">Lighting The Future</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer Xanh Đậm dưới cùng -->
+        <footer class="bg-blue-950 py-6 px-6 flex justify-center items-center space-x-4">
+            <a href="#" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition">
+                <i class="fa-brands fa-facebook-f text-xs"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition">
+                <i class="fa-brands fa-youtube text-xs"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition">
+                <span class="text-[10px] font-bold">Zalo</span>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition">
+                <i class="fa-brands fa-linkedin-in text-xs"></i>
+            </a>
+        </footer>
+
+    </div>
+
+</body>
+</html>

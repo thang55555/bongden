@@ -1,0 +1,508 @@
+<%- include("./layouts/head.ejs")%>
+
+
+  <!-- Thêm hiệu ứng cuộn mượt mà cho toàn bộ Section -->
+  <!-- Hero Section Slider (Hiệu ứng cuộn từ phải sang trái + Mũi tên điều hướng + Dots) -->
+  <section class="relative bg-slate-900 text-white overflow-hidden min-h-[550px] sm:min-h-[600px] lg:h-[650px]">
+    <div id="hero-slider" class="relative w-full h-full min-h-[550px] sm:min-h-[600px] lg:h-[650px] overflow-hidden">
+
+      <!-- Slide 1 -->
+      <% for(item of banner){%>
+      <div
+        class="hero-slide absolute inset-0 flex items-center px-12 sm:px-16 lg:px-24 py-12 w-full h-full opacity-100 translate-x-0 z-10 transition-all duration-700 ease-in-out"
+        style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.1)), url('../site/images/update/<%=item.images%>'); background-size: cover; background-position: center;">
+        <div class="max-w-4xl mx-auto w-full text-center lg:text-left space-y-4 sm:space-y-6">
+        <%-item.content%>
+        </div>
+      </div>
+          <% } %>
+
+
+      <!-- Mũi tên điều hướng Trái / Phải -->
+      <button onclick="prevSlide()"
+        class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-30 bg-black/40 hover:bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button onclick="nextSlide()"
+        class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-30 bg-black/40 hover:bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <!-- Slider Dots Indicators -->
+     <!-- Slider Dots Indicators -->
+        <div class="flex justify-center space-x-2 absolute bottom-4 left-0 right-0 z-30">
+            <% banner.forEach((_, index) => { %>
+            <button onclick="currentSlide(<%= index %>)"
+                class="slider-dot <%= index === 0 ? 'w-6 sm:w-8 bg-blue-600' : 'w-2 bg-slate-600 hover:bg-slate-400' %> h-2 rounded-full transition-all"></button>
+            <% }) %>
+        </div>
+    </div>
+  </section>
+
+  <!-- JavaScript Xử lý hiệu ứng trượt từ phải sang trái -->
+  <script>
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    let slideInterval;
+
+    function showSlide(index, direction = 'next') {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('opacity-100', 'opacity-0', 'translate-x-0', 'translate-x-full', '-translate-x-full', 'z-10', 'z-0');
+
+        if (i === index) {
+          slide.classList.add('opacity-100', 'translate-x-0', 'z-10');
+        } else {
+          slide.classList.add('opacity-0', 'z-0');
+          if (direction === 'next') {
+            if (i < index) {
+              slide.classList.add('-translate-x-full');
+            } else {
+              slide.classList.add('translate-x-full');
+            }
+          } else {
+            if (i > index) {
+              slide.classList.add('translate-x-full');
+            } else {
+              slide.classList.add('-translate-x-full');
+            }
+          }
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.remove('w-2', 'bg-slate-600');
+          dot.classList.add('w-6', 'sm:w-8', 'bg-blue-600');
+        } else {
+          dot.classList.remove('w-6', 'sm:w-8', 'bg-blue-600');
+          dot.classList.add('w-2', 'bg-slate-600');
+        }
+      });
+    }
+
+    function nextSlide() {
+      let prevIndex = currentSlideIndex;
+      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+      showSlide(currentSlideIndex, 'next');
+      resetTimer();
+    }
+
+    function prevSlide() {
+      let prevIndex = currentSlideIndex;
+      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+      showSlide(currentSlideIndex, 'prev');
+      resetTimer();
+    }
+
+    function currentSlide(index) {
+      let direction = index > currentSlideIndex ? 'next' : 'prev';
+      currentSlideIndex = index;
+      showSlide(currentSlideIndex, direction);
+      resetTimer();
+    }
+
+    // Tự động chuyển slide sau mỗi 5 giây
+    function startTimer() {
+      slideInterval = setInterval(() => {
+        nextSlide();
+      }, 5000);
+    }
+
+    function resetTimer() {
+      clearInterval(slideInterval);
+      startTimer();
+    }
+
+    if (slides.length > 0) {
+      startTimer();
+    }
+  </script>
+
+
+  <!-- Stats Bar (Cập nhật chuẩn theo ảnh mẫu) -->
+  <section
+    class="bg-white py-6 px-4 shadow-lg relative z-10 -mt-8 max-w-6xl mx-auto rounded-2xl border border-slate-100">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-y sm:divide-y-0 lg:divide-x divide-slate-100">
+
+      <!-- Item 1 -->
+      <div class="flex items-center gap-4 pt-4 sm:pt-0 px-2">
+        <div
+          class="w-14 h-14 shrink-0 rounded-full bg-blue-50/80 text-blue-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-blue-600 leading-none">10+</div>
+          <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Năm</div>
+          <div class="text-xs text-slate-400">Kinh nghiệm</div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="flex items-center gap-4 pt-4 sm:pt-0 px-2">
+        <div
+          class="w-14 h-14 shrink-0 rounded-full bg-blue-50/80 text-blue-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-blue-600 leading-none">500+</div>
+          <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Sản phẩm</div>
+          <div class="text-xs text-slate-400">Đa dạng chủng loại</div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="flex items-center gap-4 pt-4 sm:pt-0 px-2">
+        <div
+          class="w-14 h-14 shrink-0 rounded-full bg-blue-50/80 text-blue-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-store"></i>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-blue-600 leading-none">2000+</div>
+          <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Đại lý</div>
+          <div class="text-xs text-slate-400">Trên toàn quốc</div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="flex items-center gap-4 pt-4 sm:pt-0 px-2">
+        <div
+          class="w-14 h-14 shrink-0 rounded-full bg-blue-50/80 text-blue-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-blue-600 leading-none">100%</div>
+          <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Hàng chính hãng</div>
+          <div class="text-xs text-slate-400">CO, CQ đầy đủ</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Product Categories -->
+  <main class="max-w-7xl mx-auto px-4 py-16">
+    <div class="flex justify-between items-end mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">KHÁM PHÁ DANH MỤC SẢN PHẨM</h2>
+      <a href="/category" class="text-blue-600 font-semibold text-sm hover:underline flex items-center gap-1">Xem tất cả
+        <i class="fa-solid fa-arrow-right text-xs"></i></a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+            <% for(item of menu1.slice(0, 5)){%>
+      <div
+        class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition text-center group">
+        <div class="h-36 flex items-center justify-center mb-4 overflow-hidden ">
+<a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>">
+          <img src="../site/images/update/<%=item.images%>"
+            alt="<%=item.name%>" class="object-contain h-full group-hover:scale-105 transition duration-300">
+</a>
+        </div>
+        <h3 class="font-bold text-slate-800 text-sm mb-2"><%=item.name%></h3>
+        <a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>" class="text-blue-600 text-xs font-semibold inline-flex items-center gap-1 hover:underline">Xem sản
+          phẩm <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+      </div>
+      <% }%>
+    </div>
+
+    <!-- Sub-features Bar (Tiết kiệm điện năng, ánh sáng, thân thiện,...) -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-slate-800">TIẾT KIỆM ĐIỆN NĂNG</h4>
+          <p class="text-[11px] text-slate-500">Giảm chi phí điện lên đến 80%</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-slate-800">ÁNH SÁNG CHẤT LƯỢNG</h4>
+          <p class="text-[11px] text-slate-500">Cao cấp, hiệu suất cao</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-slate-800">THÂN THIỆN MÔI TRƯỜNG</h4>
+          <p class="text-[11px] text-slate-500">Không chứa thủy ngân, an toàn</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-slate-800">DỄ DÀNG LẮP ĐẶT</h4>
+          <p class="text-[11px] text-slate-500">Thiết kế thông minh, nhanh chóng</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 col-span-2 md:col-span-1">
+        <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs text-slate-800">BẢO HÀNH UY TÍN</h4>
+          <p class="text-[11px] text-slate-500">Bảo hành chính hãng đến 3 năm</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Why Choose Us -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <!-- Khối tổng bọc ngoài cùng có bo tròn và ẩn phần tràn -->
+      <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 items-center">
+
+          <!-- Cột trái: Tiêu đề và mô tả (Nền trắng) -->
+          <div class="lg:col-span-4 p-8 sm:p-10 space-y-4 text-slate-900">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
+              VI SAO NÊN CHỌN <br><span class="text-blue-600">ĐÈN LED LTC?</span>
+            </h2>
+            <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+              LTC không ngừng nghiên cứu và ứng dụng công nghệ chiếu sáng tiên tiến để mang đến những sản
+              phẩm chất lượng cao, đáp ứng mọi nhu cầu chiếu sáng.
+            </p>
+            <div class="pt-2">
+              <a href="/gioi-thieu"
+                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full text-xs sm:text-sm shadow-md transition">
+                TÌM HIỂU THÊM <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Cột phải: Khối nền xanh tràn sát mép phải, trên, dưới và có bo tròn góc phải tương ứng -->
+          <div
+            class="lg:col-span-8 relative h-full min-h-[320px] text-white p-8 sm:p-10 flex items-center lg:m-2 lg:rounded-2xl"
+            style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 w-full">
+
+              <!-- Tính năng 1 -->
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-12 h-12 shrink-0 rounded-xl bg-blue-600/30 border border-blue-400/30 text-blue-400 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xs sm:text-sm tracking-wide mb-1 text-white">CÔNG NGHỆ
+                    HIỆN ĐẠI</h3>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">Sử dụng chip LED
+                    cao cấp, hiệu suất cao.</p>
+                </div>
+              </div>
+
+              <!-- Tính năng 2 -->
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-12 h-12 shrink-0 rounded-xl bg-blue-600/30 border border-blue-400/30 text-blue-400 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xs sm:text-sm tracking-wide mb-1 text-white">TIẾT KIỆM
+                    VƯỢT TRỘI</h3>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">Giảm chi phí vận
+                    hành, hoàn vốn nhanh.</p>
+                </div>
+              </div>
+
+              <!-- Tính năng 3 -->
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-12 h-12 shrink-0 rounded-xl bg-blue-600/30 border border-blue-400/30 text-blue-400 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-shield"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xs sm:text-sm tracking-wide mb-1 text-white">ĐỘ BỀN CAO
+                  </h3>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">Hoạt động ổn định,
+                    tuổi thọ lên đến 50.000h.</p>
+                </div>
+              </div>
+
+              <!-- Tính năng 4 -->
+              <div class="flex items-start gap-4">
+                <div
+                  class="w-12 h-12 shrink-0 rounded-xl bg-blue-600/30 border border-blue-400/30 text-blue-400 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xs sm:text-sm tracking-wide mb-1 text-white">ĐA DẠNG ỨNG
+                    DỤNG</h3>
+                  <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed">Phù hợp mọi không
+                    gian từ nhà ở đến dự án lớn.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promotional Banner Section (Giảm đến 20%) -->
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <div
+      class="bg-white rounded-3xl shadow-sm border border-slate-100 flex flex-col lg:flex-row items-center overflow-hidden">
+
+      <!-- Khối trái: Ảnh banner tràn full sát mép tuyệt đối -->
+      <!-- <div class="w-full lg:w-7/12">
+            <a href="#" class="block w-full h-full">
+                <img src="./images/Screenshot 2026-07-25 230443.jpg" 
+                     alt="Ưu đãi tháng này" 
+                     class="w-full h-full object-cover block">
+            </a>
+        </div> -->
+
+      <!-- Khối trái: Banner ưu đãi (Nền xanh đậm) -->
+      <div
+        class="w-full lg:w-6/12 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden flex flex-col justify-between min-h-[240px]"
+        style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.9)), url('https://images.unsplash.com/photo-1543196929-1bced8919cd0?auto=format&fit=crop&q=80&w=800'); background-size: cover; background-position: center;">
+
+        <div class="relative z-10 space-y-3">
+          <span
+            class="inline-block bg-blue-600/40 border border-blue-400/30 text-blue-200 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            Ưu đãi tháng này
+          </span>
+
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl sm:text-3xl font-extrabold tracking-tight">GIẢM ĐẾN</span>
+          </div>
+
+          <div class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+            20%
+          </div>
+
+          <p class="text-xs text-blue-200 font-medium tracking-wide">CHO CÁC SẢN PHẨM ĐÈN LED DÂN DỤNG</p>
+        </div>
+
+        <div class="relative z-10 pt-4">
+          <a href="/category"
+            class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-full text-xs shadow-md transition">
+            MUA NGAY <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Khối phải: 3 dịch vụ hỗ trợ (có padding riêng để không bị dính sát) -->
+      <div
+        class="w-full lg:w-6/12 p-6 lg:p-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-slate-100">
+
+        <!-- Dịch vụ 1 -->
+        <div class="flex flex-col items-center pt-4 sm:pt-0 px-2">
+          <div
+            class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-3 shadow-sm">
+            <i class="fa-solid fa-truck"></i>
+          </div>
+          <h4 class="font-bold text-xs text-slate-800 mb-1">Miễn phí vận chuyển</h4>
+          <p class="text-[11px] text-slate-500">cho đơn hàng từ 1.000.000đ</p>
+        </div>
+
+        <!-- Dịch vụ 2 -->
+        <div class="flex flex-col items-center pt-4 sm:pt-0 px-2">
+          <div
+            class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-3 shadow-sm">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h4 class="font-bold text-xs text-slate-800 mb-1">Hỗ trợ kỹ thuật 24/7</h4>
+          <p class="text-[11px] text-slate-500">Tư vấn và giải đáp nhanh chóng</p>
+        </div>
+
+        <!-- Dịch vụ 3 -->
+        <div class="flex flex-col items-center pt-4 sm:pt-0 px-2">
+          <div
+            class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-3 shadow-sm">
+            <i class="fa-solid fa-rotate"></i>
+          </div>
+          <h4 class="font-bold text-xs text-slate-800 mb-1">Đổi trả dễ dàng</h4>
+          <p class="text-[11px] text-slate-500">Trong vòng 7 ngày</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="max-w-7xl mx-auto px-4 py-8">
+    <div class="flex justify-between items-end mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">DỰ ÁN TIÊU BIỂU</h2>
+      <a href="/category-du-an" class="text-blue-600 font-semibold text-sm hover:underline flex items-center gap-1">Xem tất cả
+        dự án <i class="fa-solid fa-arrow-right text-xs"></i></a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <% for(item of duan){%>
+<a href="/du-an?danh-muc=<%= item.slug %>&id=<%= item._id %>">
+      <div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm group">
+        <div class="h-48 overflow-hidden relative flex justify-center items-center h-36">
+          <img src="../site/images/update/<%=item.image[0].images%>"
+            alt="<%=item.name%>" class=" h-full object-cover group-hover:scale-105 transition duration-300">
+        </div>
+        <div class="p-4 flex justify-between items-start">
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm mb-1"><%=item.name%></h3>
+            <p class="text-xs text-slate-500 flex items-center gap-1">
+              
+            <div class=" pb-4 flex justify-between items-center text-xs text-slate-400">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-[10px] text-blue-600"></i> <%=item.add%></span>
+          <span class="flex items-center gap-1.5"><i class="fa-regular fa-eye"></i> <%=item.view%> lượt xem</span>
+        </div>
+
+
+          </div>
+
+        </div>
+      </div>
+</a>
+      <% }%>
+    </div>
+  </section>
+
+  <!-- News & Articles Section -->
+  <section class="max-w-7xl mx-auto px-4 py-8 mb-12">
+    <div class="flex justify-between items-end mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">TIN TỨC & BÀI VIẾT</h2>
+      <a href="/category-tin-tuc" class="text-blue-600 font-semibold text-sm hover:underline flex items-center gap-1">Xem tất cả
+        <i class="fa-solid fa-arrow-right text-xs"></i></a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Tin tức 1 -->
+          <% for(item of tintuc){%>
+            <a href="/tin-tuc?danh-muc=<%= item.slug %>&id=<%= item._id %>">
+      <div
+        class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm group flex flex-col justify-between">
+        <div>
+          <div class="h-40 overflow-hidden flex justify-center items-center h-36">
+            <img src="../site/images/update/<%=item.images%>"
+              alt="<%=item.name%>" class="h-full object-cover group-hover:scale-105 transition duration-300">
+          </div>
+          <div class="p-4">
+            <h3 class="font-bold text-slate-800 text-sm mb-2 line-clamp-2"><%=item.name%></h3>
+          </div>
+        </div>
+        <div class="px-4 pb-4 flex justify-between items-center text-xs text-slate-400">
+          <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar"></i> <%= new Date(item.createdAt).toLocaleDateString('vi-VN') %></span>
+          <span class="flex items-center gap-1.5"><i class="fa-regular fa-eye"></i> <%=item.view || 0 %> lượt xem</span>
+        </div>
+      </div>
+      </a>
+        <% }%>
+    </div>
+  </section>
+
+
+
+        <%- include("./layouts/footer.ejs")%>

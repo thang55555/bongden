@@ -1,0 +1,74 @@
+
+
+<%- include("../layout/head", {title: "Admin thêm mới video"})%>
+<%- include("../layout/header")%>
+<%- include("../layout/siderbar")%>
+
+
+
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="/admin/dashboard"><svg class="glyph stroked home">
+							<use xlink:href="#stroked-home"></use>
+						</svg></a></li>
+				<li><a href="/admin/danh-sach-video">Danh sách video</a></li>
+				<li>Thêm mới video</li>
+			</ol>
+		</div><!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Thêm mới video</h1>
+			</div>
+		</div><!--/.row-->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-md-6">
+							<form role="form" method="post" action="/admin/upload-video">
+								<div class="form-group">
+									<label>Tên video</label>
+									<input required type="text" name="tieude" class="form-control"
+										placeholder="Tên video...">
+								</div>
+								<div class="form-group">
+									<label>Link video</label>
+									<input required type="text" name="linkvideo" class="form-control"
+										placeholder="Link video...">
+								</div>
+						</div>
+						<div class="col-md-6">
+							
+                           
+							<div class="form-group">
+								<label>Content video</label>
+								<textarea id="description5" required name="content" class="form-control" value="" rows="3"></textarea>
+								<script>
+									CKEDITOR.replace( 'description5',{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        } );
+								</script>
+							</div>
+							<button type="submit" name="sbm" class="btn btn-success">Thêm mới</button>
+							<button type="reset" class="btn btn-default">Làm mới</button>
+						</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div> <!--/.main-->
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+
+	
+	<%- include("../layout/footer")%>

@@ -1,0 +1,207 @@
+<%- include("./layouts/head.ejs")%>
+
+    <!-- Container chính -->
+    <div class="max-w-7xl mx-auto bg-white min-h-screen shadow-sm flex flex-col justify-between">
+
+        <div>
+            <!-- Breadcrumb Navigation -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-2">
+                <div class="flex flex-wrap items-center space-x-2 text-xs sm:text-sm text-slate-500">
+                    <a href="/" class="hover:text-blue-600 transition">Trang chủ</a>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    <a href="/category-du-an" class="hover:text-blue-600 transition">Dự án</a>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    <a href="/category-du-an?slug=<%=product.menudichvu_id[0].name%>&id=<%=product.menudichvu_id[0]._id%>" class="hover:text-blue-600 transition"><%=product.menudichvu_id[0].name%></a> 
+                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    <span class="text-slate-800 font-medium truncate max-w-xs sm:max-w-md"><%=product.name%></span>
+                </div>
+            </div>
+
+            <!-- Nội dung chính (Layout 2 cột: Chi tiết bài viết & Sidebar) -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                <!-- Cột Trái: Chi tiết bài viết (8/12 cột) -->
+                <div class="lg:col-span-8 space-y-6">
+
+                    <!-- Tiêu đề & Thông tin bài viết -->
+                    <div class="space-y-4 border-b border-slate-100 pb-6">
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block"><%=product.menudichvu_id[0].name%></span>
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
+                            <%=product.name%>
+                        </h2>
+
+                        <div
+                            class="flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm text-slate-500 pt-1">
+                            <div class="flex items-center space-x-6">
+                                <span><i class="fa-regular fa-calendar mr-2 text-slate-400"></i><%= new Date(product.createdAt).toLocaleDateString('vi-VN') %></span>
+                                <span><i class="fa-regular fa-eye mr-2 text-slate-400"></i><%=product.view || 0 %> lượt xem</span>
+                                <span><i class="fa-regular fa-clock mr-2 text-slate-400"></i><%=readingTime%> phút đọc</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs font-medium text-slate-600">Chia sẻ:</span>
+                                <a href="/"
+                                    class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs hover:opacity-90 transition"><i
+                                        class="fa-brands fa-facebook-f"></i></a>
+                                <a href="/"
+                                    class="w-7 h-7 rounded-full bg-sky-500 text-white flex items-center justify-center text-xs hover:opacity-90 transition"><i
+                                        class="fa-brands fa-twitter"></i></a>
+                                <a href="/"
+                                    class="w-7 h-7 rounded-full bg-blue-700 text-white flex items-center justify-center text-xs hover:opacity-90 transition"><i
+                                        class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="/"
+                                    class="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs hover:bg-slate-300 transition"><i
+                                        class="fa-solid fa-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Banner Hero trong bài viết -->
+                    <div >
+                      <%-product.content%>
+                    </div>
+
+
+                    <!-- Tags bài viết -->
+<!-- Tags bài viết -->
+<div class="flex flex-wrap items-center gap-2 pt-6 border-t border-slate-100">
+    <span class="text-xs font-bold text-slate-900 uppercase mr-2">
+        <i class="fa-solid fa-tags mr-1.5 text-blue-600"></i>TAGS:
+    </span>
+
+    <% if (product.keywords) { %>
+        <% product.keywords.split(',').forEach(function(tag) { %>
+            <a href="/search?search=<%= tag.trim().toLowerCase().replace(/\s+/g, '-') %>" 
+               class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-lg transition font-medium">
+                <%= tag.trim() %>
+            </a>
+        <% }); %>
+    <% } %>
+</div>
+
+                </div>
+
+                <!-- Cột Phải: Sidebar (4/12 cột) -->
+                <div class="lg:col-span-4 space-y-6">
+
+                    <!-- Khối: Bài viết liên quan -->
+                    <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-4">
+                        <h3
+                            class="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-3">
+                            BÀI VIẾT LIÊN QUAN</h3>
+
+                        <div class="space-y-4">
+                            <!-- Bài liên quan  -->
+                             <%for(item of products){%>
+                            <div class="flex space-x-3 group cursor-pointer">
+                                <div class="w-20 h-16 rounded-xl bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center">
+                                    <img src="../site/images/update/<%=item.image[0].images%>"
+                                        alt="<%=item.slug%>"
+                                        class=" h-full object-cover group-hover:scale-105 transition duration-300">
+                                </div>
+                                <div class="space-y-1">
+                                    <h4
+                                        class="text-xs sm:text-sm font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition line-clamp-2">
+                                        <%=item.name%></h4>
+                                    <div class="flex items-center space-x-3 text-[10px] text-slate-400">
+                                        <span><i class="fa-regular fa-calendar mr-1"></i><%= new Date(item.createdAt).toLocaleDateString('vi-VN') %></span>
+                                        <span><i class="fa-regular fa-eye mr-1"></i><%=item.view || 0 %> lượt xem</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <%}%>
+                        </div>
+                    </div>
+
+                    <!-- Khối: Danh mục tin tức -->
+                    <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3">
+                        <h3
+                            class="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-100 pb-3">
+                            DANH MỤC TIN TỨC</h3>
+
+                        <div class="space-y-1 text-xs sm:text-sm">
+                            <a href="/category-du-an"
+                                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl bg-blue-50 text-blue-600 font-bold transition">
+                                <i class="fa-solid fa-folder-open text-xs"></i>
+                                <span>Tất cả tin tức</span>
+                            </a>
+                            <%for(item of menu){%>
+                            <a href="/category-du-an?danh-muc=<%=item.slug%>&id=<%=item._id%>"
+                                class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition font-medium">
+                                <i class="fa-solid fa-folder text-xs text-slate-400"></i>
+                                <span><%=item.name%></span>
+                            </a>
+                           <%}%>
+                        </div>
+                    </div>
+
+                    <!-- Banner Phụ (Tiết kiệm điện) -->
+                    <div
+                        class="relative rounded-2xl p-6 text-white overflow-hidden shadow-sm flex flex-col justify-between min-h-[420px]">
+                        <!-- Hình nền banner phụ full kích thước thực tế -->
+                        <div class="absolute inset-0 bg-contain bg-center bg-no-repeat"
+                            style="background-image: url('./images/banner-tin-tuc-2.png');"></div>
+
+                        <!-- Phần dưới để trống tạo khoảng cách hiển thị trọn vẹn ảnh -->
+                        <div class="relative z-10 pt-24"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Khối dịch vụ cam kết phía dưới -->
+        <div class="border-t border-slate-100 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dịch vụ 1 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-truck-fast text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Miễn phí vận chuyển</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Cho đơn hàng từ 1.000.000đ</p>
+                    </div>
+                </div>
+                <!-- Dịch vụ 2 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Bảo hành chính hãng</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Lên đến 3 năm</p>
+                    </div>
+                </div>
+                <!-- Dịch vụ 3 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-rotate-left text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Đổi trả dễ dàng</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Trong vòng 7 ngày</p>
+                    </div>
+                </div>
+                <!-- Dịch vụ 4 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-headset text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Hỗ trợ kỹ thuật 24/7</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tư vấn và giải đáp nhanh chóng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+        <%- include("./layouts/footer.ejs")%>

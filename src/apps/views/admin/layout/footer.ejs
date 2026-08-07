@@ -1,0 +1,25 @@
+	
+	
+<script>
+    window.onload = function() {
+        // Lấy tất cả các input có sử dụng hàm updateAll
+        // Bạn cần thay name="title", "description", "keywords" nếu khác
+        const inputs = [
+            { id: "title", bar: "bar_title", label: "label_title", min: 50, max: 60 },
+            { id: "description", bar: "bar_meta", label: "label_meta", min: 140, max: 160 },
+            { id: "keywords", bar: "bar_keywords", label: "label_keywords", min: 100, max: 200 }
+        ];
+
+        inputs.forEach(item => {
+            const inputField = document.querySelector(`input[name="${item.id}"]`);
+            if (inputField && inputField.value.length > 0) {
+                // Gọi hàm ngay lập tức khi trang load xong
+                updateAll(inputField.value, item.bar, item.label, item.min, item.max);
+            }
+        });
+    };
+</script>
+
+</body>
+
+</html> 

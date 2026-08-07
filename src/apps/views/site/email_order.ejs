@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #1a237e;
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .info-table {
+            width: 100%;
+            background: #f9f9f9;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        .info-table td {
+            padding: 8px 10px;
+            font-size: 13px;
+            border: none;
+            vertical-align: top;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1a237e;
+            padding-bottom: 5px;
+            color: #1a237e;
+        }
+
+        table.product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table.product-table th,
+        table.product-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1a237e;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background: #f4f4f4;
+            padding: 20px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>XÁC NHẬN ĐƠN HÀNG THÀNH CÔNG!</h1>
+            <p>Cảm ơn bạn đã mua sắm tại HTC Lighting.</p>
+        </div>
+        <div class="content">
+            <% const d=new Date(saveOrder.createdAt); const timeFormatted=`${String(d.getDate()).padStart(2, '0'
+                )}/${String(d.getMonth() + 1).padStart(2, '0' )}/${d.getFullYear()} -
+                ${String(d.getHours()).padStart(2, '0' )}:${String(d.getMinutes()).padStart(2, '0' )}`; %>
+
+                <table class="info-table">
+                    <tr>
+                        <td style="width: 50%;"><strong>Mã đơn:</strong>
+                            <%= saveOrder.madonhang %>
+                        </td>
+                        <td style="width: 50%;"><strong>Thanh toán:</strong>
+                            <%= saveOrder.thanhtoan %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ngày:</strong>
+                            <%= timeFormatted %>
+                        </td>
+                        <td><strong>Giao hàng:</strong>
+                            <%= saveOrder.vanchuyen %>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="section-title">THÔNG TIN NHẬN HÀNG</div>
+                <p style="font-size: 13px; line-height: 1.6; margin: 0;">
+                    <strong>Họ và tên:</strong>
+                    <%= saveOrder.name %><br>
+                        <strong>SĐT:</strong>
+                        <%= saveOrder.sdt %><br>
+                            <strong>Địa chỉ:</strong>
+                            <%= saveOrder.diachigiao %>
+                </p>
+
+                <!-- Thêm mục Thông tin xuất hóa đơn VAT -->
+                <% if(saveOrder.namecty.length> 1) { %>
+                    <div class="section-title">THÔNG TIN XUẤT HÓA ĐƠN VAT</div>
+                    <p style="font-size: 13px; line-height: 1.6; margin: 0;">
+                        <strong>Tên công ty:</strong>
+                        <%= saveOrder.namecty %><br>
+                            <strong>Mã số thuế:</strong>
+                            <%= saveOrder.tax %><br>
+                                <strong>Địa chỉ công ty:</strong>
+                                <%= saveOrder.addcty %>
+                    </p>
+                    <% } %>
+
+                        <div class="section-title">SẢN PHẨM</div>
+                        <table class="product-table">
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                            </tr>
+                            <% for(let items of saveOrder.item) { %>
+                                <tr>
+                                    <td>
+                                        <%= items.name %>
+                                    </td>
+                                    <td>
+                                        <%= items.qty %>
+                                    </td>
+                                    <td>
+                                        <%= Number(items.qty * items.price).toLocaleString('vi-VN') %>₫
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <tr>
+                                        <td><strong>Phí vận chuyển</strong></td>
+                                        <td></td>
+                                        <td><strong>
+                                                <%= Number(saveOrder.ship).toLocaleString('vi-VN') %>₫
+                                            </strong></td>
+                                    </tr>
+                        </table>
+
+                        <div class="total">TỔNG THANH TOÁN: <%= Number(finalTotalPrice).toLocaleString('vi-VN') %>₫
+                        </div>
+        </div>
+        <div class="footer">
+            <p>Hotline: <%= thongtintrang.sdt %> | Email: <%= thongtintrang.email %>
+            </p>
+            <p>&copy; 2026 HTC LIGHTING</p>
+        </div>
+    </div>
+</body>
+
+</html>

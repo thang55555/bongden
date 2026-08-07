@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Chọn ảnh</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f5f5f5;
+}
+
+.header{
+    background:#fff;
+    padding:15px;
+    border-bottom:1px solid #ddd;
+}
+
+.album-selection-area{
+    display:flex;
+    gap:15px;
+    padding:20px;
+}
+
+.album-box{
+    width:180px;
+    background:#fff;
+    border:2px solid #ddd;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:center;
+    padding:20px;
+}
+
+.album-box.active{
+    border-color:#007bff;
+}
+
+.album-name{
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.album-count{
+    color:#888;
+    margin-top:5px;
+}
+
+#album-gallery{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:15px;
+
+    padding:20px;
+
+}
+
+.photo-card{
+
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    overflow:hidden;
+    cursor:pointer;
+
+}
+
+.photo-card:hover{
+
+    border:2px solid #2196F3;
+
+}
+
+.photo-card img{
+
+    width:100%;
+    height:160px;
+    object-fit:cover;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h2>Thư viện ảnh</h2>
+
+</div>
+
+<div class="album-selection-area">
+
+    <div id="tab-tieude"
+         class="album-box active"
+         onclick="loadGallery('tieude')">
+
+        <div class="album-name">Album Tiêu đề</div>
+
+        <div class="album-count">
+            <%= JSON.parse(tieudeJson).length %> ảnh
+        </div>
+
+    </div>
+
+    <div id="tab-content"
+         class="album-box"
+         onclick="loadGallery('content')">
+
+        <div class="album-name">Album Content</div>
+
+        <div class="album-count">
+            <%= JSON.parse(contentJson).length %> ảnh
+        </div>
+
+    </div>
+
+</div>
+
+<div id="album-gallery"></div>
+
+<script>
+
+const albumData = {
+    tieude: <%- tieudeJson %>,
+    content: <%- contentJson %>
+};
+
+const funcNum=new URLSearchParams(location.search)
+.get("CKEditorFuncNum");
+
+function loadGallery(type){
+
+    document.querySelectorAll(".album-box")
+    .forEach(e=>e.classList.remove("active"));
+
+    document.getElementById("tab-"+type)
+    .classList.add("active");
+
+    const gallery=document.getElementById("album-gallery");
+
+    gallery.innerHTML="";
+
+    albumData[type].forEach(item=>{
+
+        const card=document.createElement("div");
+
+        card.className="photo-card";
+
+        const path=
+            type=="tieude"
+            ? "../../static/site/images/update/"
+            : "/images/";
+
+        card.innerHTML=`
+            <img src="${path+item.images}">
+        `;
+
+        card.onclick=function(){
+
+            window.opener.CKEDITOR.tools.callFunction(
+                funcNum,
+                path+item.images
+            );
+
+            window.close();
+
+        }
+
+        gallery.appendChild(card);
+
+    });
+
+}
+
+loadGallery("tieude");
+
+</script>
+
+</body>
+</html>

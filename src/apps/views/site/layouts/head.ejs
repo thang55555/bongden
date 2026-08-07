@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/static/site/">
+  <title>LTC - Giải pháp chiếu sáng LED hiện đại, tiết kiệm và bền bỉ</title>
+  <meta name="description"
+    content="Chuyên cung cấp các giải pháp chiếu sáng LED hiện đại, tiết kiệm năng lượng và thân thiện với môi trường từ thương hiệu LTC.">
+  <!-- Tailwind CSS CDN -->
+  <script src="./them/java.js"></script>
+  <!-- FontAwesome cho Icons -->
+  <link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              blue: '#0052cc',
+              darkBlue: '#003399',
+              dark: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="./them/alpine.js"></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+  <!-- Top Bar -->
+  <div class="bg-slate-100 text-xs text-slate-600 py-2 border-b border-slate-200 hidden md:block">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+      <div class="flex space-x-6">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-truck text-blue-600"></i> Miễn phí vận
+          chuyển cho đơn hàng từ 1.000.000đ</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-blue-600"></i> Bảo hành
+          chính hãng lên đến 3 năm</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-blue-600"></i> Tiết kiệm điện
+          năng lên đến 80%</span>
+      </div>
+      <div class="flex space-x-6">
+        <a href="/" class="hover:text-blue-600 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i>
+          Hệ thống cửa hàng</a>
+        <a href="/" class="hover:text-blue-600 flex items-center gap-1"><i class="fa-solid fa-file-arrow-down"></i> Tài
+          liệu tải về</a>
+        <a href="tel:19001234" class="font-bold text-slate-900 hover:text-blue-600 flex items-center gap-1"><i
+            class="fa-solid fa-headset text-blue-600"></i> Hotline: <span class="text-blue-600"><%=thongtintrang.sdt%></span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header / Navigation -->
+  <header class="sticky top-0 z-50 bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+      <!-- Left: Mobile Menu Button & Logo -->
+      <div class="flex items-center gap-3">
+        <!-- Nút Hamburger cho Mobile có tích hợp đổi thành dấu X -->
+        <button id="mobile-menu-button"
+          class="lg:hidden text-slate-700 hover:text-blue-600 focus:outline-none p-1 w-8 h-8 flex items-center justify-center">
+          <i id="menu-icon" class="fa-solid fa-bars text-xl transition-transform duration-300"></i>
+        </button>
+
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2">
+          <div class="text-blue-600 font-black text-2xl tracking-tighter leading-none">
+            <img src="../site/images/update/<%=thongtintrang.images%>" style="max-width: 60px;">
+            <div class="text-[9px] tracking-normal text-slate-500 uppercase font-semibold">Lighting The
+              Future</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Nav Menu -->
+      <nav class="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-700">
+        <a href="/" class="text-blue-600 font-semibold hover:text-blue-600 transition">TRANG CHỦ</a>
+        <a href="/gioi-thieu" class="hover:text-blue-600 transition">GIỚI THIỆU</a>
+        <div class="relative group" x-data="{ activeTab: 'dan-dung' }">
+          <button class="flex items-center gap-1 hover:text-blue-600 transition">
+            SẢN PHẨM <i class="fa-solid fa-chevron-down text-xs"></i>
+          </button>
+
+          <!-- Mega Menu Dropdown -->
+          <div
+            class="absolute top-full left-0 w-[650px] bg-white shadow-xl rounded-xl border border-slate-100 hidden group-hover:block p-6 transition-all">
+
+            <!-- Khung chứa 2 cột chính -->
+            <div class="grid grid-cols-2 gap-4"
+              x-data="{ activeTab: '<%= menu1 && menu1.length > 0 ? menu1[0]._id : "" %>' }">
+
+              <!-- CỘT BÊN TRÁI: Danh mục cấp 1 (Menu1) -->
+              <div class="space-y-1">
+                <% menu1.forEach((item, index)=> { %>
+                  <a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>" @mouseenter="activeTab = '<%= item._id %>'"
+                    :class="activeTab === '<%= item._id %>' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-slate-700 hover:bg-slate-50'"
+                    class="flex items-center justify-between p-2.5 rounded-lg transition">
+                    <div class="flex items-center gap-3">
+                      <!-- Bạn có thể thay icon tùy ý hoặc dùng icon mặc định từ DB nếu có -->
+                      <%- item.icon %>
+                      <%= item.name %>
+                    </div>
+                    <!-- Mũi tên hiển thị khi mục này đang được chọn -->
+                    <i class="fa-solid fa-chevron-right text-xs transition-transform"
+                      :class="activeTab === '<%= item._id %>' ? 'opacity-150 translate-x-0.5' : 'opacity-30'"></i>
+                  </a>
+                  <% }) %>
+              </div>
+
+              <!-- CỘT BÊN PHẢI: Menu con cấp 2 tương ứng (Menu2) -->
+              <div class="space-y-1">
+                <% menu1.forEach((item)=> { %>
+                  <!-- Mỗi tab cấp 1 sẽ tương ứng với một khối x-show kiểm tra _id -->
+                  <div x-show="activeTab === '<%= item._id %>'" class="space-y-1" <%=item===menu1[0] ? ''
+                    : 'style="display: none;"' %>>
+                    <% // Lọc các menu2 có chứa danhmuc_id trùng với item._id của menu1 const
+                      subMenus=menu2.filter(sub=> {
+                      if (!sub.danhmuc_id) return false;
+                      // Vì danhmuc_id ở schema là một Mảng (Array) các ObjectId
+                      return sub.danhmuc_id.some(id => id.toString() === item._id.toString());
+                      });
+                      %>
+
+                      <% if (subMenus.length> 0) { %>
+                        <% subMenus.forEach(sub=> { %>
+                          <a href="/category?danh-muc=<%= sub.slug %>&id=<%= sub._id %>"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i>
+                            <%= sub.name %>
+                          </a>
+                          <% }) %>
+                            <% } else { %>
+                              <div class="p-2.5 text-slate-400 text-sm italic">Đang cập nhật danh mục...</div>
+                              <% } %>
+                  </div>
+                  <% }) %>
+              </div>
+
+            </div>
+
+            <!-- Dòng Xem tất cả sản phẩm ở dưới cùng -->
+            <div class="border-t border-slate-100 pt-3 mt-4">
+              <a href="/san-pham"
+                class="flex items-center justify-center gap-2 text-blue-600 font-bold hover:underline w-full">
+                Xem tất cả sản phẩm <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+          </div>
+        </div>
+        <a href="/category-du-an" class="hover:text-blue-600 transition">DỰ ÁN</a>
+        <a href="/category-tin-tuc" class="hover:text-blue-600 transition">TIN TỨC</a>
+        <a href="/lien-he" class="hover:text-blue-600 transition">LIÊN HỆ</a>
+      </nav>
+
+      <!-- Search & Cart -->
+      <div class="flex items-center space-x-3">
+        <!-- Ô tìm kiếm trên desktop -->
+<form action="/search" method="GET" class="relative hidden sm:block w-48 md:w-64">
+  <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..."
+    class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+  <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+  </button>
+</form>
+        <a href="/gio-hang" class="relative p-2 text-slate-700 hover:text-blue-600 transition">
+          <i class="fa-solid fa-cart-shopping text-lg"></i>
+<span id="cart-badge-count" class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+    <%= totalQty %>
+</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Menu (Chạm để hiện danh mục sản phẩm giống desktop) -->
+
+
+    <div id="mobile-menu"
+      class="hidden lg:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-3 shadow-lg max-h-[80vh] overflow-y-auto"
+      x-data="{ mobileTab: 'dan-dung' }">
+
+
+<!-- Ô tìm kiếm trên mobile -->
+<form action="/search" method="GET" class="relative sm:hidden mb-3">
+  <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..."
+    class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+  <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+  </button>
+</form>
+
+      <a href="/" class="block text-blue-600 font-semibold py-2 border-b border-slate-100">TRANG CHỦ</a>
+      <a href="/gioi-thieu" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">GIỚI
+        THIỆU</a>
+
+      <!-- Nhóm Sản Phẩm trên Mobile -->
+<div class="border-b border-slate-100 pb-2" x-data="{ openProducts: false, mobileTab: '' }">
+  <button @click="openProducts = !openProducts"
+    class="w-full flex items-center justify-between py-3 font-semibold text-slate-800 focus:outline-none">
+    <span>SẢN PHẨM</span>
+    <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300"
+      :class="openProducts ? 'rotate-180 text-blue-600' : ''"></i>
+  </button>
+
+  <!-- Danh sách sản phẩm cấp 1 & cấp 2 (Ẩn/Hiện khi bấm SẢN PHẨM) -->
+  <div x-show="openProducts" x-cloak class="pl-2 pb-2 space-y-3 text-sm text-slate-600">
+
+    <% if (typeof menu1 !== 'undefined' && menu1.length > 0) { %>
+      <% menu1.forEach((item) => { %>
+        <!-- Cấp 1: <%= item.name %> -->
+        <div class="space-y-1">
+          <button @click="mobileTab = mobileTab === '<%= item._id %>' ? '' : '<%= item._id %>'"
+            class="w-full flex items-center justify-between p-2 rounded-lg transition"
+            :class="mobileTab === '<%= item._id %>' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-slate-700'">
+            <div class="flex items-center gap-3">
+               <a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>">
+              <!-- Có thể tùy biến icon theo từng danh mục nếu muốn, ở đây dùng icon mặc định -->
+               <%- item.icon %> <%= item.name %></a>
+            </div>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform"
+              :class="mobileTab === '<%= item._id %>' ? 'rotate-180 text-blue-600' : 'opacity-30'"></i>
+          </button>
+
+          <!-- Cấp 2 tương ứng -->
+          <div x-show="mobileTab === '<%= item._id %>'" x-cloak class="pl-8 space-y-1 pt-1">
+            <% 
+              // Lọc các menu2 có chứa danhmuc_id trùng với item._id của menu1
+              const subMenus = menu2.filter(sub => {
+                if (!sub.danhmuc_id) return false;
+                return sub.danhmuc_id.some(id => id.toString() === item._id.toString());
+              });
+            %>
+            
+            <% if (subMenus.length > 0) { %>
+              <% subMenus.forEach(sub => { %>
+                <a href="/category?danh-muc=<%= sub.slug %>&id=<%= sub._id %>" class="block py-1.5 text-slate-600 hover:text-blue-600 transition">
+                  ⚡ <%= sub.name %>
+                </a>
+              <% }) %>
+            <% } else { %>
+              <div class="py-1.5 text-slate-400 text-sm italic">Đang cập nhật...</div>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+
+    <!-- Nút xem tất cả -->
+    <div class="pt-2 border-t border-slate-100 mt-2">
+      <a href="/san-pham" class="flex items-center justify-center gap-2 text-blue-600 font-bold py-2">
+        Xem tất cả sản phẩm <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+      <a href="/category-du-an" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">DỰ ÁN</a>
+      <a href="/category-tin-tuc" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">TIN TỨC</a>
+      <a href="/lien-he" class="block text-slate-700 hover:text-blue-600 py-2">LIÊN HỆ</a>
+    </div>
+
+    <!-- JavaScript cập nhật bổ sung sự kiện bấm mở danh mục sản phẩm trên mobile -->
+    <script>
+      // Xử lý mở/đóng danh mục Sản phẩm trên mobile
+      const mobileProductToggle = document.getElementById('mobile-product-toggle');
+      const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
+      const productChevron = document.getElementById('product-chevron');
+
+      mobileProductToggle.addEventListener('click', () => {
+        mobileProductDropdown.classList.toggle('hidden');
+        productChevron.classList.toggle('rotate-180');
+      });
+    </script>
+  </header>
+
+  <!-- JavaScript xử lý Menu Mobile (Đổi icon 3 gạch thành dấu X) và Slider -->
+  <script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
+      if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      } else {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-xmark');
+      }
+    });
+
+  </script>

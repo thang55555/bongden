@@ -1,0 +1,79 @@
+
+<%- include("../layout/head", {title: "Admin danh sách chia sẻ KH"})%>
+<%- include("../layout/header")%>
+<%- include("../layout/siderbar")%>
+
+
+
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="/admin/dashboard"><svg class="glyph stroked home">
+							<use xlink:href="#stroked-home"></use>
+						</svg></a></li>
+				<li>Danh sách banner</li>
+			</ol>
+		</div><!--/.row-->
+
+
+		<div id="toolbar" class="btn-group">
+			<a href="/admin/add-banner" class="btn btn-success">
+				<i class="glyphicon glyphicon-plus"></i> Thêm banner
+			</a>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<table data-toolbar="#toolbar" data-toggle="table">
+
+							<thead>
+								<tr>
+									<th data-field="id" data-sortable="true">ID</th>
+																		
+									<th>Hành động</th>
+									<th>Banner</th>
+									<th>Content</th>
+									<th> Ngày đăng</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% for(item of product){%> 
+								<tr>
+									<td><%=stt++%></td>
+									<td class="form-group">
+										<a href="/admin/edit-banner/<%=item._id%>" ><i class="fa-solid fa-pen-to-square"></i></a>
+										<a onclick="clickDelete('<%=item._id%>')"  ><i class="fa-solid fa-trash" style="color: rgb(48, 165, 255);"></i></a>
+									</td>
+									<td><img height="150px" width="150px" src="../site/images/update/<%=item.images%>" />
+									</td>
+									
+									<td><div class="antext"><%-item.content%></div></td>
+									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
+
+								</tr>
+								<%}%>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div><!--/.row-->
+	</div> <!--/.main-->
+	<script>
+		function handleConfirm(id) {
+		  const isConfirm = confirm(`Bạn có chắc chắn xóa không?`)
+		  const link = () => window.location.href = `/admin/delete-banner/${id}`
+		  return isConfirm ? link() : false
+		}
+		const clickDelete = (id) => handleConfirm(id)
+	  </script>
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+
+	<%- include("../layout/footer")%>

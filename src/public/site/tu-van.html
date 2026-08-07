@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTC - Giải pháp chiếu sáng LED hiện đại, tiết kiệm và bền bỉ</title>
+    <meta name="description"
+        content="Chuyên cung cấp các giải pháp chiếu sáng LED hiện đại, tiết kiệm năng lượng và thân thiện với môi trường từ thương hiệu LTC.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome cho Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0052cc',
+                            darkBlue: '#003399',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-100 text-xs text-slate-600 py-2 border-b border-slate-200 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex space-x-6">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-truck text-blue-600"></i> Miễn phí vận
+                    chuyển cho đơn hàng từ 1.000.000đ</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-blue-600"></i> Bảo hành
+                    chính hãng lên đến 3 năm</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-blue-600"></i> Tiết kiệm điện
+                    năng lên đến 80%</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-blue-600 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i>
+                    Hệ thống cửa hàng</a>
+                <a href="#" class="hover:text-blue-600 flex items-center gap-1"><i
+                        class="fa-solid fa-file-arrow-down"></i> Tài liệu tải về</a>
+                <a href="tel:19001234" class="font-bold text-slate-900 hover:text-blue-600 flex items-center gap-1"><i
+                        class="fa-solid fa-headset text-blue-600"></i> Hotline: <span class="text-blue-600">1900
+                        1234</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+            <!-- Left: Mobile Menu Button & Logo -->
+            <div class="flex items-center gap-3">
+                <!-- Nút Hamburger cho Mobile có tích hợp đổi thành dấu X -->
+                <button id="mobile-menu-button"
+                    class="lg:hidden text-slate-700 hover:text-blue-600 focus:outline-none p-1 w-8 h-8 flex items-center justify-center">
+                    <i id="menu-icon" class="fa-solid fa-bars text-xl transition-transform duration-300"></i>
+                </button>
+
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <div class="text-blue-600 font-black text-2xl tracking-tighter leading-none">
+                        <span class="text-3xl">LTC</span>
+                        <div class="text-[9px] tracking-normal text-slate-500 uppercase font-semibold">Lighting The
+                            Future</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-700">
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-600 transition">TRANG CHỦ</a>
+                <a href="#" class="hover:text-blue-600 transition">GIỚI THIỆU</a>
+                <div class="relative group ">
+                    <button class="flex items-center gap-1 hover:text-blue-600 transition">
+                        SẢN PHẨM <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <!-- Mega Menu Dropdown -->
+                    <div
+                        class="absolute top-full left-0 w-[650px] bg-white shadow-xl rounded-xl border border-slate-100 hidden group-hover:grid grid-cols-2 p-6 gap-4 transition-all">
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-lightbulb text-lg text-blue-600 w-6"></i> Bóng đèn LED dân dụng
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Bulb
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-industry text-lg text-blue-600 w-6"></i> Bóng đèn LED công nghiệp
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Tuýp
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-sun text-lg text-blue-600 w-6"></i> Đèn LED chiếu sáng
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Downlight
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-palette text-lg text-blue-600 w-6"></i> Đèn LED trang trí
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Ốp trần
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition col-span-2 border-t pt-3">
+                            <span class="text-blue-600 font-bold text-center w-full">Xem tất cả sản phẩm <i
+                                    class="fa-solid fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+                <a href="#" class="hover:text-blue-600 transition">DỰ ÁN</a>
+                <a href="#" class="hover:text-blue-600 transition">TIN HỖ TRỢ</a>
+                <a href="#" class="hover:text-blue-600 transition">LIÊN HỆ</a>
+            </nav>
+
+            <!-- Search & Cart -->
+            <div class="flex items-center space-x-3">
+                <div class="relative hidden sm:block w-48 md:w-64">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                        class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </button>
+                </div>
+                <a href="#" class="relative p-2 text-slate-700 hover:text-blue-600 transition">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span
+                        class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">1</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu (Chạm để hiện danh mục sản phẩm giống desktop) -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-3 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="relative sm:hidden mb-3">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                    class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </button>
+            </div>
+
+            <a href="#" class="block text-blue-600 font-semibold py-2 border-b border-slate-100">TRANG CHỦ</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">GIỚI THIỆU</a>
+
+            <!-- Nhóm Sản Phẩm trên Mobile (Bấm vào để mở/đóng danh mục) -->
+            <div class="border-b border-slate-100">
+                <button id="mobile-product-toggle"
+                    class="w-full flex items-center justify-between py-3 font-semibold text-slate-800 focus:outline-none">
+                    <span>SẢN PHẨM</span>
+                    <i id="product-chevron"
+                        class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                </button>
+                <!-- Danh mục con (Ẩn mặc định, hiện khi click) -->
+                <div id="mobile-product-dropdown"
+                    class="hidden pl-3 pb-3 space-y-2 text-sm text-slate-600 grid grid-cols-1">
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-lightbulb text-blue-600 w-5"></i> Bóng đèn LED dân dụng</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Bulb</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-industry text-blue-600 w-5"></i> Bóng đèn LED công nghiệp</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Tuýp</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-sun text-blue-600 w-5"></i> Đèn LED chiếu sáng</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Downlight</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-palette text-blue-600 w-5"></i> Đèn LED trang trí</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Ốp trần</a>
+                    <a href="#" class="text-blue-600 font-semibold py-2 mt-1 block border-t border-slate-100">Xem tất cả
+                        sản phẩm <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">DỰ ÁN</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">TIN HỖ TRỢ</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2">LIÊN HỆ</a>
+        </div>
+
+        <!-- JavaScript cập nhật bổ sung sự kiện bấm mở danh mục sản phẩm trên mobile -->
+        <script>
+            // Xử lý mở/đóng danh mục Sản phẩm trên mobile
+            const mobileProductToggle = document.getElementById('mobile-product-toggle');
+            const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
+            const productChevron = document.getElementById('product-chevron');
+
+            mobileProductToggle.addEventListener('click', () => {
+                mobileProductDropdown.classList.toggle('hidden');
+                productChevron.classList.toggle('rotate-180');
+            });
+        </script>
+    </header>
+
+    <!-- JavaScript xử lý Menu Mobile (Đổi icon 3 gạch thành dấu X) và Slider -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+    </script>
+
+
+    <div class="max-w-7xl mx-auto px-4 py-6 space-y-8">
+
+        <!-- Breadcrumb & Banner Header -->
+        <!-- Banner Header 2 Cột dạng căn đều phía trên (items-start) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden bg-transparent items-start">
+
+            <!-- Cột Trái: Text nội dung căn trên -->
+            <div class="py-2 pr-6 flex flex-col justify-start space-y-3 z-10">
+                <div class="text-xs md:text-sm text-gray-500 space-x-2">
+                    <a href="#" class="hover:text-gray-900 transition">Trang chủ</a>
+                    <span>></span>
+                    <a href="#" class="hover:text-gray-900 transition">Hỗ trợ</a>
+                    <span>></span>
+                    <span class="text-gray-900 font-medium">Tư vấn</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">TƯ VẤN GIẢI PHÁP CHIẾU SÁNG</h1>
+                <p class="text-gray-600 text-sm leading-relaxed">
+                    LTC Lighting sẵn sàng lắng nghe và đưa ra giải pháp chiếu sáng tối ưu, phù hợp với nhu cầu và ngân
+                    sách của bạn.
+                </p>
+            </div>
+
+            <!-- Cột Phải: Hình ảnh có hiệu ứng mờ chuyển màu sang trái -->
+            <div class="relative h-[220px] md:h-[260px] w-full overflow-hidden rounded-2xl">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop"
+                    alt="Background giải pháp chiếu sáng" class="w-full h-full object-cover">
+                <!-- Lớp phủ gradient mờ cạnh trái để hòa vào nền sáng -->
+                <div class="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-gray-50 to-transparent"></div>
+            </div>
+
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Left 2 Cols: Gửi Yêu Cầu Tư Vấn -->
+            <div class="lg:col-span-2 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 space-y-6">
+                <!-- Section Title -->
+                <div class="flex items-center space-x-3 pb-4 border-b border-gray-100">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#003399]">
+                        <i class="fa-regular fa-file-lines text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-900">GỬI YÊU CẦU TƯ VẤN</h2>
+                        <p class="text-xs text-gray-500">Vui lòng điền đầy đủ thông tin, chúng tôi sẽ liên hệ lại với
+                            bạn trong thời gian sớm nhất.</p>
+                    </div>
+                </div>
+
+                <!-- Form Fields -->
+                <form class="space-y-5">
+                    <!-- Row 1: Họ tên, SĐT, Email -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-gray-700">Họ và tên <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" placeholder="Nhập họ và tên"
+                                class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition"
+                                required>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-gray-700">Số điện thoại <span
+                                    class="text-red-500">*</span></label>
+                            <input type="tel" id="phone-input" inputmode="numeric" pattern="[0-9]*"
+                                placeholder="Nhập số điện thoại"
+                                class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition"
+                                required>
+                        </div>
+
+                        <!-- Thêm đoạn script này vào cuối trang (trước thẻ đóng </body>) -->
+                        <script>
+                            const phoneInput = document.getElementById('phone-input');
+                            phoneInput.addEventListener('input', function (e) {
+                                // Chỉ giữ lại các ký tự số, tự động xóa bỏ chữ hoặc ký tự đặc biệt nếu người dùng paste hoặc nhập vào
+                                this.value = this.value.replace(/[^0-9]/g, '');
+                            });
+                        </script>
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-gray-700">Email</label>
+                            <input type="email" placeholder="Nhập email"
+                                class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Loại khách hàng & Khu vực -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-gray-700">Loại khách hàng</label>
+                            <div class="relative">
+                                <select
+                                    class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm bg-white appearance-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
+                                    <option value="" disabled selected>Chọn loại khách hàng</option>
+                                    <option value="retail">Khách lẻ / Hộ gia đình</option>
+                                    <option value="project">Đại biểu / Dự án / Thầu xây dựng</option>
+                                    <option value="partner">Đối tác phân phối</option>
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-gray-700">Khu vực</label>
+                            <div class="relative">
+                                <select required
+                                    class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm bg-white appearance-none focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
+                                    <option value="" disabled selected>Chọn tỉnh / thành phố</option>
+                                    <option value="an-giang">An Giang</option>
+                                    <option value="ba-ria-vung-tau">Bà Rịa - Vũng Tàu</option>
+                                    <option value="bac-giang">Bắc Giang</option>
+                                    <option value="bac-kan">Bắc Kạn</option>
+                                    <option value="bac-lieu">Bạc Liêu</option>
+                                    <option value="bac-ninh">Bắc Ninh</option>
+                                    <option value="ben-tre">Bến Tre</option>
+                                    <option value="binh-dinh">Bình Định</option>
+                                    <option value="binh-duong">Bình Dương</option>
+                                    <option value="binh-phuoc">Bình Phước</option>
+                                    <option value="binh-thuan">Bình Thuận</option>
+                                    <option value="ca-mau">Cà Mau</option>
+                                    <option value="can-tho">Cần Thơ</option>
+                                    <option value="cao-bang">Cao Bằng</option>
+                                    <option value="da-nang">Đà Nẵng</option>
+                                    <option value="dak-lak">Đắk Lắk</option>
+                                    <option value="dak-nong">Đắk Nông</option>
+                                    <option value="dien-bien">Điện Biên</option>
+                                    <option value="dong-nai">Đồng Nai</option>
+                                    <option value="dong-thap">Đồng Tháp</option>
+                                    <option value="gia-lai">Gia Lai</option>
+                                    <option value="ha-giang">Hà Giang</option>
+                                    <option value="ha-nam">Hà Nam</option>
+                                    <option value="ha-noi">Hà Nội</option>
+                                    <option value="ha-tinh">Hà Tĩnh</option>
+                                    <option value="hai-duong">Hải Dương</option>
+                                    <option value="hai-phong">Hải Phòng</option>
+                                    <option value="hau-giang">Hậu Giang</option>
+                                    <option value="hoa-binh">Hòa Bình</option>
+                                    <option value="hung-yen">Hưng Yên</option>
+                                    <option value="khanh-hoa">Khánh Hòa</option>
+                                    <option value="kien-giang">Kiên Giang</option>
+                                    <option value="kon-tum">Kon Tum</option>
+                                    <option value="lai-chau">Lai Châu</option>
+                                    <option value="lam-dong">Lâm Đồng</option>
+                                    <option value="lang-son">Lạng Sơn</option>
+                                    <option value="lao-cai">Lào Cai</option>
+                                    <option value="long-an">Long An</option>
+                                    <option value="nam-dinh">Nam Định</option>
+                                    <option value="nghe-an">Nghệ An</option>
+                                    <option value="ninh-binh">Ninh Bình</option>
+                                    <option value="ninh-thuan">Ninh Thuận</option>
+                                    <option value="phu-tho">Phú Thọ</option>
+                                    <option value="phu-yen">Phú Yên</option>
+                                    <option value="quang-binh">Quảng Bình</option>
+                                    <option value="quang-nam">Quảng Nam</option>
+                                    <option value="quang-ngai">Quảng Ngãi</option>
+                                    <option value="quang-ninh">Quảng Ninh</option>
+                                    <option value="quang-tri">Quảng Trị</option>
+                                    <option value="soc-trang">Sóc Trăng</option>
+                                    <option value="son-la">Sơn La</option>
+                                    <option value="tay-ninh">Tây Ninh</option>
+                                    <option value="thai-binh">Thái Bình</option>
+                                    <option value="thai-nguyen">Thái Nguyên</option>
+                                    <option value="thanh-hoa">Thanh Hóa</option>
+                                    <option value="thua-thien-hue">Thừa Thiên Huế</option>
+                                    <option value="tien-giang">Tiền Giang</option>
+                                    <option value="tp-hcm">Hồ Chí Minh</option>
+                                    <option value="tra-vinh">Trà Vinh</option>
+                                    <option value="tuyen-quang">Tuyên Quang</option>
+                                    <option value="vinh-long">Vĩnh Long</option>
+                                    <option value="vinh-phuc">Vĩnh Phúc</option>
+                                    <option value="yen-bai">Yên Bái</option>
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nhu cầu tư vấn (Checkbox grid với thuộc tính bắt buộc chọn ít nhất 1) -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-gray-700">Nhu cầu tư vấn <span
+                                class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-1" id="needs-group">
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
+                                <input type="checkbox" name="needs" value="nha-o"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Chiếu sáng nhà ở</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
+                                <input type="checkbox" name="needs" value="van-phong"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Chiếu sáng văn phòng</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
+                                <input type="checkbox" name="needs" value="nha-xuong"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Chiếu sáng nhà xưởng</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
+                                <input type="checkbox" name="needs" value="cua-hang"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Chiếu sáng cửa hàng</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
+                                <input type="checkbox" name="needs" value="cong-cong"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Chiếu sáng công cộng</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
+                                <input type="checkbox" name="needs" value="du-an"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Dự án / Công trình</span>
+                            </label>
+                            <label class="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer col-span-2">
+                                <input type="checkbox" id="other-checkbox" name="needs" value="khac"
+                                    class="needs-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <span>Nhu cầu khác</span>
+                            </label>
+                        </div>
+
+                        <!-- Ô nhập hiện ra khi tích chọn "Nhu cầu khác" -->
+                        <div id="other-input-container" class="hidden pt-1">
+                            <input type="text" id="other-text-input" placeholder="Vui lòng nhập nhu cầu khác của bạn..."
+                                class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
+                        </div>
+                    </div>
+
+                    <!-- Script xử lý bật/tắt ô "Nhu cầu khác" và ràng buộc bắt buộc chọn ít nhất 1 checkbox -->
+                    <script>
+                        const otherCheckbox = document.getElementById('other-checkbox');
+                        const otherContainer = document.getElementById('other-input-container');
+                        const otherTextInput = document.getElementById('other-text-input');
+                        const checkboxes = document.querySelectorAll('.needs-checkbox');
+                        const form = document.querySelector('form'); // Giả định form của bạn dùng thẻ <form>
+
+                        // 1. Xử lý hiển thị/ẩn ô nhập "Nhu cầu khác"
+                        otherCheckbox.addEventListener('change', function () {
+                            if (this.checked) {
+                                otherContainer.classList.remove('hidden');
+                                otherTextInput.setAttribute('required', 'true');
+                                otherTextInput.focus();
+                            } else {
+                                otherContainer.classList.add('hidden');
+                                otherTextInput.removeAttribute('required');
+                                otherTextInput.value = '';
+                            }
+                        });
+
+                        // 2. Ràng buộc bắt buộc chọn ít nhất 1 checkbox trước khi submit form
+                        if (form) {
+                            form.addEventListener('submit', function (e) {
+                                const isChecked = Array.from(checkboxes).some(cb => cb.checked);
+                                if (!isChecked) {
+                                    e.preventDefault();
+                                    alert('Vui lòng chọn ít nhất một nhu cầu tư vấn!');
+                                    // Cuộn màn hình tới phần checkbox để người dùng dễ nhìn thấy
+                                    document.getElementById('needs-group').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                            });
+                        }
+                    </script>
+
+                    <!-- Nội dung yêu cầu -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-semibold text-gray-700">Nội dung yêu cầu <span
+                                class="text-red-500">*</span></label>
+                        <textarea rows="4"
+                            placeholder="Mô tả chi tiết nhu cầu, diện tích, loại công trình, phong cách mong muốn..."
+                            class="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition resize-none"></textarea>
+                    </div>
+
+                    <!-- Tải lên bản vẽ / hình ảnh (Đã nâng giới hạn lên 300MB) -->
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-semibold text-gray-700">Tải lên bản vẽ / hình ảnh (nếu
+                            có)</label>
+
+                        <div id="drop-zone"
+                            class="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-blue-500 transition cursor-pointer bg-gray-50/50 relative">
+                            <input type="file" id="file-input" name="drawing_file"
+                                accept=".jpg, .jpeg, .png, .pdf, .dwg"
+                                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10">
+
+                            <div class="flex flex-col items-center space-y-2 pointer-events-none">
+                                <div class="text-blue-600 text-xl">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+                                <p id="file-label-text" class="text-xs text-gray-600">Kéo thả file hoặc <span
+                                        class="text-blue-600 font-medium underline">chọn file</span></p>
+                                <!-- Đã sửa dòng này thành Tối đa 300MB -->
+                                <p class="text-[10px] text-gray-400">Định dạng: JPG, PNG, PDF, DWG (Tối đa 300MB)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đoạn script xử lý -->
+                    <script>
+                        const fileInput = document.getElementById('file-input');
+                        const fileLabelText = document.getElementById('file-label-text');
+                        const dropZone = document.getElementById('drop-zone');
+
+                        fileInput.addEventListener('change', function (e) {
+                            handleFiles(e.target.files);
+                        });
+
+                        ['dragenter', 'dragover'].forEach(eventName => {
+                            dropZone.addEventListener(eventName, (e) => {
+                                e.preventDefault();
+                                dropZone.classList.add('border-blue-500', 'bg-blue-50/20');
+                            }, false);
+                        });
+
+                        ['dragleave', 'drop'].forEach(eventName => {
+                            dropZone.addEventListener(eventName, (e) => {
+                                e.preventDefault();
+                                dropZone.classList.remove('border-blue-500', 'bg-blue-50/20');
+                            }, false);
+                        });
+
+                        dropZone.addEventListener('drop', (e) => {
+                            const dt = e.dataTransfer;
+                            const files = dt.files;
+                            fileInput.files = files;
+                            handleFiles(files);
+                        });
+
+                        function handleFiles(files) {
+                            if (files.length > 0) {
+                                const file = files[0];
+                                const fileSizeMB = file.size / (1024 * 1024);
+
+                                // Đã đổi hạn mức kiểm tra từ 10MB thành 300MB
+                                if (fileSizeMB > 300) {
+                                    alert('File vượt quá dung lượng cho phép (Tối đa 300MB). Vui lòng chọn file khác!');
+                                    fileInput.value = '';
+                                    fileLabelText.innerHTML = `Kéo thả file hoặc <span class="text-blue-600 font-medium underline">chọn file</span>`;
+                                    return;
+                                }
+
+                                fileLabelText.innerHTML = `<span class="text-green-600 font-semibold"><i class="fa-solid fa-file-arrow-up mr-1"></i> Đã chọn: ${file.name} (${fileSizeMB.toFixed(2)} MB)</span>`;
+                            }
+                        }
+                    </script>
+
+                    <!-- Đồng ý chính sách bảo mật -->
+                    <div class="flex items-start space-x-2 pt-1">
+                        <input type="checkbox" id="privacy"
+                            class="mt-0.5 w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500" required>
+                        <label for="privacy" class="text-xs text-gray-600">
+                            Tôi đồng ý với <a href="#" class="text-blue-600 hover:underline">Chính sách bảo mật</a> và
+                            cho phép LTC Lighting liên hệ tư vấn.
+                        </label>
+                    </div>
+
+                    <!-- Button Submit -->
+                    <button type="submit"
+                        class="w-full py-3.5 bg-[#003399] hover:bg-blue-800 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center space-x-2 text-sm tracking-wide">
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                        <span>GỬI YÊU CẦU TƯ VẤN</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right 1 Col: Sidebar Info -->
+            <div class="space-y-6">
+
+                <!-- Box 1: Vì sao chọn tư vấn cùng LTC Lighting -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-5">
+                    <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wide border-b border-gray-100 pb-3">
+                        Vì sao chọn tư vấn cùng LTC Lighting?
+                    </h3>
+
+                    <div class="space-y-4">
+                        <!-- Item A -->
+                        <div class="flex items-start space-x-3.5">
+                            <div
+                                class="w-9 h-9 rounded-xl bg-blue-50 flex-shrink-0 flex items-center justify-center text-[#003399]">
+                                <i class="fa-solid fa-lightbulb text-sm"></i>
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-gray-900">Giải pháp tối ưu</h4>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">Đề xuất giải pháp chiếu sáng phù
+                                    hợp với nhu cầu và ngân sách.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item B -->
+                        <div class="flex items-start space-x-3.5">
+                            <div
+                                class="w-9 h-9 rounded-xl bg-blue-50 flex-shrink-0 flex items-center justify-center text-[#003399]">
+                                <i class="fa-solid fa-shield-halved text-sm"></i>
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-gray-900">Sản phẩm chính hãng</h4>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">100% sản phẩm chính hãng, chất
+                                    lượng đảm bảo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item C -->
+                        <div class="flex items-start space-x-3.5">
+                            <div
+                                class="w-9 h-9 rounded-xl bg-blue-50 flex-shrink-0 flex items-center justify-center text-[#003399]">
+                                <i class="fa-solid fa-bolt text-sm"></i>
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-gray-900">Tiết kiệm năng lượng</h4>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">Giải pháp giúp tiết kiệm điện năng
+                                    lên đến 80%.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item D -->
+                        <div class="flex items-start space-x-3.5">
+                            <div
+                                class="w-9 h-9 rounded-xl bg-blue-50 flex-shrink-0 flex items-center justify-center text-[#003399]">
+                                <i class="fa-solid fa-headset text-sm"></i>
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-gray-900">Hỗ trợ tận tâm</h4>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">Đội ngũ chuyên viên giàu kinh
+                                    nghiệm, hỗ trợ tận tâm 24/7.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item E -->
+                        <div class="flex items-start space-x-3.5">
+                            <div
+                                class="w-9 h-9 rounded-xl bg-blue-50 flex-shrink-0 flex items-center justify-center text-[#003399]">
+                                <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
+                            </div>
+                            <div class="space-y-0.5">
+                                <h4 class="text-xs font-bold text-gray-900">Báo giá nhanh chóng</h4>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">Nhận báo giá chi tiết và cạnh tranh
+                                    trong thời gian ngắn nhất.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box 2: Cần tư vấn ngay? -->
+                <div class="bg-blue-50/50 rounded-2xl p-6 shadow-sm border border-blue-100 space-y-4">
+                    <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wide">
+                        Cần tư vấn ngay?
+                    </h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Liên hệ trực tiếp với chúng tôi để được hỗ trợ nhanh chóng!
+                    </p>
+
+                    <div class="space-y-2 text-xs text-gray-700">
+                        <div class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-phone-volume text-blue-600 mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-gray-900">Hotline: 1900 1234</span>
+                                <div class="text-[10px] text-gray-500">(8:00 - 22:00, T2 - CN)</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-regular fa-envelope text-blue-600"></i>
+                            <span>Email: hotro@ltc-lighting.vn</span>
+                        </div>
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-solid fa-comments text-blue-600"></i>
+                            <span>Chat trực tuyến: <a href="#" class="text-blue-600 font-medium hover:underline">Hỗ trợ
+                                    ngay</a></span>
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full py-3 bg-white hover:bg-blue-600 hover:text-white text-blue-700 font-bold rounded-xl border border-blue-200 shadow-xs transition flex items-center justify-center space-x-2 text-xs tracking-wide">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span>CHAT VỚI CHÚNG TÔI</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Section: Quy trình tư vấn tại LTC Lighting -->
+        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 space-y-6">
+            <h3 class="text-center text-sm md:text-base font-bold text-gray-900 uppercase tracking-wider">
+                Quy trình tư vấn tại LTC Lighting
+            </h3>
+
+            <!-- Steps Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative pt-2">
+
+                <!-- Step 1 -->
+
+                
+<div class="quytrinh bg-white rounded-xl p-5 pt-7 border border-gray-100 shadow-sm relative flex items-center space-x-4 hover:shadow-md transition">
+    <!-- Số thứ tự -->
+    <div class="absolute -top-3 left-4 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-sm z-10">
+        1
+    </div>
+    
+    <!-- Icon nằm bên trái -->
+                    <div class="flex justify-center pt-2 text-blue-600 text-2xl">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+    
+    <!-- Phần text nằm bên phải icon -->
+    <div class="flex-grow space-y-1 text-left">
+        <h4 class="text-xs font-bold text-gray-900">Tiếp nhận yêu cầu</h4>
+        <p class="text-[11px] text-gray-500 leading-tight">Tiếp nhận thông tin và nhu cầu từ khách hàng</p>
+    </div>
+
+    <!-- Mũi tên và nét gạch nối giữa các bước -->
+    <div class="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 items-center space-x-1 text-blue-400 z-20">
+        <span class="text-xs font-bold tracking-tighter">---</span>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+    </div>
+</div>
+
+
+                <!-- Step 2 -->
+                <div class="quytrinh bg-white rounded-xl p-5 pt-6 border border-gray-100 shadow-sm relative flex items-center space-x-4 hover:shadow-md transition">
+            <div class="absolute -top-3 left-4 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-sm z-10">
+                2
+            </div>
+                    <div class="flex justify-center pt-2 text-blue-600 text-2xl">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+            <div class="flex-grow space-y-1 text-left">
+                <h4 class="text-xs font-bold text-gray-900">Tư vấn giải pháp</h4>
+                <p class="text-[11px] text-gray-500 leading-tight">Đội ngũ chuyên viên tư vấn giải pháp phù hợp</p>
+            </div>
+            <div class="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 items-center space-x-1 text-blue-400 z-20">
+                <span class="text-xs font-bold tracking-tighter">---</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </div>
+        </div>
+
+                <!-- Step 3 -->
+
+
+<div class="quytrinh bg-white rounded-xl p-5 pt-6 border border-gray-100 shadow-sm relative flex items-center space-x-4 hover:shadow-md transition">
+            <div class="absolute -top-3 left-4 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-sm z-10">
+                3
+            </div>
+                    <div class="flex justify-center pt-2 text-blue-600 text-2xl">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+            <div class="flex-grow space-y-1 text-left">
+                <h4 class="text-xs font-bold text-gray-900">Báo giá chi tiết</h4>
+                <p class="text-[11px] text-gray-500 leading-tight">Gửi báo giá chi tiết và phương án thực hiện</p>
+            </div>
+            <div class="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 items-center space-x-1 text-blue-400 z-20">
+                <span class="text-xs font-bold tracking-tighter">---</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </div>
+        </div>
+
+                <!-- Step 4 -->
+
+
+<div class="quytrinh bg-white rounded-xl p-5 pt-6 border border-gray-100 shadow-sm relative flex items-center space-x-4 hover:shadow-md transition">
+            <div class="absolute -top-3 left-4 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-sm z-10">
+                4
+            </div>
+                    <div class="flex justify-center pt-2 text-blue-600 text-2xl">
+                        <i class="fa-solid fa-file-contract"></i>
+                    </div>
+            <div class="flex-grow space-y-1 text-left">
+                <h4 class="text-xs font-bold text-gray-900">Triển khai dự án</h4>
+                <p class="text-[11px] text-gray-500 leading-tight">Ký kết hợp đồng và triển khai dự án nhanh</p>
+            </div>
+            <div class="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 items-center space-x-1 text-blue-400 z-20">
+                <span class="text-xs font-bold tracking-tighter">---</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </div>
+        </div>
+
+                <!-- Step 5 -->
+
+
+                <div class="quytrinh bg-white rounded-xl p-5 pt-6 border border-gray-100 shadow-sm relative flex items-center space-x-4 hover:shadow-md transition">
+            <div class="absolute -top-3 left-4 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-sm z-10">
+                5
+            </div>
+                    <div
+                        class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-lg mt-1">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+            <div class="flex-grow space-y-1 text-left">
+                <h4 class="text-xs font-bold text-gray-900">Bảo hành & hỗ trợ</h4>
+                <p class="text-[11px] text-gray-500 leading-tight">Bảo hành chính hãng và hỗ trợ lâu dài</p>
+            </div>
+        </div>
+<style>
+.quytrinh {
+    margin: 3%;
+}
+.quytrinh div:first-child {
+    margin-left: -6%;
+    margin-top: 8%;
+}
+</style>
+            </div>
+        </div>
+
+        <!-- Footer Services Bar -->
+        <div
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="flex items-center space-x-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#003399] text-xl flex-shrink-0">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-gray-900">Miễn phí vận chuyển</h4>
+                    <p class="text-[11px] text-gray-500">Cho đơn hàng từ 1.000.000₫</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#003399] text-xl flex-shrink-0">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-gray-900">Bảo hành chính hãng</h4>
+                    <p class="text-[11px] text-gray-500">Lên đến 3 năm</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#003399] text-xl flex-shrink-0">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-gray-900">Đổi trả dễ dàng</h4>
+                    <p class="text-[11px] text-gray-500">Trong vòng 7 ngày</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#003399] text-xl flex-shrink-0">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-gray-900">Hỗ trợ kỹ thuật 24/7</h4>
+                    <p class="text-[11px] text-gray-500">Tư vấn và giải đáp nhanh chóng</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-300 pt-12 pb-8 border-t border-slate-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Đã thu hẹp khoảng cách dưới (mb-8) để đường kẻ ngang gần với các cột hơn -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-8 lg:gap-y-0 mb-8">
+
+                <!-- Col 1: Logo & Info -->
+                <div class="lg:pr-6 lg:border-r lg:border-slate-800">
+                    <div class="text-white font-black text-2xl tracking-tighter">
+                        LTC
+                        <div class="text-[9px] tracking-normal text-slate-400 uppercase font-semibold">Lighting The
+                            Future
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm mt-3">
+                        LTC Việt Nam là thương hiệu hàng đầu trong lĩnh vực cung cấp các giải pháp chiếu sáng LED hiện
+                        đại,
+                        tiết kiệm năng lượng và thân thiện với môi trường.
+                    </p>
+                    <div class="flex space-x-3 pt-4">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                                class="fa-brands fa-facebook-f text-xs"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                                class="fa-brands fa-youtube text-xs"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                                class="fa-brands fa-linkedin-in text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Company -->
+                <div class="lg:px-6 lg:border-r lg:border-slate-800">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">THÔNG TIN CÔNG TY</h4>
+                    <div class="text-white font-bold text-xs mb-3">CÔNG TY TNHH LTC VIỆT NAM</div>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot mt-0.5 text-blue-500"></i>
+                            Số
+                            123, Đường ABC, P. Cầu Giấy, Q. Nam Từ Liêm, Hà Nội</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-500"></i> 024 3 123
+                            4567
+                        </li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-500"></i>
+                            info@ltc-lighting.vn</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-globe text-blue-500"></i>
+                            www.ltc-lighting.vn</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-file-invoice text-blue-500"></i> MST:
+                            0101234567</li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Customer Care (Đã bổ sung lớp border-b và pb để tạo đường kẻ ngang giữa các mục) -->
+                <div class="lg:px-6 lg:border-r lg:border-slate-800">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">CHĂM SÓC KHÁCH HÀNG</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li class="pb-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Hướng dẫn mua hàng</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách thanh toán</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách vận chuyển</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách đổi trả</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách bảo hành</a></li>
+                        <li class="pt-2"><a href="#" class="hover:text-white transition block">Điều khoản sử dụng</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Support info -->
+                <div class="lg:px-6 lg:border-r lg:border-slate-800">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">HỖ TRỢ KHÁCH HÀNG</h4>
+                    <div class="space-y-4 text-xs text-slate-400">
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-headset text-blue-500 text-base mt-0.5"></i>
+                            <div>
+                                <div class="text-white font-bold">1900 1234</div>
+                                <div class="text-[10px]">(8h00 – 21h00, T2 – CN)</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-envelope text-blue-500 text-base mt-0.5"></i>
+                            <div>
+                                <div class="text-white font-bold">Email hỗ trợ</div>
+                                <div class="text-[10px]">hotro@ltc-lighting.vn</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-tools text-blue-500 text-base mt-0.5"></i>
+                            <div>
+                                <div class="text-white font-bold">Hỗ trợ kỹ thuật</div>
+                                <div class="text-[10px]">technical@ltc-lighting.vn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 5: Newsletter -->
+                <div class="lg:pl-6">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-2">ĐĂNG KÝ NHẬN TIN</h4>
+                    <p class="text-xs text-slate-400 mb-3">Nhận thông tin sản phẩm mới, ưu đãi và tin tức từ LTC.</p>
+                    <form class="space-y-2.5" onsubmit="event.preventDefault();">
+                        <div class="relative">
+                            <input type="email" placeholder="Nhập email của bạn"
+                                class="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg px-3 py-2.5 pr-8 text-white focus:outline-none focus:border-blue-500">
+                            <button type="submit" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-white">
+                                <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                            </button>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-lg transition">ĐĂNG
+                            KÝ</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Phần bản quyền và thẻ thanh toán -->
+        <div
+            class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+            <div>© 2026 LTC Việt Nam. All rights reserved.</div>
+            <div class="flex space-x-2 mt-4 sm:mt-0 items-center">
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-visa text-blue-700 text-lg"></i>
+                </div>
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-mastercard text-red-600 text-lg"></i>
+                </div>
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <span class="text-[10px] font-extrabold text-pink-700 tracking-tighter">MOMO</span>
+                </div>
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <span class="text-[10px] font-extrabold text-teal-600 tracking-tighter">ZaloPay</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .py-2 {
+            padding-top: 0
+        }
+
+        .mb-8 {
+            margin-bottom: 1rem
+        }
+    </style>
+
+
+</body>
+
+</html>

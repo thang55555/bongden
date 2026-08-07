@@ -1,0 +1,113 @@
+<%- include("./layouts/head.ejs")%>
+
+<title><%= menudanhmuc.title || menudanhmuc.tendanhmuc %></title>
+<meta name="description" content="<%=menudanhmuc.metadescription%>">
+<meta name="keywords" content="<%=menudanhmuc.metakeywords%>">
+
+<%- include("./layouts/header.ejs")%>
+
+        <!-- main -->
+        <div class="container" >
+
+            <ul class="breadcrumb">
+                <li><a href="/"><span itemprop="name">TRANG CHỦ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a><span itemprop="name" style="color: #F5D182;">DỰ ÁN THIẾT KẾ</span></a>
+                    <meta content="2">
+                </li>
+                <li><a><span itemprop="name" style="color: #F5D182;"><%=menudanhmuc.tendanhmuc%></span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+        </div>
+     
+    
+    
+        <div class="content-prds__pages mb-55">
+            <div class="container">
+                <div class="tops-prds__pages">
+                    <div class="title-cicle__alls">
+                        <h2 class="title-in-cicles"><%=menudanhmuc.tendanhmuc%></h2>
+                    </div>
+                    <div >
+                        <%-menudanhmuc.content%>
+                    </div>
+                    <div class="titles-tag__prds">
+                        <p class="titles-prds__pages">Tất cả dự án</p>
+                        <div class="tag-prds__pages">
+                            <p>Bộ lọc</p>
+                            <ul>
+                                <%for(item of nhomsp){%>
+                                <li ><a href="/category-item/<%=item.slug%>/<%=item._id%>" title="<%=item.tennhomsanpham%>"><%=item.tennhomsanpham%></a></li>
+                                    <%}%>
+                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-prds__alls">
+                    <div class="row">
+                        <% for(item of product){%>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                            <div class="items-prds__alls">
+                                <div class="imgs-prds__alls">
+                                     <a href="/product/<%=item.slug%>/<%=item._id%>"
+                                        class="d-block img">
+                                        <picture><img loading="lazy" src="https://phongthodep.net/static/site/images/update/<%=item.image[0].images%>"
+                                                    onerror="this.onerror=null;this.src='https://phongthodep.net/images/<%=item.image[0].images%>';"
+                                                class="img-fluid ls-is-cached lazyloaded" alt="<%=item.image[0].images%>">
+                                        </picture>
+                                    </a> </div>
+                                <div class="intros-prds__alls">
+                                    <p><a href="/product/<%=item.slug%>/<%=item._id%>"
+                                            class="title-prds__alls"> <%=item.tieudesp%></a></p>
+                                    <ul class="infos-prds__items">
+                                        <li><img src="./images/prds-icons-1.png" alt="Chủ đầu tư"> Chủ đầu
+                                            tư: <%=item.chudautu%></li>
+                                        <li><img src="./images/prds-icons-2.png" alt="Địa chỉ"> Địa chỉ:
+                                            <%=item.diachi%></li>
+                                        <li><img src="./images/prds-icons-3.png" alt="Diện tích"> Thông số: <%=item.dientich%></li>
+                                        <li><img src="./images/prds-icons-4.png" alt="Kinh phí dự trù">
+                                            Kinh phí dự trù: <%=item.kinhphi%></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <% if(hasPrev){%>
+                            <li class="page-item"><a class="page-link"
+                                    href="/category-menu/<%=slug%>/<%=id%>?page=<%=prev%>">&laquo;</a></li>
+                            <% }%>
+                                <% for(i of pages){%>
+                                    <% if(i==="..." ){%>
+                                        <li class="page-item"><span class="page-link" <%=i%></span>
+                                        </li>
+                                        <% }else{%>
+                                            <li class="page-item <%= i === page ? 'active' : '' %>"><a class="page-link"
+                                                    href="/category-menu/<%=slug%>/<%=id%>?page=<%=i%>">
+                                                    <%=i%>
+                                                </a></li>
+                                            <%}%>
+                                                <% }%>
+                                                    <% if(hasNext){%>
+                                                        <li class="page-item"><a class="page-link"
+                                                                href="/category-menu/<%=slug%>/<%=id%>?page=<%=next%>">&raquo;</a>
+                                                        </li>
+                                                        <% }%>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- end main -->
+
+
+
+
+    </div>
+    <%- include("./layouts/footer.ejs")%>

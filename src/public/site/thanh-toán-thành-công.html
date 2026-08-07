@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTC - Giải pháp chiếu sáng LED hiện đại, tiết kiệm và bền bỉ</title>
+    <meta name="description"
+        content="Chuyên cung cấp các giải pháp chiếu sáng LED hiện đại, tiết kiệm năng lượng và thân thiện với môi trường từ thương hiệu LTC.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome cho Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0052cc',
+                            darkBlue: '#003399',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-100 text-xs text-slate-600 py-2 border-b border-slate-200 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex space-x-6">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-truck text-blue-600"></i> Miễn phí vận
+                    chuyển cho đơn hàng từ 1.000.000đ</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-blue-600"></i> Bảo hành
+                    chính hãng lên đến 3 năm</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-blue-600"></i> Tiết kiệm điện
+                    năng lên đến 80%</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-blue-600 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i>
+                    Hệ thống cửa hàng</a>
+                <a href="#" class="hover:text-blue-600 flex items-center gap-1"><i
+                        class="fa-solid fa-file-arrow-down"></i> Tài liệu tải về</a>
+                <a href="tel:19001234" class="font-bold text-slate-900 hover:text-blue-600 flex items-center gap-1"><i
+                        class="fa-solid fa-headset text-blue-600"></i> Hotline: <span class="text-blue-600">1900
+                        1234</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+            <!-- Left: Mobile Menu Button & Logo -->
+            <div class="flex items-center gap-3">
+                <!-- Nút Hamburger cho Mobile có tích hợp đổi thành dấu X -->
+                <button id="mobile-menu-button"
+                    class="lg:hidden text-slate-700 hover:text-blue-600 focus:outline-none p-1 w-8 h-8 flex items-center justify-center">
+                    <i id="menu-icon" class="fa-solid fa-bars text-xl transition-transform duration-300"></i>
+                </button>
+
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <div class="text-blue-600 font-black text-2xl tracking-tighter leading-none">
+                        <span class="text-3xl">LTC</span>
+                        <div class="text-[9px] tracking-normal text-slate-500 uppercase font-semibold">Lighting The
+                            Future</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-700">
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-600 transition">TRANG CHỦ</a>
+                <a href="#" class="hover:text-blue-600 transition">GIỚI THIỆU</a>
+                <div class="relative group">
+                    <button class="flex items-center gap-1 hover:text-blue-600 transition">
+                        SẢN PHẨM <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <!-- Mega Menu Dropdown -->
+                    <div
+                        class="absolute top-full left-0 w-[650px] bg-white shadow-xl rounded-xl border border-slate-100 hidden group-hover:grid grid-cols-2 p-6 gap-4 transition-all">
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-lightbulb text-lg text-blue-600 w-6"></i> Bóng đèn LED dân dụng
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Bulb
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-industry text-lg text-blue-600 w-6"></i> Bóng đèn LED công nghiệp
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Tuýp
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-sun text-lg text-blue-600 w-6"></i> Đèn LED chiếu sáng
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Downlight
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-palette text-lg text-blue-600 w-6"></i> Đèn LED trang trí
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Ốp trần
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition col-span-2 border-t pt-3">
+                            <span class="text-blue-600 font-bold text-center w-full">Xem tất cả sản phẩm <i
+                                    class="fa-solid fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+                <a href="#" class="hover:text-blue-600 transition">DỰ ÁN</a>
+                <a href="#" class="hover:text-blue-600 transition">TIN HỖ TRỢ</a>
+                <a href="#" class="hover:text-blue-600 transition">LIÊN HỆ</a>
+            </nav>
+
+            <!-- Search & Cart -->
+            <div class="flex items-center space-x-3">
+                <div class="relative hidden sm:block w-48 md:w-64">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                        class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </button>
+                </div>
+                <a href="#" class="relative p-2 text-slate-700 hover:text-blue-600 transition">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span
+                        class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">1</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu (Chạm để hiện danh mục sản phẩm giống desktop) -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-3 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="relative sm:hidden mb-3">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                    class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </button>
+            </div>
+
+            <a href="#" class="block text-blue-600 font-semibold py-2 border-b border-slate-100">TRANG CHỦ</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">GIỚI THIỆU</a>
+
+            <!-- Nhóm Sản Phẩm trên Mobile (Bấm vào để mở/đóng danh mục) -->
+            <div class="border-b border-slate-100">
+                <button id="mobile-product-toggle"
+                    class="w-full flex items-center justify-between py-3 font-semibold text-slate-800 focus:outline-none">
+                    <span>SẢN PHẨM</span>
+                    <i id="product-chevron"
+                        class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                </button>
+                <!-- Danh mục con (Ẩn mặc định, hiện khi click) -->
+                <div id="mobile-product-dropdown"
+                    class="hidden pl-3 pb-3 space-y-2 text-sm text-slate-600 grid grid-cols-1">
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-lightbulb text-blue-600 w-5"></i> Bóng đèn LED dân dụng</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Bulb</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-industry text-blue-600 w-5"></i> Bóng đèn LED công nghiệp</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Tuýp</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-sun text-blue-600 w-5"></i> Đèn LED chiếu sáng</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Downlight</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-palette text-blue-600 w-5"></i> Đèn LED trang trí</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Ốp trần</a>
+                    <a href="#" class="text-blue-600 font-semibold py-2 mt-1 block border-t border-slate-100">Xem tất cả
+                        sản phẩm <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">DỰ ÁN</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">TIN HỖ TRỢ</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2">LIÊN HỆ</a>
+        </div>
+
+        <!-- JavaScript cập nhật bổ sung sự kiện bấm mở danh mục sản phẩm trên mobile -->
+        <script>
+            // Xử lý mở/đóng danh mục Sản phẩm trên mobile
+            const mobileProductToggle = document.getElementById('mobile-product-toggle');
+            const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
+            const productChevron = document.getElementById('product-chevron');
+
+            mobileProductToggle.addEventListener('click', () => {
+                mobileProductDropdown.classList.toggle('hidden');
+                productChevron.classList.toggle('rotate-180');
+            });
+        </script>
+    </header>
+
+    <!-- JavaScript xử lý Menu Mobile (Đổi icon 3 gạch thành dấu X) và Slider -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+    </script>
+
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Breadcrumb -->
+        <nav class="text-xs sm:text-sm text-slate-500 flex items-center space-x-2">
+            <a href="#" class="hover:text-blue-600 transition">Trang chủ</a>
+            <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            <span class="text-slate-800 font-medium">Đặt hàng</span>
+        </nav>
+
+        <!-- Main Card: Đặt hàng thành công & Hỗ trợ -->
+        <div
+            class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+            <!-- Phần trái: Thông báo thành công (chiếm 7 phần) -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6">
+                    <!-- Vòng tròn icon check kèm các chi tiết trang trí -->
+                    <div class="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center flex-shrink-0">
+                        <div class="absolute top-1 left-2 w-2 h-2 rounded-full bg-emerald-400"></div>
+                        <div class="absolute top-4 right-2 w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                        <div class="absolute bottom-4 left-1 w-2 h-2 rounded-full bg-blue-400"></div>
+                        <div class="absolute bottom-1 right-6 w-2 h-2 rounded-full bg-indigo-400"></div>
+                        <div class="absolute top-1/2 left-0 w-1.5 h-1.5 rounded-full bg-teal-400"></div>
+
+                        <!-- Vòng tròn nền xanh lá -->
+                        <div
+                            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-emerald-500/10 flex items-center justify-center relative">
+                            <div
+                                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30">
+                                <i class="fa-solid fa-check text-2xl sm:text-3xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">ĐẶT HÀNG THÀNH
+                            CÔNG!</h1>
+                        <p class="text-xs sm:text-sm text-slate-600">
+                            Cảm ơn bạn đã tin tưởng và mua hàng tại <span class="font-semibold text-slate-900">LTC
+                                Lighting</span>.<br>
+                            Đơn hàng của bạn đã được tiếp nhận và đang được xử lý.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mã đơn hàng box -->
+                <div
+                    class="bg-emerald-50/50 rounded-2xl p-4 border border-emerald-100/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-0.5">
+                        <p class="text-[11px] text-slate-500 font-medium">Mã đơn hàng</p>
+                        <div class="flex items-center space-x-2">
+                            <!-- Thêm id="order-code" để lấy dữ liệu -->
+                            <span id="order-code"
+                                class="text-sm sm:text-base font-bold text-emerald-700 tracking-wide">LTC240518-000123</span>
+
+                            <!-- Viết trực tiếp JS vào onclick -->
+                            <button onclick="
+                const btn = this;
+                const icon = btn.querySelector('i');
+                navigator.clipboard.writeText(document.getElementById('order-code').innerText);
+                
+                // Đổi sang icon check
+                icon.className = 'fa-solid fa-check text-sm text-green-600';
+                
+                // Trả lại icon cũ sau 2 giây
+                setTimeout(() => {
+                    icon.className = 'fa-regular fa-copy text-sm';
+                }, 2000);
+            " class="text-blue-600 hover:text-blue-700 transition" title="Sao chép">
+                                <i class="fa-regular fa-copy text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông báo email và số điện thoại -->
+                <p class="text-xs text-slate-500">
+                    Chúng tôi đã gửi thông tin đơn hàng đến email <span
+                        class="font-semibold text-slate-900">nguyenvana@gmail.com</span> và số điện thoại <span
+                        class="font-semibold text-slate-900">0901 234 567</span>
+                </p>
+            </div>
+
+            <!-- Phần phải: Bạn cần hỗ trợ? (chiếm 5 phần, có border trái trên màn hình lớn) -->
+            <div
+                class="lg:col-span-5 bg-slate-50/70 rounded-2xl p-6 border border-slate-100 space-y-4 lg:border-l lg:border-slate-100 lg:pl-8 lg:bg-transparent lg:border-0">
+                <div>
+                    <h3 class="text-sm font-bold text-slate-900">Bạn cần hỗ trợ?</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Đội ngũ LTC luôn sẵn sàng hỗ trợ bạn</p>
+                </div>
+
+                <div class="space-y-3 text-xs sm:text-sm text-slate-600">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-phone text-blue-600 text-sm w-4 text-center"></i>
+                        <span>Hotline: <strong class="text-slate-900">1900 1234</strong> (8:00 - 22:00, T2 - CN)</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-regular fa-envelope text-blue-600 text-sm w-4 text-center"></i>
+                        <span>Email: <strong class="text-slate-900">hotro@ltc-lighting.vn</strong></span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-regular fa-comment-dots text-blue-600 text-sm w-4 text-center"></i>
+                        <span>Chat trực tuyến: <a href="#" class="text-blue-600 font-semibold hover:underline">Hỗ trợ
+                                ngay</a></span>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <a href="#"
+                        class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center space-x-2 transition shadow-sm shadow-blue-500/20">
+                        <span>TIẾP TỤC MUA SẮM</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Chi tiết đơn hàng (Thông tin đơn hàng, Địa chỉ giao hàng, Tóm tắt đơn hàng) -->
+        <div
+            class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <div class="lg:col-span-12">
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-6">CHI TIẾT ĐƠN HÀNG</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs sm:text-sm text-slate-600">
+
+                    <!-- Cột 1: Thông tin đơn hàng -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2 text-slate-900 font-semibold mb-4">
+                            <i class="fa-solid fa-file-lines text-blue-600"></i>
+                            <span>Thông tin đơn hàng</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Ngày đặt hàng:</span>
+                            <span class="font-medium text-slate-900">18/05/2024 - 10:30</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Hình thức vận chuyển:</span>
+                            <span class="font-medium text-slate-900 text-right">Giao hàng tiêu chuẩn (1 - 3 ngày)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Hình thức thanh toán:</span>
+                            <span class="font-medium text-slate-900 text-right">Thanh toán khi nhận hàng (COD)</span>
+                        </div>
+                    </div>
+
+                    <!-- Cột 2: Địa chỉ giao hàng -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2 text-slate-900 font-semibold mb-4">
+                            <i class="fa-solid fa-location-dot text-blue-600"></i>
+                            <span>Địa chỉ giao hàng</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-900">Nguyễn Văn A - 0901 234 567</p>
+                            <p class="text-slate-600 mt-1">123 Đường Cầu Giấy, Phường Dịch Vọng, Quận Cầu Giấy, Hà Nội
+                            </p>
+                        </div>
+                        <div class="pt-1">
+                            <span class="text-slate-400">Ghi chú: </span>
+                            <span class="text-slate-600">Giao hàng giờ hành chính</span>
+                        </div>
+                    </div>
+
+                    <!-- Cột 3: Tóm tắt đơn hàng -->
+                    <div class="space-y-3 lg:border-l lg:border-slate-100 lg:pl-8">
+                        <div class="text-slate-900 font-semibold mb-4">
+                            <span>Tóm tắt đơn hàng</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Tạm tính (3 sản phẩm)</span>
+                            <span class="font-medium text-slate-900">367.000đ</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Phí vận chuyển</span>
+                            <span class="font-medium text-emerald-600">Miễn phí</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500">Giảm giá</span>
+                            <span class="font-medium text-slate-900">- 36.700đ</span>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+                            <span class="font-bold text-slate-900">TỔNG CỘNG</span>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-blue-600">330.300đ</div>
+                                <div class="text-[10px] text-slate-400">(Đã bao gồm VAT)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sản phẩm có thể bạn cần (Slider/Carousel Section) -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6 relative">
+            <h3 class="text-center text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wider">SẢN PHẨM CÓ
+                THỂ BẠN CẦN</h3>
+
+            <!-- Nút điều hướng trái -->
+            <button onclick="document.getElementById('product-slider').scrollBy({ left: -280, behavior: 'smooth' })"
+                class="absolute -left-3 sm:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition z-20">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+
+            <!-- Danh sách sản phẩm dạng Slider có thể kéo vuốt ngang -->
+            <div id="product-slider"
+                class="flex gap-4 overflow-x-auto scroll-smooth pb-4 pt-1 px-1 no-scrollbar cursor-grab active:cursor-grabbing">
+
+                <!-- Sản phẩm 1 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=300&auto=format&fit=crop&q=80"
+                                alt="Bóng LED Bulb A60 9W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Bóng LED Bulb A60 9W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                 <div class="flex items-center space-x-1 mt-1.5 text-[10px] text-amber-400">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-slate-400 ml-1">(98)   <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span></span>
+                            </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">35.500đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">32.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 2 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-15%</span>
+                            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Downlight Âm Trần 9W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Downlight Âm Trần 9W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng vàng (3000K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">100.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">85.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 3 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Tuýp T8 1.2m 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Tuýp T8 1.2m 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">69.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">62.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 4 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-20%</span>
+                            <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=300&auto=format&fit=crop&q=80"
+                                alt="Bóng LED Spotlight GU10 7W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Bóng LED Spotlight GU10 7W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng vàng (3000K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">56.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">45.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 5 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Panel 300x300 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Panel 300x300 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">160.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">145.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 5 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Panel 300x300 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Panel 300x300 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">160.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">145.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 5 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Panel 300x300 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Panel 300x300 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">160.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">145.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 5 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Panel 300x300 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Panel 300x300 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">160.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">145.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 5 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Panel 300x300 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Panel 300x300 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">160.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">145.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm 5 -->
+                <div
+                    class="min-w-[200px] sm:min-w-[220px] lg:min-w-[20%] flex-1 bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex flex-col justify-between hover:shadow-md transition group">
+                    <div class="space-y-3">
+                        <div
+                            class="w-full h-32 flex items-center justify-center bg-white rounded-xl p-2 relative overflow-hidden">
+                            <span
+                                class="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-15 shadow-sm">-10%</span>
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300&auto=format&fit=crop&q=80"
+                                alt="Đèn LED Panel 300x300 18W"
+                                class="max-h-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-900 line-clamp-1">Đèn LED Panel 300x300 18W</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Ánh sáng trắng (6500K)</p>
+                            <div class="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+                                <span><i class="fa-regular fa-eye mr-1"></i>798 lượt xem</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end justify-between mt-4 pt-2 border-t border-slate-100">
+                        <div>
+                            <span class="text-[10px] text-slate-400 line-through block">160.000đ</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-600">145.000đ</span>
+                        </div>
+                        <button
+                            class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition">
+                            <i class="fa-solid fa-cart-shopping text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Nút điều hướng phải -->
+            <button onclick="document.getElementById('product-slider').scrollBy({ left: 280, behavior: 'smooth' })"
+                class="absolute -right-3 sm:-right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition z-20">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+
+        <!-- Đoạn script hỗ trợ thao tác kéo trượt chuột trái/phải -->
+        <script>
+            const slider = document.getElementById('product-slider');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            slider.addEventListener('mouseleave', () => { isDown = false; });
+            slider.addEventListener('mouseup', () => { isDown = false; });
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        </script>
+
+        <style>
+            /* Ẩn thanh cuộn mặc định */
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            /* Ngăn chặn bôi đen văn bản khi kéo chuột */
+            #product-slider {
+                -webkit-user-select: none;
+                /* Safari */
+                -moz-user-select: none;
+                /* Firefox */
+                -ms-user-select: none;
+                /* IE/Edge */
+                user-select: none;
+                /* Standard */
+            }
+        </style>
+
+
+
+        <!-- Footer Features Bar -->
+        <div
+            class="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <!-- Item 1 -->
+            <div class="flex items-center space-x-3.5 p-2">
+                <div
+                    class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 text-lg">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-900">Miễn phí vận chuyển</h4>
+                    <p class="text-[11px] text-slate-500">Cho đơn hàng từ 1.000.000đ</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="flex items-center space-x-3.5 p-2">
+                <div
+                    class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 text-lg">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-900">Bảo hành chính hãng</h4>
+                    <p class="text-[11px] text-slate-500">Lên đến 3 năm</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="flex items-center space-x-3.5 p-2">
+                <div
+                    class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 text-lg">
+                    <i class="fa-solid fa-rotate"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-900">Đổi trả dễ dàng</h4>
+                    <p class="text-[11px] text-slate-500">Trong vòng 7 ngày</p>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="flex items-center space-x-3.5 p-2">
+                <div
+                    class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 text-lg">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-900">Hỗ trợ kỹ thuật 24/7</h4>
+                    <p class="text-[11px] text-slate-500">Tư vấn và giải đáp nhanh chóng</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-300 pt-12 pb-8 border-t border-slate-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Đã thu hẹp khoảng cách dưới (mb-8) để đường kẻ ngang gần với các cột hơn -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-8 lg:gap-y-0 mb-8">
+
+                <!-- Col 1: Logo & Info -->
+                <div class="lg:pr-6 lg:border-r lg:border-slate-800">
+                    <div class="text-white font-black text-2xl tracking-tighter">
+                        LTC
+                        <div class="text-[9px] tracking-normal text-slate-400 uppercase font-semibold">Lighting The
+                            Future
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm mt-3">
+                        LTC Việt Nam là thương hiệu hàng đầu trong lĩnh vực cung cấp các giải pháp chiếu sáng LED hiện
+                        đại,
+                        tiết kiệm năng lượng và thân thiện với môi trường.
+                    </p>
+                    <div class="flex space-x-3 pt-4">
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                                class="fa-brands fa-facebook-f text-xs"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                                class="fa-brands fa-youtube text-xs"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                                class="fa-brands fa-linkedin-in text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Company -->
+                <div class="lg:px-6 lg:border-r lg:border-slate-800">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">THÔNG TIN CÔNG TY</h4>
+                    <div class="text-white font-bold text-xs mb-3">CÔNG TY TNHH LTC VIỆT NAM</div>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot mt-0.5 text-blue-500"></i>
+                            Số
+                            123, Đường ABC, P. Cầu Giấy, Q. Nam Từ Liêm, Hà Nội</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-500"></i> 024 3 123
+                            4567
+                        </li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-500"></i>
+                            info@ltc-lighting.vn</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-globe text-blue-500"></i>
+                            www.ltc-lighting.vn</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-file-invoice text-blue-500"></i> MST:
+                            0101234567</li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Customer Care (Đã bổ sung lớp border-b và pb để tạo đường kẻ ngang giữa các mục) -->
+                <div class="lg:px-6 lg:border-r lg:border-slate-800">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">CHĂM SÓC KHÁCH HÀNG</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li class="pb-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Hướng dẫn mua hàng</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách thanh toán</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách vận chuyển</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách đổi trả</a></li>
+                        <li class="py-2 border-b border-slate-900"><a href="#"
+                                class="hover:text-white transition block">Chính sách bảo hành</a></li>
+                        <li class="pt-2"><a href="#" class="hover:text-white transition block">Điều khoản sử dụng</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Support info -->
+                <div class="lg:px-6 lg:border-r lg:border-slate-800">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">HỖ TRỢ KHÁCH HÀNG</h4>
+                    <div class="space-y-4 text-xs text-slate-400">
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-headset text-blue-500 text-base mt-0.5"></i>
+                            <div>
+                                <div class="text-white font-bold">1900 1234</div>
+                                <div class="text-[10px]">(8h00 – 21h00, T2 – CN)</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-envelope text-blue-500 text-base mt-0.5"></i>
+                            <div>
+                                <div class="text-white font-bold">Email hỗ trợ</div>
+                                <div class="text-[10px]">hotro@ltc-lighting.vn</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <i class="fa-solid fa-tools text-blue-500 text-base mt-0.5"></i>
+                            <div>
+                                <div class="text-white font-bold">Hỗ trợ kỹ thuật</div>
+                                <div class="text-[10px]">technical@ltc-lighting.vn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 5: Newsletter -->
+                <div class="lg:pl-6">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-2">ĐĂNG KÝ NHẬN TIN</h4>
+                    <p class="text-xs text-slate-400 mb-3">Nhận thông tin sản phẩm mới, ưu đãi và tin tức từ LTC.</p>
+                    <form class="space-y-2.5" onsubmit="event.preventDefault();">
+                        <div class="relative">
+                            <input type="email" placeholder="Nhập email của bạn"
+                                class="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg px-3 py-2.5 pr-8 text-white focus:outline-none focus:border-blue-500">
+                            <button type="submit" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-white">
+                                <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                            </button>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-lg transition">ĐĂNG
+                            KÝ</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Phần bản quyền và thẻ thanh toán -->
+        <div
+            class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+            <div>© 2026 LTC Việt Nam. All rights reserved.</div>
+            <div class="flex space-x-2 mt-4 sm:mt-0 items-center">
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-visa text-blue-700 text-lg"></i>
+                </div>
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-mastercard text-red-600 text-lg"></i>
+                </div>
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <span class="text-[10px] font-extrabold text-pink-700 tracking-tighter">MOMO</span>
+                </div>
+                <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
+                    <span class="text-[10px] font-extrabold text-teal-600 tracking-tighter">ZaloPay</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .py-2 {
+            padding-top: 0
+        }
+
+        .mb-8 {
+            margin-bottom: 1rem
+        }
+    </style>
+
+
+</body>
+
+</html>

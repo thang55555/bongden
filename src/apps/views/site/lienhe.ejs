@@ -1,0 +1,74 @@
+<%- include("./layouts/head.ejs")%>
+<title>Liên hệ</title>
+<%- include("./layouts/header.ejs")%>
+
+
+        <!-- main -->
+        <div class="container" >
+            <ul class="breadcrumb">
+                <li><a href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a href="/lien-he"><span>Liên hệ</span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+
+            <div class="intros-bottom__contacts" style="margin-left: 10px; margin-right: 10px;">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h2 class="titles-bottom__contacts">THÔNG TIN LIÊN HỆ</h2>
+                        <%for(item of thongtin){%>
+                        <div class="text-bottom__contacts">
+                            <div class="text-yellows__contacts">
+                                <p>Mọi thông tin thắc mắc cần giải đáp, Quý khách vui lòng với chúng tôi theo thông tin
+                                    bên dưới</p>
+                            </div>
+                            <div class="address-bottom__contacts">
+                                <h3 class="titles-address__contacts"><%=item.tencongty%></h3>
+                                <ul class="intros-address__contacts">
+                                    <li>Hotline: <a href="tel:0858.937.999" title="0858.937.999"><%=item.sdt%></a> </li>
+                                    <li>Email: <a href="mailto:<%=item.email%>" ><%=item.email%></a></li>
+                                    <li>Địa chỉ: <span><%=item.diachicty%></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                    <div class="col-lg-8">
+                        <%for(item of thongtin){%>
+                        <h2 class="titles-bottom__contacts">GỬI THÔNG TIN LIÊN HỆ ĐẾN <%=item.tencongty%></h2>
+                        <%}%>
+                        <div class="box-form__contacs">
+                            <form method="POST" accept-charset="utf-8" class="frm__contact_ ajaxform"
+                                action="/gui-lien-he" data-success="CONTACT._" autocomplete="off"><input type="hidden"
+                                    name="csrf_tech5s_name" >
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="group-form__alls"> <input type="text" name="name" class="input-alls control-alls" placeholder="Họ tên" crequired="" text-crequired="Nhập vào họ tên !"> </div>
+                                            <div class="group-form__alls"> <input 
+    type="tel" 
+    name="lienhe" 
+    class="input-alls control-alls"
+    placeholder="Số điện thoại"
+    required
+    pattern="[0-9]{10}"
+    title="Số điện thoại phải đủ 10 chữ số">
+ </div>
+                                            <div class="group-form__alls"> <input type="text" name="email" class="input-alls control-alls" placeholder="Email"> </div> <input type="hidden" name="type" value="SIDEBAR">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-form__alls"> <textarea class="control-alls" name="yeucau" type="text" placeholder="Nội dung" rows="3"></textarea> </div> <button type="submit" class="button-borders__alls">Gửi yêu cầu</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <%- include("./layouts/footer.ejs")%>

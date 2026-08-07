@@ -1,0 +1,242 @@
+<%- include("./layouts/head.ejs")%>
+
+  <title>
+    <%= category.title || category.tennhomsanpham %>
+  </title>
+  <meta name="description" content="<%=category.metadescription%>">
+  <meta name="keywords" content="<%=category.metakeywords%>">
+  <%- include("./layouts/header.ejs")%>
+
+    <!-- main -->
+
+
+    <!-- Giới thiệu -->
+    <div class="container">
+
+      <ul class="breadcrumb">
+        <li><a href="/"><span>Trang chủ</span></a>
+          <meta content="1">
+        </li>
+        <li><a><span style="color: #F5D182;">Sản Phẩm</span></a>
+          <meta content="2">
+        </li>
+        <li><a href="/category-menu/<%=category.danhmuc_id.slug%>/<%=category.danhmuc_id._id%>"><span>
+              <%=category.danhmuc_id.tendanhmuc%>
+            </span></a>
+          <meta content="3">
+        </li>
+        <li><a><span style="color: #F5D182;">
+              <%=category.tennhomsanpham%>
+            </span></a>
+          <meta content="4">
+        </li>
+      </ul>
+
+<% if (typeof image !== 'undefined' && image && image.length > 0) { %>
+      <div class="bd-example category_item_img">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <%for(var i=1; i <=image.length; i++){%>
+              <li data-target="#carouselExampleCaptions" data-slide-to="<%=i%>" class=""></li>
+              <%}%>
+          </ol>
+          <div class="carousel-inner">
+            <% image.forEach((item, index)=> { %>
+              <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                <a href="https://phongthodep.net/static/site/images/update/<%= item.images %>" class="glightbox">
+                  <img class="d-block w-100" alt="<%= item.images %>"
+                    src="https://phongthodep.net/static/site/images/update/<%= item.images %>"
+                    onerror="this.onerror=null; this.src='https://phongthodep.net/images/<%= item.images %>'; this.closest('a').href='https://phongthodep.net/images/<%= item.images %>';"
+                    style="cursor: pointer;">
+                </a>
+                <div class="carousel-caption d-none d-md-block category_item_text">
+                  <%- item.content %>
+                </div>
+              </div>
+              <% }) %>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+<%}%>
+
+    </div>
+
+    <!-- end giới thiệu -->
+
+
+
+
+
+
+    <div class="container">
+      <!-- Quy trình dịch vụ -->
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-12">
+          <div class="title-cicle__alls">
+            <h3 class="title-in-cicles">Quy trình dịch vụ</h3>
+          </div>
+          <div class="tab-content img_content">
+            <div>
+
+              <%-category.quytrinh%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end quy trình dịch vụ -->
+
+
+      <!-- Các Công trình thiết kế tiêu biểu -->
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-12">
+          <div class="title-cicle__alls">
+            <h3 class="title-in-cicles">
+              <%=category.tennhomsanpham%> TIÊU BIỂU
+            </h3>
+          </div>
+          <div class="tab-content">
+            <div class="tab-pane active">
+              <div class="list-prds__alls ajax_result">
+                <div class="tab__ active" data-id="7">
+                  <div class="row">
+
+                    <% for(item of product){%>
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="items-prds__alls">
+                          <div class="imgs-prds__alls"> <a href="/product/<%=item.slug%>/<%=item._id%>"
+                              class="d-block img">
+                              <picture>
+                                <img src="https://phongthodep.net/static/site/images/update/<%=item.image[0].images%>"
+                                  onerror="this.onerror=null;this.src='https://phongthodep.net/images/<%=item.image[0].images%>';">
+                              </picture>
+                            </a> </div>
+                          <div class="intros-prds__alls">
+                            <p><a href="/product/<%=item.slug%>/<%=item._id%>" class="title-prds__alls">
+                                <%=item.tieudesp%>
+                              </a></p>
+                            <ul class="infos-prds__items">
+                              <li><img src="./images/prds-icons-1.png" alt="Chủ đầu tư"> Chủ
+                                đầu
+                                tư: <%=item.chudautu%>
+                              </li>
+                              <li><img src="./images/prds-icons-2.png" alt="Địa chỉ" />
+                                Địa chỉ: <%=item.diachi%>
+                              </li>
+                              <li><img src="./images/prds-icons-3.png" alt="Diện tích"> Thông số: <%=item.dientich%>
+                              </li>
+                              <li><img src="./images/prds-icons-4.png" alt="Kinh phí dự trù">
+                                Kinh phí dự trù: <%=item.kinhphi%>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <%}%>
+
+
+
+                  </div>
+                </div>
+                <div class="tab__" data-id="8"> </div>
+                <div class="tab__" data-id="9"> </div>
+              </div>
+            </div>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <% if(hasPrev){%>
+                <li class="page-item"><a class="page-link"
+                    href="/category-item/<%=slug%>/<%=id%>?page=<%=prev%>">&laquo;</a></li>
+                <% }%>
+                  <% for(i of pages){%>
+                    <% if(i==="..." ){%>
+                      <li class="page-item"><span class="page-link" <%=i%></span>
+                      </li>
+                      <% }else{%>
+                        <li class="page-item"><a class="page-link" href="/category-item/<%=slug%>/<%=id%>?page=<%=i%>">
+                            <%=i%>
+                          </a></li>
+                        <%}%>
+                          <% }%>
+                            <% if(hasNext){%>
+                              <li class="page-item"><a class="page-link"
+                                  href="/category-item/<%=slug%>/<%=id%>?page=<%=next%>">&raquo;</a>
+                              </li>
+                              <% }%>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- end Các Công trình thiết kế tiêu biểu -->
+
+      <!-- Khách hàng nói về chúng tôi -->
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-12">
+          <div class="title-cicle__alls">
+            <h3 class="title-in-cicles">CHIA SẺ CỦA KHÁCH HÀNG VỀ NAM THÀNH PHÁT</h3>
+          </div>
+          <div class="tab-content">
+            <div
+              class="customer-feel__sl swiper-container wow fadeIn swiper-container-initialized swiper-container-horizontal"
+              data-wow-duration="1.5s" data-wow-delay="0.1s"
+              style="visibility: visible; animation-duration: 1.5s; animation-delay: 0.1s;">
+              <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+
+
+                <% for(item of chiase){%>
+                  <div class="swiper-slide swiper-slide-active" style="width: 439.333px; margin-right: 30px;">
+                    <div class="feel-customers__items" style="height:auto;">
+                      <div class="img-customers__feels">
+                        <picture>
+                          <source media="(min-width:480px;)" data-srcset="./images/update/<%=item.images%>"
+                            srcset="./images/update/<%=item.images%>">
+                          <source media="(min-width:0px;)" data-srcset="./images/update/<%=item.images%>"
+                            srcset="./images/update/<%=item.images%>">
+                          <img loading="lazy" src="https://phongthodep.net/static/site/images/update/<%=item.images%>"
+                            onerror="this.onerror=null;this.src='https://phongthodep.net/images/<%=item.images%>';"
+                            data-src="https://phongthodep.net/static/site/images/update/<%=item.images%>"
+                            onerror="this.onerror=null;this.src='https://phongthodep.net/images/<%=item.images%>';"
+                            class="img-fluid ls-is-cached lazyloaded">
+                        </picture>
+                      </div>
+                      <div class="name-works__customers">
+                        <p><span class="name-feel__customer">
+                            <%=item.name%>
+                          </span></p>
+
+                      </div>
+                      <div>
+                        <%-item.content%>
+                      </div>
+                    </div>
+                  </div>
+                  <%}%>
+
+              </div>
+              <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span
+                  class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button"
+                  aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button"
+                  aria-label="Go to slide 2"></span></div> <span class="swiper-notification" aria-live="assertive"
+                aria-atomic="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end Khách hàng nói về chúng tôi -->
+
+
+
+    </div>
+
+
+    </div>
+    <%- include("./layouts/footer.ejs")%>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoàn tiền Shopee</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa; /* nền xám nhẹ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #ee4d2d; /* cam Shopee nhẹ */
+            box-shadow: 0 0 4px rgba(238, 77, 45, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #ee4d2d; /* màu Shopee */
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #d84324;
+        }
+
+        .note {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="icon">🛒</div>
+        <h2>Hoàn tiền Shopee</h2>
+        <p>Dán link sản phẩm để nhận hoàn tiền</p>
+
+        <form method="POST" action="/add-shoppe">
+            <input type="text" name="link" placeholder="Dán link Shopee..." required>
+            <button type="submit">Tiếp tục</button>
+        </form>
+
+        <div class="note">
+            * Bạn sẽ được chuyển đến Shopee để mua hàng
+        </div>
+    </div>
+<script>
+window.addEventListener("pageshow", function () {
+    const input = document.querySelector('input[name="link"]');
+    if (input) {
+        input.value = ""; // xóa trắng khi quay lại
+    }
+});
+</script>
+</body>
+
+</html>

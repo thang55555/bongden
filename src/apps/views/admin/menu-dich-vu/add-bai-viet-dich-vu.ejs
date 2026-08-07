@@ -1,0 +1,320 @@
+<%- include("../layout/head", {title: "Admin Thêm mới bài viết dự án" })%>
+    <%- include("../layout/header")%>
+        <%- include("../layout/siderbar")%>
+
+
+            <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="/admin/dashboard"><svg class="glyph stroked home">
+                                    <use xlink:href="#stroked-home"></use>
+                                </svg></a></li>
+                        <li><a href="/admin/bai-viet-dich-vu">Danh sách bài viết dự án</a></li>
+                        <li>Thêm mới bài viết dự án</li>
+                    </ol>
+                </div><!--/.row-->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Thêm mới bài viết dự án</h1>
+                    </div>
+                </div><!--/.row-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <form id="productForm" name="frm" role="form" method="post" enctype="multipart/form-data"
+                                        action="/admin/upload-bai-viet-dich-vu">
+                                        <div class="form-group">
+                                            <label>Tên bài viết:</label>
+                                            <input required name="name" type="text" class="form-control"
+                                                placeholder="Tên bài viết...">
+                                        </div>
+
+                                        
+                                       <div class="form-group">
+                                        <label>Nhóm dự án: (giữ phím Ctrl để chọn nhiều)</label>
+                                        <select name="menudichvu_id" class="form-control" multiple required >
+                                            <% for(item of category){%>
+                                                <option value="<%=item._id%>">
+                                                    <%=item.name%>
+                                                </option>
+                                                <%}%>
+                                        </select>
+                                    </div>
+
+                                        <div class="form-group">
+                                            <label>Vị trí dự án:</label>
+                                            <input required name="add" type="text" class="form-control"
+                                                placeholder="Vị trí dự án...">
+                                        </div>
+                                        <!-- 3 thẻ sale -->
+<div class="form-group">
+    <label>Thẻ title: <span id="label_title"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_title', 'label_title', 50, 60)" 
+           name="title" type="text" class="form-control" placeholder="Title">
+    
+    <div class="progress-container">
+        <div id="bar_title" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta description: <span id="label_meta"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_meta', 'label_meta', 140, 160)" 
+           name="description" type="text" class="form-control" placeholder="Meta description...">
+    
+    <div class="progress-container">
+        <div id="bar_meta" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta keywords: <span id="label_keywords"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_keywords', 'label_keywords', 100, 200)" 
+           name="keywords" type="text" class="form-control" placeholder="Meta keywords...">
+    
+    <div class="progress-container">
+        <div id="bar_keywords" class="progress-bar"></div>
+    </div>
+</div>
+
+
+                                </div>
+                                <div class="col-md-6">
+
+
+                                    
+                                    <!-- <div class="form-group">
+                                       <label>Ảnh banner bài viết</label>
+                                        <input name="images" type="file" multiple required>
+                                        <br>
+                                    </div> -->
+
+                                       <div class="form-group">
+    <label>Ảnh đại diện</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input name="images" type="file" multiple id="fileInput">
+        <button type="button" class="btn btn-info" onclick="openAlbumModal()">Chọn từ Album</button>
+        <span id="album-status" style="color: #666; font-size: 14px; font-weight: bold;"></span>
+    </div>
+    <input type="hidden" name="album_image_ids" id="album_image_ids">
+</div>
+  <script>
+    // hàm bắt buộc tải ảnh
+document.getElementById("productForm").addEventListener("submit", function(e) {
+
+    const fileInput = document.getElementById("fileInput");
+    const albumInput = document.getElementById("album_image_ids");
+
+    const hasUpload = fileInput.files.length > 0;
+    const hasAlbum = albumInput.value.trim() !== "";
+
+    if (!hasUpload && !hasAlbum) {
+        e.preventDefault();
+        alert("Vui lòng tải lên ít nhất một ảnh hoặc chọn ảnh từ Album.");
+        return false;
+    }
+
+});
+</script>
+
+<div id="albumModal" class="modal">
+    <div class="modal-content">
+       <div class="modal-header">
+    <div class="modal-title">
+        <i class="fas fa-images"></i> Thư viện ảnh của bạn
+    </div>
+    <div class="header-actions">
+        <button type="button" class="btn-back" onclick="closeAlbumModal()">Trở về</button>
+        <button type="button" class="btn-confirm" onclick="confirmAlbumSelection()">
+            <i class="fas fa-check"></i> Xác nhận
+        </button>
+    </div>
+</div>
+        <div class="modal-body">
+            <div class="album-selection-area">
+                <div id="tab-tieude" class="album-box" onclick="loadGallery('tieude')">
+                    <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
+                    <div class="album-name">Album Tiêu đề</div>
+                    <div class="album-count"><%= JSON.parse(tieudeJson).length %> ảnh</div>
+                </div>
+                <div id="tab-content" class="album-box" onclick="loadGallery('content')">
+                    <div class="album-icon-wrapper"><i class="fas fa-folder-open"></i></div>
+                    <div class="album-name">Album content</div>
+                    <div class="album-count"><%= JSON.parse(contentJson).length %> ảnh</div>
+                </div>
+                <div id="tab-selected" class="album-box" onclick="loadSelectedView()">
+                    <div class="album-icon-wrapper"><i class="fas fa-check-circle" style="color: #27ae60;"></i></div>
+                    <div class="album-name">Đã chọn</div>
+                    <div id="selected-count-badge" class="album-count">0 ảnh</div>
+                </div>
+            </div>
+            <div id="album-gallery"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const albumData = { tieude: <%- tieudeJson %>, content: <%- contentJson %> };
+    // Dùng Set để lưu tên file (item.images)
+    let selectedImages = new Set();
+
+    function openAlbumModal() { document.getElementById('albumModal').style.display = "block"; loadGallery('tieude'); }
+    function closeAlbumModal() { document.getElementById('albumModal').style.display = "none"; }
+
+    function updateCount() { 
+        document.getElementById('selected-count-badge').innerText = selectedImages.size + ' ảnh'; 
+    }
+
+    // Toggle dựa trên filename
+    function toggleImageSelect(filename, cardElement) {
+        if (selectedImages.has(filename)) { 
+            selectedImages.delete(filename); 
+            cardElement.classList.remove('selected'); 
+        } else { 
+            selectedImages.add(filename); 
+            cardElement.classList.add('selected'); 
+        }
+        updateCount();
+    }
+
+    function loadGallery(type) {
+        const gallery = document.getElementById('album-gallery');
+        const data = albumData[type];
+        document.querySelectorAll('.album-box').forEach(el => el.classList.remove('active'));
+        document.getElementById(`tab-${type}`).classList.add('active');
+        gallery.innerHTML = '';
+        
+        data.forEach(item => {
+            const card = document.createElement('div');
+            // Kiểm tra theo filename
+            card.className = `photo-card ${selectedImages.has(item.images) ? 'selected' : ''}`;
+            card.onclick = () => toggleImageSelect(item.images, card);
+            
+            const path = (type === 'tieude') ? '../site/images/update/' : '/images/';
+            card.innerHTML = `<img src="${path + item.images}" loading="lazy"><span class="checkmark">✔</span>`;
+            gallery.appendChild(card);
+        });
+    }
+
+    function loadSelectedView() {
+        const gallery = document.getElementById('album-gallery');
+        document.querySelectorAll('.album-box').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-selected').classList.add('active');
+        gallery.innerHTML = '';
+        
+        selectedImages.forEach(filename => {
+            const card = document.createElement('div');
+            card.className = 'photo-card selected';
+            card.onclick = () => { toggleImageSelect(filename, card); card.remove(); };
+            
+            // Xác định đường dẫn dựa trên việc file nằm ở đâu trong 2 album
+            const path = albumData.tieude.some(i => i.images === filename) ? '../site/images/update/' : '/images/';
+            card.innerHTML = `<img src="${path + filename}" loading="lazy"><span class="checkmark">✔</span>`;
+            gallery.appendChild(card);
+        });
+    }
+
+    // HÀM DUY NHẤT ĐỂ XÁC NHẬN
+    function confirmAlbumSelection() {
+        // 1. Cập nhật input ẩn (danh sách tên file)
+        document.getElementById('album_image_ids').value = Array.from(selectedImages).join(',');
+
+        // 2. Cập nhật thông báo ngoài form chính (thay vì ảnh thumbnail)
+        const statusEl = document.getElementById('album-status');
+        if (statusEl) {
+            statusEl.innerText = selectedImages.size > 0 ? `${selectedImages.size} ảnh từ album` : "";
+        }
+
+        // 3. Đóng modal
+        closeAlbumModal();
+    }
+</script>
+
+<style>
+        /* CSS Modal & Album */
+        .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal-content { background: #f4f7f9; margin: 2% auto; width: 90%; max-width: 1100px; border-radius: 8px; display: flex; flex-direction: column; height: 90vh; }
+        .modal-body { padding: 20px; overflow-y: auto; }
+        
+        .album-selection-area { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #ddd; }
+        .album-box { background: white; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; width: 140px; border: 2px solid transparent; transition: 0.2s; }
+        .album-box:hover { border-color: #ccc; }
+        .album-box.active { border-color: #007bff; background: #eef6ff; }
+        #tab-selected.active { border-color: #27ae60; background: #e8f5e9; }
+        
+        .album-icon-wrapper { font-size: 2rem; margin-bottom: 5px; color: #f39c12; }
+        .album-name { font-weight: bold; font-size: 0.9rem; }
+        .album-count { color: #6c757d; font-size: 0.8rem; }
+
+        #album-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
+        .photo-card { position: relative; border: 2px solid transparent; border-radius: 4px; cursor: pointer; padding: 2px; }
+        .photo-card img { width: 100%; height: 100px; object-fit: cover; display: block; }
+        .photo-card.selected { border-color: #27ae60; }
+        .checkmark { display: none; position: absolute; bottom: 5px; right: 5px; background: #27ae60; color: white; width: 20px; height: 20px; text-align: center; border-radius: 50%; font-size: 12px; }
+        .photo-card.selected .checkmark { display: block; }
+
+        /* Header Modal xịn hơn */
+.modal-header {
+    background: #f8f9fa;
+    padding: 15px 25px;
+    border-bottom: 2px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title { font-size: 1.2rem; font-weight: 600; color: #333; }
+
+.header-actions button {
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-back { background: #e0e0e0; color: #555; margin-right: 10px; }
+.btn-back:hover { background: #d0d0d0; }
+
+.btn-confirm { background: #007bff; color: white; box-shadow: 0 2px 5px rgba(0,123,255,0.3); }
+.btn-confirm:hover { background: #0056b3; }
+    </style>
+
+                                    <div class="form-group">
+                                        <label>Mô tả bài viết</label>
+                                        <textarea id="description" required name="content" class="form-control" rows="3"></textarea>
+                                        <script>
+                                            CKEDITOR.replace('description',{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        });
+                                        </script>
+                                    </div>
+
+                                    <div class="form-check form-switch">
+                                        <input  class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="nhap" value="on">
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">Đăng ngay</label>
+                                      </div>
+                                    <button name="sbm" type="submit" class="btn btn-success">Thêm mới</button>
+                                    <button type="reset" class="btn btn-default">Làm mới</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- /.col-->
+                </div><!-- /.row -->
+
+            </div> <!--/.main-->
+
+            <script src="js/jquery-1.11.1.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+
+            <%- include("../layout/footer")%>

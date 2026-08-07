@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Đơn Bán Hàng</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #000;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice-container {
+            width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .logo-box {
+            width: 140px;
+            margin-right: 15px;
+        }
+
+        .company-info h2 {
+            margin: 0 0 4px 0;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .company-info p {
+            margin: 2px 0;
+            font-size: 12px;
+        }
+
+        /* Title */
+        .title-box {
+            text-align: center;
+            margin: 15px 0 10px 0;
+            position: relative;
+        }
+
+        .title-box h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .title-date {
+            font-style: italic;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .doc-no {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .doc-no span {
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* Customer Info */
+        .info-section {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .info-left {
+            flex: 1;
+        }
+
+        .info-right {
+            width: 120px;
+            text-align: left;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #000;
+        }
+
+        th {
+            padding: 6px 4px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12px;
+            background-color: #fff;
+        }
+
+        td {
+            padding: 6px 6px;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .total-row td {
+            font-weight: bold;
+        }
+
+        /* Amount in words */
+        .words-section {
+            margin: 10px 0 25px 0;
+            font-size: 12px;
+        }
+
+        /* Signatures */
+        .signature-date {
+            text-align: right;
+            font-style: italic;
+            margin-bottom: 10px;
+            padding-right: 20px;
+            font-size: 12px;
+        }
+
+        .signature-grid {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .sig-col {
+            width: 20%;
+        }
+
+        .sig-title {
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .sig-sub {
+            font-style: italic;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .invoice-container {
+                box-shadow: none;
+                width: 100%;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="invoice-container">
+        <div class="header">
+            <div class="logo-box">
+               <img src="../../static/site/images/update/<%=thongtintrang.images%>" style=" max-width: 120px; max-height: 80px;" >
+    
+            </div>
+            <div class="company-info">
+                <h2><%=thongtintrang.name%></h2>
+                <p><%=thongtintrang.diachi%></p>
+                <p>ĐT: <%=thongtintrang.sdt%></p>
+            </div>
+        </div>
+
+        <div class="title-box">
+            <h1>HÓA ĐƠN BÁN HÀNG</h1>
+<% 
+    let d = new Date(hoaDon.createdAt);
+    let ngay = d.getDate();
+    let thang = d.getMonth() + 1;
+    let nam = d.getFullYear();
+    
+    let ngayStr = ngay < 10 ? '0' + ngay : ngay;
+    let thangStr = thang < 10 ? '0' + thang : thang;
+%>
+
+<div class="title-date">Ngày <%= ngayStr %> tháng <%= thangStr %> năm <%= nam %></div>
+            <div class="doc-no">Mã đơn hàng: <span><%=hoaDon.madonhang%></span></div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-row">
+                <div class="info-left">
+                    <div><span class="bold">Họ tên người mua hàng:</span> <%=hoaDon.name%> - <%=hoaDon.sdt%></div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-left">
+                    <div><span class="bold">Đơn vị:</span> Khách lẻ</div>
+                </div>
+                <div class="info-right">
+                    <div><span class="bold">Tk nợ:</span> 1311</div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-left">
+                    <div><span class="bold">Địa chỉ:</span> <%=hoaDon.diachigiao%></div>
+                </div>
+                <div class="info-right">
+                    <div><span class="bold">Tk có:</span> 5111</div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-left">
+                    <div><span class="bold">Nhân viên bán hàng:</span> </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-left">
+                    <div><span class="bold">Nội dung: </span><%=hoaDon.note%></div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Stt</th>
+                    <th style="width: 32%;">Tên hàng</th>
+                    <th style="width: 8%;">ĐVT</th>
+                    <th style="width: 8%;">Số lượng</th>
+                    <th style="width: 10%;">Đơn giá</th>
+                    <th style="width: 8%;">Chiết khấu</th>
+                    <th style="width: 14%;">Thành tiền</th>
+                </tr>
+            </thead>
+<tbody>
+    <% 
+        let stt = 1; 
+    %>
+    <% for(items of hoaDon.item) { %>
+        <tr>
+            <td class="text-center"><%= stt++ %></td>
+            <td class="text-left"><%= items.name %></td>
+            <td class="text-center">Cái</td>
+            <td class="text-center"><%= items.qty %></td>
+            <td class="text-center"><%= Number(items.price).toLocaleString('vi-VN') %></td>
+            <td class="text-center">0</td>
+            <td class="text-right"><%= Number(items.price * items.qty).toLocaleString('vi-VN') %></td>
+        </tr>
+    <% } %>
+
+    <tr class="total-row">
+        <td colspan="6" class="text-right" style="padding-right: 15px;">Cộng tiền hàng:</td>
+        <td class="text-right"><%= Number(totalPrice).toLocaleString('vi-VN') %></td>
+    </tr>
+    <tr class="total-row">
+        <td colspan="6" class="text-right" style="padding-right: 15px;">Phí vận chuyển:</td>
+        <td class="text-right"><%= Number(hoaDon.ship || 0).toLocaleString('vi-VN') %></td>
+    </tr>
+    <tr class="total-row">
+        <td colspan="6" class="text-right" style="padding-right: 15px;">Tổng thanh toán:</td>
+        <td class="text-right"><%= Number(totalPrice + (hoaDon.ship || 0)).toLocaleString('vi-VN') %></td>
+    </tr>
+</tbody>
+        </table>
+
+<div class="words-section">
+    <% 
+        // Tính tổng tiền thanh toán thực tế
+        let tongTienThanhToan = totalPrice + (hoaDon.ship || 0);
+
+        // Hàm chuyển số thành chữ tiếng Việt
+        function docSoTien(so) {
+            if (so === 0) return "Không đồng";
+            
+            const chuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+            const donVi = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
+
+            function docBlock(num) {
+                let tram = Math.floor(num / 100);
+                let chuc = Math.floor((num % 100) / 10);
+                let donViNum = num % 10;
+                let str = "";
+
+                if (tram === 0 && chuc === 0 && donViNum === 0) return "";
+
+                if (tram > 0) {
+                    str += chuSo[tram] + " trăm ";
+                    if (chuc === 0 && donViNum > 0) str += "lẻ ";
+                }
+
+                if (chuc > 1) {
+                    str += chuSo[chuc] + " mươi ";
+                    if (chuc === 1 && donViNum === 5) str += "lăm ";
+                    else if (chuc > 1 && donViNum === 1) str += "mốt ";
+                    else if (donViNum > 0) str += chuSo[donViNum] + " ";
+                } else if (chuc === 1) {
+                    str += "mười ";
+                    if (donViNum === 5) str += "lăm ";
+                    else if (donViNum > 0) str += chuSo[donViNum] + " ";
+                } else if (chuc === 0 && donViNum > 0 && tram > 0) {
+                    str += chuSo[donViNum] + " ";
+                } else if (chuc === 0 && donViNum > 0 && tram === 0) {
+                    str += chuSo[donViNum] + " ";
+                }
+
+                return str.trim();
+            }
+
+            let str = "";
+            let i = 0;
+            let num = Math.abs(so);
+
+            while (num > 0) {
+                let block = num % 1000;
+                if (block > 0) {
+                    str = docBlock(block) + " " + donVi[i] + " " + str;
+                }
+                num = Math.floor(num / 1000);
+                i++;
+            }
+
+            str = str.trim();
+            // Viết hoa chữ cái đầu tiên
+            return str.charAt(0).toUpperCase() + str.slice(1) + " đồng.";
+        }
+
+        let tienBangChu = docSoTien(tongTienThanhToan);
+    %>
+
+    <span style="font-style: italic;">Bằng chữ: </span>
+    <span style="font-style: italic; font-weight: bold;"><%= tienBangChu %></span>
+</div>
+
+<div class="signature-date">Ngày <%= ngayStr %> tháng <%= thangStr %> năm <%= nam %></div>
+
+        <div class="signature-grid">
+            <div class="sig-col">
+                <div class="sig-title">NGƯỜI LẬP PHIẾU</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">NHÂN VIÊN GIAO HÀNG</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">NGƯỜI MUA HÀNG</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">THỦ KHO</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">KẾ TOÁN TRƯỞNG</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+        </div>
+    </div>
+<script>
+    // Tự động bật cửa sổ in của trình duyệt ngay khi file hd.ejs vừa tải xong
+    window.onload = function() {
+        window.print();
+    };
+</script>
+</body>
+
+</html>

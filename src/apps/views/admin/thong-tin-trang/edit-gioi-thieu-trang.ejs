@@ -1,0 +1,133 @@
+<%- include("../layout/head", {title: "Admin update giới thiệu trang"})%>
+<%- include("../layout/header")%>
+<%- include("../layout/siderbar")%>
+
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+                <li><a href="/admin/dashboard"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+                <li><a href="/admin/gioi-thieu-trang">Giới thiệu trang</a></li>
+				<li>Update giới thiệu trang</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row"> 
+			<div class="col-lg-12">
+				<h1 class="page-header">Update Giới thiệu trang</h1>
+			</div>
+        </div><!--/.row-->
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <form action="/update-gioi-thieu-trang/<%=gioithieu._id%>" role="form" method="post" enctype="multipart/form-data">
+                                
+                                    <div class="form-group">
+                                        <label>Link video</label>
+                                        <input type="text" name="linkvideo" value="<%=gioithieu.linkvideo%>" class="form-control"
+                                            placeholder="Link video...">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Giới thiệu chung</label>
+                                        <textarea id="description"  name="gioithieuchung" class="form-control" value="" rows="3"><%=gioithieu.gioithieuchung%></textarea>
+                                        <script>
+                                            CKEDITOR.replace( 'description' ,{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        });
+                                        </script>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Content Tầm nhìn</label>
+                                        <textarea id="description1" name="content_tamnhin" class="form-control" value="" rows="3"><%=gioithieu.content_tamnhin%></textarea>
+                                        <script>
+                                            CKEDITOR.replace( 'description1' ,{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        });
+                                        </script>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Content Sứ mệnh</label>
+                                        <textarea id="description5" name="content_sumenh" class="form-control" value="" rows="3"><%=gioithieu.content_sumenh%></textarea>
+                                        <script>
+                                            CKEDITOR.replace( 'description5',{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        } );
+                                        </script>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ảnh Banner tầm nhìn, sứ mệnh</label>
+                                        <input name="img_tamnhin" type="file" >
+                                        <br>
+                                    </div>
+
+                                   
+
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Content Giá trị cốt lõi</label>
+                                    <textarea id="description2" name="content_cotloi" class="form-control" value="" rows="3"><%=gioithieu.content_cotloi%></textarea>
+                                    <script>
+                                        CKEDITOR.replace( 'description2' ,{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ảnh Banner Giá trị cốt lõi</label>
+                                    <input name="img_cotloi" type="file" >
+                                    <br>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Content Đội ngũ kỹ thuật</label>
+                                    <textarea id="description4"  name="content_kythuat" class="form-control" value="" rows="3"><%=gioithieu.content_kythuat%></textarea>
+                                    <script>
+                                        CKEDITOR.replace( 'description4',{
+                                            extraPlugins:'filebrowser',
+                                            filebrowserBrowseUrl:'/list',//upload location
+                                            filebrowserUploadMethod:'form',
+                                            filebrowserUploadUrl:'/upload'//route
+                                        } );
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ảnh Banner đội ngũ kỹ thuật</label>
+                                    <input name="img_kythuat" type="file">
+                                    <br>
+                                    
+                                </div>
+
+
+                                <button name="sbm" type="submit" class="btn btn-success">Update</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div><!-- /.col-->
+            </div><!-- /.row -->
+		
+	</div>	<!--/.main-->	
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <%- include("../layout/footer")%>

@@ -1,0 +1,78 @@
+<%- include("../layout/head", {title: "Admin update menu tin tức"})%>
+<%- include("../layout/header")%>
+<%- include("../layout/siderbar")%>
+
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/admin/dashboard"><svg class="glyph stroked home">
+                            <use xlink:href="#stroked-home"></use>
+                        </svg></a></li>
+                <li><a href="/admin/danh-sach-menu-tin-tuc">Menu tin tức</a></li>
+                <li>Update menu tin tức</li>
+            </ol>
+         </div><!--/.row-->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Menu tin tức: <%=update.name%></h1>
+            </div>
+        </div><!--/.row-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-md-8">
+                            <form name="frm"  role="form" method="post" action="/admin/update-menu-tin-tuc/<%=update._id%>">
+                                <div class="form-group">
+                                    <label>Tên menu tin tức:</label>
+                                    <input required type="text" name="name" class="form-control" value="<%=update.name%>"
+                                        placeholder="Tên menu...">
+                                </div>
+
+<div class="form-group">
+    <label>Thẻ title <span id="label_title"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_title', 'label_title', 50, 60)" 
+           name="title" type="text" class="form-control" placeholder="Title" value="<%=update.title%>">
+    
+    <div class="progress-container">
+        <div id="bar_title" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta description <span id="label_meta"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_meta', 'label_meta', 140, 160)" 
+           name="description" type="text" class="form-control" placeholder="Meta description..." value="<%=update.description%>">
+    
+    <div class="progress-container">
+        <div id="bar_meta" class="progress-bar"></div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label>Thẻ meta keywords <span id="label_keywords"></span></label>
+    <input required onkeyup="updateAll(this.value, 'bar_keywords', 'label_keywords', 100, 200)" 
+           name="keywords" type="text" class="form-control" placeholder="Meta keywords..." value="<%=update.keywords%>" >
+    
+    <div class="progress-container">
+        <div id="bar_keywords" class="progress-bar"></div>
+    </div>
+</div>
+                                <button type="submit" name="sbm" class="btn btn-success">Updade</button>
+                                <button type="reset" class="btn btn-default">Làm mới</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.col-->
+    </div> <!--/.main-->
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-table.js"></script>
+    <%- include("../layout/footer")%>

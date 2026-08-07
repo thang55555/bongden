@@ -1,0 +1,99 @@
+<%- include("./layouts/head.ejs")%>
+<title><%=product.tieude%></title>
+<meta name="description" content="<%=product.metadescription%>">
+<meta name="keywords" content="<%=product.metakeywords%>">
+<%- include("./layouts/header.ejs")%>
+
+        <!-- main -->
+        <div class="container">
+
+            <ul class="breadcrumb">
+                <li><a
+                        href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a
+                        href="/danh-sach-video"><span>Video</span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="row danhsachvideo">
+                <div class="col-lg-9 col-md-9 col-sm-12 col-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 product_video_site">
+                            <div>
+                                <iframe src="<%=product.linkvideo%>"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div><a style="color: #F5D182;" class="name-project__mains"><%=product.tieude%></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 "> <%-product.content%></div>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                    <div class="col-lg-12">
+                        <div class="sidebar-prds__details">
+                            <div class="box-filter__mains">
+								<p class="titles-box__filters">ĐĂNG KÝ TƯ VẤN</p>
+								<form action="/gui-lien-he" method="POST" class="frn__contact ajaxform" accept-charset="utf-8" data-success="CONTACT._">
+									<div class="group-form__alls"> <input type="text" class="input-alls control-alls" name="name" placeholder="Họ tên" crequired="" text-crequired="Nhập vào họ tên !"> </div>
+									<div class="group-form__alls"> <input type="text" class="input-alls control-alls" name="lienhe" placeholder="Số điện thoại" crequired="" text-crequired="Nhập vào số điện thoại !"> </div>
+									<div class="group-form__alls"> <input type="text" name="email" class="input-alls control-alls" placeholder="email"> </div>
+									<input type="hidden" name="type" value="SIDEBAR"> <button type="submit" class="button-borders__alls">Gửi thông tin</button>
+								</form>
+							</div>
+                            <div class="relate-news__details">
+                                <h4 class="titles-list__sidebars">BÀI VIẾT LIÊN QUAN</h4>
+                                <div class="hopthoai_danhsach_video">
+                                    <ul>
+                                        <%for(item of baiviet){%>
+                                        <li>
+                                            <div class="news-relate__items">
+                                                <div class="img-news__relates"> <a href="/product/<%=item.slug%>/<%=item._id%>" title=""
+                                                        class="d-block img_">
+                                                        <picture> <img loading="lazy" src="https://phongthodep.net/static/site/images/update/<%=item.image[0].images%>"
+                                                                class="img-fluid ls-is-cached lazyloaded">
+                                                        </picture>
+                                                    </a> </div>
+                                                <div class="news-intros__relates">
+                                                    <p><a href="/product/<%=item.slug%>/<%=item._id%>"
+                                                            class="names-news__relates"><%=item.tieudesp%></a></p>
+                                                    <ul class="admin-times__ups">
+                                                        <li><img src="./images/admin-time-news-1.jpg" alt="Đăng bởi"> <a
+                                                                href="" title="admin">admin</a></li>
+                                                        <li><img src="./images/admin-time-news-2.jpg"
+                                                                alt="Thời gian đăng">
+                                                                <%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></li>
+                                                    </ul>
+                                                    <div class="antext">  <%-item.content%></div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                     <%}%>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end main -->
+
+
+
+
+    </div>
+    
+    <%- include("./layouts/footer.ejs")%>

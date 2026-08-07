@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTC - Giải pháp chiếu sáng LED hiện đại, tiết kiệm và bền bỉ</title>
+    <meta name="description"
+        content="Chuyên cung cấp các giải pháp chiếu sáng LED hiện đại, tiết kiệm năng lượng và thân thiện với môi trường từ thương hiệu LTC.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome cho Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0052cc',
+                            darkBlue: '#003399',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-100 text-xs text-slate-600 py-2 border-b border-slate-200 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex space-x-6">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-truck text-blue-600"></i> Miễn phí vận
+                    chuyển cho đơn hàng từ 1.000.000đ</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-blue-600"></i> Bảo hành
+                    chính hãng lên đến 3 năm</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-blue-600"></i> Tiết kiệm điện
+                    năng lên đến 80%</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-blue-600 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i>
+                    Hệ thống cửa hàng</a>
+                <a href="#" class="hover:text-blue-600 flex items-center gap-1"><i
+                        class="fa-solid fa-file-arrow-down"></i> Tài liệu tải về</a>
+                <a href="tel:19001234" class="font-bold text-slate-900 hover:text-blue-600 flex items-center gap-1"><i
+                        class="fa-solid fa-headset text-blue-600"></i> Hotline: <span class="text-blue-600">1900
+                        1234</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+            <!-- Left: Mobile Menu Button & Logo -->
+            <div class="flex items-center gap-3">
+                <!-- Nút Hamburger cho Mobile có tích hợp đổi thành dấu X -->
+                <button id="mobile-menu-button"
+                    class="lg:hidden text-slate-700 hover:text-blue-600 focus:outline-none p-1 w-8 h-8 flex items-center justify-center">
+                    <i id="menu-icon" class="fa-solid fa-bars text-xl transition-transform duration-300"></i>
+                </button>
+
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2">
+                    <div class="text-blue-600 font-black text-2xl tracking-tighter leading-none">
+                        <span class="text-3xl">LTC</span>
+                        <div class="text-[9px] tracking-normal text-slate-500 uppercase font-semibold">Lighting The
+                            Future</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden lg:flex items-center space-x-8 font-medium text-sm text-slate-700">
+                <a href="#" class="text-blue-600 font-semibold hover:text-blue-600 transition">TRANG CHỦ</a>
+                <a href="#" class="hover:text-blue-600 transition">GIỚI THIỆU</a>
+                <div class="relative group py-2">
+                    <button class="flex items-center gap-1 hover:text-blue-600 transition">
+                        SẢN PHẨM <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <!-- Mega Menu Dropdown -->
+                    <div
+                        class="absolute top-full left-0 w-[650px] bg-white shadow-xl rounded-xl border border-slate-100 hidden group-hover:grid grid-cols-2 p-6 gap-4 transition-all">
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-lightbulb text-lg text-blue-600 w-6"></i> Bóng đèn LED dân dụng
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Bulb
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-industry text-lg text-blue-600 w-6"></i> Bóng đèn LED công nghiệp
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Tuýp
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-sun text-lg text-blue-600 w-6"></i> Đèn LED chiếu sáng
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Downlight
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-palette text-lg text-blue-600 w-6"></i> Đèn LED trang trí
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">
+                            <i class="fa-solid fa-circle text-xs text-blue-600 w-6"></i> Bóng đèn LED Ốp trần
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-3 p-2.5 rounded-lg hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition col-span-2 border-t pt-3">
+                            <span class="text-blue-600 font-bold text-center w-full">Xem tất cả sản phẩm <i
+                                    class="fa-solid fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+                <a href="#" class="hover:text-blue-600 transition">DỰ ÁN</a>
+                <a href="#" class="hover:text-blue-600 transition">TIN HỖ TRỢ</a>
+                <a href="#" class="hover:text-blue-600 transition">LIÊN HỆ</a>
+            </nav>
+
+            <!-- Search & Cart -->
+            <div class="flex items-center space-x-3">
+                <div class="relative hidden sm:block w-48 md:w-64">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                        class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </button>
+                </div>
+                <a href="#" class="relative p-2 text-slate-700 hover:text-blue-600 transition">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span
+                        class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">1</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu (Chạm để hiện danh mục sản phẩm giống desktop) -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-3 shadow-lg max-h-[80vh] overflow-y-auto">
+            <div class="relative sm:hidden mb-3">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..."
+                    class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </button>
+            </div>
+
+            <a href="#" class="block text-blue-600 font-semibold py-2 border-b border-slate-100">TRANG CHỦ</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">GIỚI THIỆU</a>
+
+            <!-- Nhóm Sản Phẩm trên Mobile (Bấm vào để mở/đóng danh mục) -->
+            <div class="border-b border-slate-100">
+                <button id="mobile-product-toggle"
+                    class="w-full flex items-center justify-between py-3 font-semibold text-slate-800 focus:outline-none">
+                    <span>SẢN PHẨM</span>
+                    <i id="product-chevron"
+                        class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+                </button>
+                <!-- Danh mục con (Ẩn mặc định, hiện khi click) -->
+                <div id="mobile-product-dropdown"
+                    class="hidden pl-3 pb-3 space-y-2 text-sm text-slate-600 grid grid-cols-1">
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-lightbulb text-blue-600 w-5"></i> Bóng đèn LED dân dụng</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Bulb</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-industry text-blue-600 w-5"></i> Bóng đèn LED công nghiệp</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Tuýp</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-sun text-blue-600 w-5"></i> Đèn LED chiếu sáng</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Downlight</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-palette text-blue-600 w-5"></i> Đèn LED trang trí</a>
+                    <a href="#" class="flex items-center gap-2 py-1.5 hover:text-blue-600"><i
+                            class="fa-solid fa-circle text-xs text-blue-600 w-5"></i> Bóng đèn LED Ốp trần</a>
+                    <a href="#" class="text-blue-600 font-semibold py-2 mt-1 block border-t border-slate-100">Xem tất cả
+                        sản phẩm <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">DỰ ÁN</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2 border-b border-slate-100">TIN HỖ TRỢ</a>
+            <a href="#" class="block text-slate-700 hover:text-blue-600 py-2">LIÊN HỆ</a>
+        </div>
+
+        <!-- JavaScript cập nhật bổ sung sự kiện bấm mở danh mục sản phẩm trên mobile -->
+        <script>
+            // Xử lý mở/đóng danh mục Sản phẩm trên mobile
+            const mobileProductToggle = document.getElementById('mobile-product-toggle');
+            const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
+            const productChevron = document.getElementById('product-chevron');
+
+            mobileProductToggle.addEventListener('click', () => {
+                mobileProductDropdown.classList.toggle('hidden');
+                productChevron.classList.toggle('rotate-180');
+            });
+        </script>
+    </header>
+
+    <!-- JavaScript xử lý Menu Mobile (Đổi icon 3 gạch thành dấu X) và Slider -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+    </script>
+
+
+<!-- style order -->
+ <style>
+        :root {
+            --primary-color: #2563eb;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #cbd5e1;
+            --bg-light: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            padding: 24px;
+            font-size: 14px;
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 24px 32px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-sub);
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-sub);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 24px;
+        }
+
+        /* Progress Steps */
+        .steps-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 500px;
+            margin-bottom: 36px;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 25px;
+            right: 25px;
+            height: 2px;
+            background: #e2e8f0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            padding: 0 4px;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .step-item.active .step-number {
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+        }
+
+        .step-item.active .step-label {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Main Layout Grid */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 32px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 28px;
+        }
+
+        .section-heading {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row.two-cols {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            color: var(--text-main);
+        }
+
+        .form-group label span {
+            color: #ef4444;
+        }
+
+        .form-control {
+            height: 42px;
+            padding: 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            background: #ffffff;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 36px;
+        }
+
+        /* Radio & Checkbox Customization */
+        .radio-group, .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-main);
+            user-select: none;
+        }
+
+        .radio-options {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            accent-color: var(--primary-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Shipping & Payment Options Cards */
+        .option-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .option-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .option-title {
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .option-price {
+            font-weight: 600;
+            color: #16a34a;
+        }
+
+        .option-price.fee {
+            color: var(--text-main);
+        }
+
+        /* Right Order Summary Column */
+        .order-summary-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            position: sticky;
+            top: 24px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 600;
+        }
+
+        .edit-cart-link {
+            font-size: 13px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .summary-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .summary-item-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .summary-item-img {
+            width: 48px;
+            height: 48px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            object-fit: contain;
+            padding: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .summary-item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .summary-item-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .summary-item-variant {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .summary-item-qty {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .summary-item-price {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        /* Calculations */
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .calc-row.free-ship span:last-child {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .calc-row.discount span:last-child {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        /* Voucher input */
+        .voucher-box {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .voucher-input {
+            flex: 1;
+            height: 38px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0 10px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .voucher-btn {
+            padding: 0 16px;
+            height: 38px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .voucher-btn:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        /* Total Section */
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .total-label {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .total-amount-group {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .total-price-val {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .vat-note {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        /* Policy & Trust Badges */
+        .policy-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 16px;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .badge-item i {
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-top: 2px;
+        }
+
+        .badge-text-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .badge-text-desc {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        .secure-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+        }
+
+        .secure-box i {
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        .secure-box p {
+            font-size: 11px;
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        /* Terms & Submit button section inside left form */
+        .terms-submit-area {
+            margin-top: 24px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
+        }
+
+        .terms-row {
+            margin-bottom: 16px;
+        }
+
+        .terms-row a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .terms-row a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-order-btn {
+            width: 100%;
+            height: 48px;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .submit-order-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .sms-note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+            .order-summary-box {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .checkout-container {
+                padding: 16px;
+            }
+            .form-row, .form-row.two-cols {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    
+    <div class="checkout-container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="#">Trang chủ</a>
+            <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+            <a href="#">Giỏ hàng</a>
+            <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+            <span style="color: var(--text-main);">ĐẶT HÀNG</span>
+        </div>
+
+        <!-- Page Title -->
+        <h1 class="page-title">ĐẶT HÀNG</h1>
+
+        <!-- Progress Steps -->
+        <div class="steps-container">
+            <div class="step-item active">
+                <div class="step-number">1</div>
+                <div class="step-label">Thông tin đặt hàng</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-label">Thanh toán</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-label">Hoàn tất</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="checkout-grid">
+            
+            <!-- Left Column: Forms -->
+            <div class="checkout-form-column">
+                
+                <!-- 1. THÔNG TIN LIÊN HỆ -->
+                <div class="form-section">
+                    <h2 class="section-heading">1. THÔNG TIN LIÊN HỆ</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Họ và tên <span>*</span></label>
+                            <input type="text" class="form-control" value="Nguyễn Văn A">
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại <span>*</span></label>
+                            <input type="text" class="form-control" value="0901 234 567">
+                        </div>
+                        <div class="form-group">
+                            <label>Email <span>*</span></label>
+                            <input type="email" class="form-control" value="nguyenvana@gmail.com">
+                        </div>
+                    </div>
+<!-- 1. THÔNG TIN LIÊN HỆ -->
+<div class="form-section">
+    <h2 class="section-heading">1. THÔNG TIN LIÊN HỆ</h2>
+    <div class="form-row">
+        <div class="form-group">
+            <label>Họ và tên <span>*</span></label>
+            <input type="text" class="form-control" value="Nguyễn Văn A">
+        </div>
+        <div class="form-group">
+            <label>Số điện thoại <span>*</span></label>
+            <input type="text" class="form-control" value="0901 234 567">
+        </div>
+        <div class="form-group">
+            <label>Email <span>*</span></label>
+            <input type="email" class="form-control" value="nguyenvana@gmail.com">
+        </div>
+    </div>
+    <div class="checkbox-group">
+        <input type="checkbox" id="company-invoice">
+        <label for="company-invoice">Đặt hàng với tư cách doanh nghiệp</label>
+    </div>
+
+    <!-- KHU VỰC NHẬP THÔNG TIN CÔNG TY (Sẽ ẩn/hiện dựa vào checkbox) -->
+    <div id="company-fields-wrapper" class="company-info-fields">
+        <div class="form-row two-cols" style="margin-bottom: 16px;">
+            <div class="form-group">
+                <label>Tên công ty <span>*</span></label>
+                <input type="text" class="form-control" placeholder="Nhập tên công ty">
+            </div>
+            <div class="form-group">
+                <label>Mã số thuế <span>*</span></label>
+                <input type="text" class="form-control" placeholder="Nhập mã số thuế">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Địa chỉ công ty (trên hóa đơn) <span>*</span></label>
+            <input type="text" class="form-control" placeholder="Nhập địa chỉ đăng ký kinh doanh">
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxCompany = document.getElementById("company-invoice");
+        const companyFields = document.getElementById("company-fields-wrapper");
+
+        if (checkboxCompany && companyFields) {
+            checkboxCompany.addEventListener("change", function () {
+                if (this.checked) {
+                    companyFields.classList.add("show");
+                } else {
+                    companyFields.classList.remove("show");
+                }
+            });
+        }
+    });
+</script>
+<style>
+    /* Mặc định ẩn phần nhập thông tin doanh nghiệp */
+.company-info-fields {
+    display: none;
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+}
+
+.company-info-fields.show {
+    display: block;
+}
+</style>
+                </div>
+
+                <!-- 2. ĐỊA CHỈ GIAO HÀNG -->
+                <div class="form-section">
+                    <h2 class="section-heading">2. ĐỊA CHỈ GIAO HÀNG</h2>
+                    <div class="radio-options">
+                        <label class="radio-group">
+                            <input type="radio" name="shipping-method-tab" checked> Giao hàng tận nơi
+                        </label>
+                        <label class="radio-group">
+                            <input type="radio" name="shipping-method-tab"> Nhận hàng tại cửa hàng
+                        </label>
+                    </div>
+
+                    <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 16px;">
+                        <div class="form-group">
+                            <label>Tỉnh / Thành phố <span>*</span></label>
+                            <select class="form-control">
+                                <option>Hà Nội</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quận / Huyện <span>*</span></label>
+                            <select class="form-control">
+                                <option>Cầu Giấy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Phường / Xã <span>*</span></label>
+                            <select class="form-control">
+                                <option>Dịch Vọng</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label>Địa chỉ chi tiết <span>*</span></label>
+                        <input type="text" class="form-control" value="123 Đường Cầu Giấy, Phường Dịch Vọng, Quận Cầu Giấy, Hà Nội">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ghi chú giao hàng</label>
+                        <input type="text" class="form-control" placeholder="Ví dụ: Giao hàng giờ hành chính, gọi trước khi giao...">
+                    </div>
+                </div>
+
+                <!-- 3. PHƯƠNG THỨC VẬN CHUYỂN -->
+                <div class="form-section">
+                    <h2 class="section-heading">3. PHƯƠNG THỨC VẬN CHUYỂN</h2>
+                    <div class="option-card-list">
+                        <label class="option-item">
+                            <div class="option-info">
+                                <input type="radio" name="shipping-fee" checked>
+                                <span class="option-title">Giao hàng tiêu chuẩn (1 - 3 ngày)</span>
+                            </div>
+                            <span class="option-price">Miễn phí</span>
+                        </label>
+                        <label class="option-item">
+                            <div class="option-info">
+                                <input type="radio" name="shipping-fee">
+                                <span class="option-title">Giao hàng nhanh (Trong ngày)</span>
+                            </div>
+                            <span class="option-price fee">30.000đ</span>
+                        </label>
+                        <label class="option-item">
+                            <div class="option-info">
+                                <input type="radio" name="shipping-fee">
+                                <span class="option-title">Giao hàng hỏa tốc (2 - 4 giờ)</span>
+                            </div>
+                            <span class="option-price fee">60.000đ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 4. PHƯƠNG THỨC THANH TOÁN -->
+                <div class="form-section">
+                    <h2 class="section-heading">4. PHƯƠNG THỨC THANH TOÁN</h2>
+                    <div class="option-card-list">
+                        <label class="option-item" style="align-items: flex-start;">
+                            <div class="option-info">
+                                <input type="radio" name="payment-method" checked style="margin-top: 3px;">
+                                <div class="option-text-group">
+                                    <span class="option-title">Thanh toán khi nhận hàng (COD)</span>
+                                    <span class="option-desc">Thanh toán bằng tiền mặt khi nhận hàng</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="option-item" style="align-items: flex-start;">
+                            <div class="option-info">
+                                <input type="radio" name="payment-method" style="margin-top: 3px;">
+                                <div class="option-text-group">
+                                    <span class="option-title">Chuyển khoản ngân hàng</span>
+                                    <span class="option-desc">Bạn sẽ nhận được thông tin tài khoản sau khi đặt hàng</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="option-item" style="align-items: flex-start;">
+                            <div class="option-info">
+                                <input type="radio" name="payment-method" style="margin-top: 3px;">
+                                <div class="option-text-group">
+                                    <span class="option-title">Thanh toán qua thẻ ATM / Internet Banking</span>
+                                    <span class="option-desc">Thanh toán qua cổng thanh toán an toàn</span>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="option-item" style="align-items: flex-start;">
+                            <div class="option-info">
+                                <input type="radio" name="payment-method" style="margin-top: 3px;">
+                                <div class="option-text-group">
+                                    <span class="option-title">Ví điện tử</span>
+                                    <span class="option-desc">Thanh toán qua MoMo, ZaloPay, VNPay</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Terms and Submit Button Area -->
+                <div class="terms-submit-area">
+                    <div class="checkbox-group terms-row">
+                        <input type="checkbox" id="terms-check" checked>
+                        <label for="terms-check">Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> của LTC Lighting</label>
+                    </div>
+                    <button type="button" class="submit-order-btn">
+                        <i class="fa-solid fa-lock"></i> ĐẶT HÀNG
+                    </button>
+                    <div class="sms-note">Bạn sẽ nhận được xác nhận đơn hàng qua SMS/Email</div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="checkout-summary-column">
+                <div class="order-summary-box">
+                    <div class="summary-header">
+                        <span>ĐƠN HÀNG CỦA BẠN (3 sản phẩm)</span>
+                        <a href="#" class="edit-cart-link">Sửa đơn hàng</a>
+                    </div>
+
+                    <div class="summary-items-list">
+                        <!-- Item 1 -->
+                        <div class="summary-item">
+                            <div class="summary-item-left">
+                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><circle cx='75' cy='75' r='50' fill='%23f1f5f9'/></svg>" class="summary-item-img" alt="Bóng LED Bulb A60 12W">
+                                <div class="summary-item-details">
+                                    <span class="summary-item-name">Bóng LED Bulb A60 12W</span>
+                                    <span class="summary-item-variant">Ánh sáng trắng (6500K)</span>
+                                    <span class="summary-item-qty">x 2</span>
+                                </div>
+                            </div>
+                            <span class="summary-item-price">96.000đ</span>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="summary-item">
+                            <div class="summary-item-left">
+                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><circle cx='75' cy='75' r='50' fill='%23f1f5f9'/></svg>" class="summary-item-img" alt="Đèn LED Downlight Âm Tràn 9W">
+                                <div class="summary-item-details">
+                                    <span class="summary-item-name">Đèn LED Downlight Âm Tràn 9W</span>
+                                    <span class="summary-item-variant">Ánh sáng vàng (3000K)</span>
+                                    <span class="summary-item-qty">x 1</span>
+                                </div>
+                            </div>
+                            <span class="summary-item-price">85.000đ</span>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="summary-item">
+                            <div class="summary-item-left">
+                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><circle cx='75' cy='75' r='50' fill='%23f1f5f9'/></svg>" class="summary-item-img" alt="Đèn LED Tuýp T8 1.2m 18W">
+                                <div class="summary-item-details">
+                                    <span class="summary-item-name">Đèn LED Tuýp T8 1.2m 18W</span>
+                                    <span class="summary-item-variant">Ánh sáng trắng (6500K)</span>
+                                    <span class="summary-item-qty">x 3</span>
+                                </div>
+                            </div>
+                            <span class="summary-item-price">186.000đ</span>
+                        </div>
+                    </div>
+
+                    <!-- Calculation lines -->
+                    <div class="calc-row">
+                        <span>Tạm tính</span>
+                        <span>367.000đ</span>
+                    </div>
+                    <div class="calc-row free-ship">
+                        <span>Phí vận chuyển</span>
+                        <span>Miễn phí</span>
+                    </div>
+                    <div class="calc-row discount">
+                        <span>Giảm giá</span>
+                        <span>- 36.700đ</span>
+                    </div>
+
+                    <!-- Voucher Box -->
+                    <div class="voucher-box">
+                        <input type="text" class="voucher-input" placeholder="Nhập mã giảm giá...">
+                        <button type="button" class="voucher-btn">Áp dụng</button>
+                    </div>
+
+                    <!-- Total Row -->
+                    <div class="total-row">
+                        <span class="total-label">TỔNG CỘNG</span>
+                        <div class="total-amount-group">
+                            <span class="total-price-val">330.300đ</span>
+                            <span class="vat-note">(Đã bao gồm VAT)</span>
+                        </div>
+                    </div>
+
+                    <!-- Policy Badges -->
+                    <div class="policy-badges">
+                        <div class="badge-item">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <div>
+                                <div class="badge-text-title">Miễn phí vận chuyển</div>
+                                <div class="badge-text-desc">Cho đơn hàng từ 1.000.000đ</div>
+                            </div>
+                        </div>
+                        <div class="badge-item">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <div>
+                                <div class="badge-text-title">Bảo hành chính hãng</div>
+                                <div class="badge-text-desc">Lên đến 3 năm</div>
+                            </div>
+                        </div>
+                        <div class="badge-item">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <div>
+                                <div class="badge-text-title">Đổi trả dễ dàng</div>
+                                <div class="badge-text-desc">Trong vòng 7 ngày</div>
+                            </div>
+                        </div>
+                        <div class="badge-item">
+                            <i class="fa-solid fa-headset"></i>
+                            <div>
+                                <div class="badge-text-title">Hỗ trợ kỹ thuật 24/7</div>
+                                <div class="badge-text-desc">Tư vấn và giải đáp nhanh chóng</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secure Box -->
+                    <div class="secure-box">
+                        <i class="fa-solid fa-shield"></i>
+                        <div>
+                            <div style="font-weight: 600; font-size: 12px; color: var(--text-main); margin-bottom: 2px;">MUA HÀNG AN TÂM</div>
+                            <p>Thông tin của bạn được bảo mật tuyệt đối</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-300 pt-16 pb-8 border-t border-slate-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+            <!-- Col 1: Logo & Info -->
+            <div class="lg:col-span-2 space-y-4">
+                <div class="text-white font-black text-2xl tracking-tighter">
+                    LTC
+                    <div class="text-[9px] tracking-normal text-slate-400 uppercase font-semibold">Lighting The Future
+                    </div>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                    LTC Việt Nam là thương hiệu hàng đầu trong lĩnh vực cung cấp các giải pháp chiếu sáng LED hiện đại,
+                    tiết kiệm năng lượng và thân thiện với môi trường.
+                </p>
+                <div class="flex space-x-3 pt-2">
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                            class="fa-brands fa-facebook-f text-xs"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                            class="fa-brands fa-youtube text-xs"></i></a>
+                    <a href="#"
+                        class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
+                            class="fa-brands fa-linkedin-in text-xs"></i></a>
+                </div>
+            </div>
+
+            <!-- Col 2: Company -->
+            <div>
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">CÔNG TY TNHH LTC VIỆT NAM</h4>
+                <ul class="space-y-2.5 text-xs text-slate-400">
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot mt-0.5 text-blue-500"></i> Số
+                        123, Đường ABC, P. Cầu Giấy, Q. Nam Từ Liêm, Hà Nội</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-500"></i> 024 3 123 4567
+                    </li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-500"></i>
+                        info@ltc-lighting.vn</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-globe text-blue-500"></i>
+                        www.ltc-lighting.vn</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-file-invoice text-blue-500"></i> MST:
+                        0101234567</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-clock text-blue-500"></i> Thứ 2 - Thứ 7:
+                        8h00 - 17h30</li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Customer Care -->
+            <div>
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">CHĂM SÓC KHÁCH HÀNG</h4>
+                <ul class="space-y-2 text-xs text-slate-400">
+                    <li><a href="#" class="hover:text-white transition">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#" class="hover:text-white transition">Chính sách thanh toán</a></li>
+                    <li><a href="#" class="hover:text-white transition">Chính sách vận chuyển</a></li>
+                    <li><a href="#" class="hover:text-white transition">Chính sách đổi trả</a></li>
+                    <li><a href="#" class="hover:text-white transition">Chính sách bảo hành</a></li>
+                    <li><a href="#" class="hover:text-white transition">Điều khoản sử dụng</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Newsletter & Support info -->
+            <div>
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">HỖ TRỢ KHÁCH HÀNG</h4>
+                <div class="space-y-3 text-xs text-slate-400 mb-6">
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-headset text-blue-500 text-base mt-0.5"></i>
+                        <div>
+                            <div class="text-white font-bold">1900 1234</div>
+                            <div class="text-[10px]">(8h00 – 21h00, T2 – CN)</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-tools text-blue-500 text-base mt-0.5"></i>
+                        <div>
+                            <div class="text-white font-bold">Hỗ trợ kỹ thuật</div>
+                            <div class="text-[10px]">technical@ltc-lighting.vn</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-2">ĐĂNG KÝ NHẬN TIN</h4>
+                <p class="text-xs text-slate-400 mb-2">Nhận thông tin sản phẩm mới, ưu đãi và tin tức từ LTC.</p>
+                <form class="space-y-2" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Nhập email của bạn"
+                        class="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500">
+                    <button type="submit"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2 rounded-lg transition">ĐĂNG
+                        KÝ</button>
+                </form>
+            </div>
+        </div>
+
+        <div
+            class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+            <div>© 2026 LTC Việt Nam. All rights reserved.</div>
+            <div class="flex space-x-2 mt-4 sm:mt-0 items-center">
+                <div class="bg-white rounded-md px-1.5 py-0.5 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-visa text-blue-600 text-xl"></i>
+                </div>
+                <div class="bg-white rounded-md px-1.5 py-0.5 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-mastercard text-red-500 text-xl"></i>
+                </div>
+                <div class="bg-white rounded-md px-1.5 py-0.5 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-amex text-blue-500 text-xl"></i>
+                </div>
+                <div class="bg-white rounded-md px-1.5 py-0.5 shadow-sm flex items-center justify-center">
+                    <i class="fa-brands fa-cc-discover text-orange-500 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<%- include("./layouts/head.ejs")%>
+<title>Danh sách video</title>
+<%- include("./layouts/header.ejs")%>
+
+        <!-- main -->
+        <div class="container" >
+
+            <ul class="breadcrumb">
+                <li><a itemprop="item"
+                        href="/"><span>Trang chủ</span></a>
+                    <meta content="1">
+                </li>
+                <li><a itemprop="item"
+                        href="/danh-sach-video"><span>Video</span></a>
+                    <meta content="2">
+                </li>
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="row danhsachvideo">
+                <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+                    <div class="row">
+                        <% for(item of product){%>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-12 product_video_site" style="text-align: center;">
+                        <div>
+                            <iframe src="<%=item.linkvideo%>"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div><a href="/product-video/<%=item.slug%>/<%=item._id%>" class="name-project__mains"><%=item.tieude%></a>
+                        </div>
+                    </div>
+                    <%}%>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <% if(hasPrev){%>
+                                <li class="page-item"><a class="page-link"
+                                        href="/danh-sach-video?page=<%=prev%>">&laquo;</a></li>
+                                <% }%>
+                                    <% for(i of pages){%>
+                                        <% if(i==="..." ){%>
+                                            <li class="page-item"><span class="page-link" <%=i%></span>
+                                            </li>
+                                            <% }else{%>
+                                                <li class="page-item <%= i === page ? 'active' : '' %>"><a class="page-link"
+                                                        href="/danh-sach-video?page=<%=i%>">
+                                                        <%=i%>
+                                                    </a></li>
+                                                <%}%>
+                                                    <% }%>
+                                                        <% if(hasNext){%>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="/danh-sach-video?page=<%=next%>">&raquo;</a>
+                                                            </li>
+                                                            <% }%>
+                        </ul>
+                    </nav>
+                </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+                    <div class="col-lg-12">
+                        <div class="sidebar-prds__details">
+                            <div class="box-filter__mains">
+								<p class="titles-box__filters">ĐĂNG KÝ TƯ VẤN</p>
+								<form action="/gui-lien-he" method="POST" class="frn__contact ajaxform" accept-charset="utf-8" data-success="CONTACT._">
+									<div class="group-form__alls"> <input type="text" class="input-alls control-alls" name="name" placeholder="Họ tên" crequired="" text-crequired="Nhập vào họ tên !"> </div>
+									<div class="group-form__alls"> <input type="text" class="input-alls control-alls" name="lienhe" placeholder="Số điện thoại" crequired="" text-crequired="Nhập vào số điện thoại !"> </div>
+									<div class="group-form__alls"> <input type="text" name="email" class="input-alls control-alls" placeholder="email"> </div>
+									<input type="hidden" name="type" value="SIDEBAR"> <button type="submit" class="button-borders__alls">Gửi thông tin</button>
+								</form>
+							</div>
+                            <div class="relate-news__details">
+                                <h4 class="titles-list__sidebars">BÀI VIẾT LIÊN QUAN</h4>
+                                <div class="hopthoai_danhsach_video">
+                                <ul>
+                                    <%for(item of baiviet){%>
+                                    <li>
+                                        <div class="news-relate__items">
+                                            <div class="img-news__relates"> <a href="/product-dichvu/<%=item.slug%>/<%=item._id%>" title=""
+                                                    class="d-block img_">
+                                                    <picture> <img loading="lazy" src="https://phongthodep.net/static/site/images/update/<%=item.image[0].images%>"
+                                                            class="img-fluid ls-is-cached lazyloaded" alt="<%=item.image[0].images%>">
+                                                    </picture>
+                                                </a> </div>
+                                            <div class="news-intros__relates">
+                                                <p><a href="/product-dichvu/<%=item.slug%>/<%=item._id%>"
+                                                        title="Kích Thước Nhà Gỗ 5 Gian 2 Buồng Ngủ Điển Hình - Tham Khảo Các Kích Thước Đẹp Nên Xây Dựng"
+                                                        class="names-news__relates"><%=item.tieudesp%></a></p>
+                                                <ul class="admin-times__ups">
+                                                    <li><img src="./images/admin-time-news-1.jpg" alt="Đăng bởi"> <a
+                                                            href="" title="admin">admin</a></li>
+                                                    <li><img src="./images/admin-time-news-2.jpg" alt="Thời gian đăng">
+                                                        <%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></li>
+                                                </ul>
+                                            
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <%}%>
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end main -->
+
+
+
+
+    </div>
+    <%- include("./layouts/footer.ejs")%>

@@ -1,0 +1,95 @@
+/* Fixed sidenav, full height */
+.sidenav {
+    height: 650px;
+    width: inherit;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+    margin-top: 7%;
+    padding-bottom: 200px;
+}
+
+/* Style the sidenav links and the dropdown button */ 
+.sidenav a,
+.dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+/* On mouse-over */
+.sidenav a:hover,
+.dropdown-btn:hover {
+    color: #f1f1f1;
+}
+
+/* Main content */
+.main {
+    font-size: 14px;
+    /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+    background-color: green;
+    color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+.dropdown-container{
+    padding-left: 15%;
+}
+.antext {
+    display: block;
+    display: -webkit-box;
+    height: 16px*1.3*3;
+    font-size: 13px;
+    line-height: 1.3;
+    -webkit-line-clamp: 5;  /* số dòng hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top:10px;
+}
+.antext img {
+    height: 150px;
+    width: 150px;
+}
+@media (max-width: 550px) {
+    .sidenav {
+        margin-top: 40%;
+    }
+    .sidebar form {
+        margin-top: 10%;
+    }
+    .user-menu{
+        margin-top: 0;
+    }
+}
+h1, h2, h3, h4, h5, h6{
+    font-size: 14px;
+}

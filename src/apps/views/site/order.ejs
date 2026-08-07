@@ -1,0 +1,1065 @@
+<%- include("./layouts/head.ejs")%>
+
+
+    <!-- style order -->
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #cbd5e1;
+            --bg-light: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            padding: 24px;
+            font-size: 14px;
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 24px 32px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-sub);
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-sub);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 24px;
+        }
+
+        /* Progress Steps */
+        .steps-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 500px;
+            margin-bottom: 36px;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 25px;
+            right: 25px;
+            height: 2px;
+            background: #e2e8f0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            padding: 0 4px;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .step-item.active .step-number {
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+        }
+
+        .step-item.active .step-label {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Main Layout Grid */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 32px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 28px;
+        }
+
+        .section-heading {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row.two-cols {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            color: var(--text-main);
+        }
+
+        .form-group label span {
+            color: #ef4444;
+        }
+
+        .form-control {
+            height: 42px;
+            padding: 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            background: #ffffff;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 36px;
+        }
+
+        /* Radio & Checkbox Customization */
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-main);
+            user-select: none;
+        }
+
+        .radio-options {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            accent-color: var(--primary-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Shipping & Payment Options Cards */
+        .option-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .option-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .option-title {
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .option-price {
+            font-weight: 600;
+            color: #16a34a;
+        }
+
+        .option-price.fee {
+            color: var(--text-main);
+        }
+
+        /* Right Order Summary Column */
+        .order-summary-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            position: sticky;
+            top: 24px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 600;
+        }
+
+        .edit-cart-link {
+            font-size: 13px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .summary-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 16px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .summary-item-left {
+            display: flex;
+            gap: 10px;
+        }
+
+        .summary-item-img {
+            width: 48px;
+            height: 48px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            object-fit: contain;
+            padding: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .summary-item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .summary-item-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .summary-item-variant {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .summary-item-qty {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .summary-item-price {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        /* Calculations */
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .calc-row.free-ship span:last-child {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .calc-row.discount span:last-child {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        /* Voucher input */
+        .voucher-box {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .voucher-input {
+            flex: 1;
+            height: 38px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0 10px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .voucher-btn {
+            padding: 0 16px;
+            height: 38px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .voucher-btn:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        /* Total Section */
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .total-label {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .total-amount-group {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .total-price-val {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .vat-note {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        /* Policy & Trust Badges */
+        .policy-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 16px;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .badge-item i {
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-top: 2px;
+        }
+
+        .badge-text-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .badge-text-desc {
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+
+        .secure-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+        }
+
+        .secure-box i {
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        .secure-box p {
+            font-size: 11px;
+            color: var(--text-sub);
+            line-height: 1.4;
+        }
+
+        /* Terms & Submit button section inside left form */
+        .terms-submit-area {
+            margin-top: 24px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 20px;
+        }
+
+        .terms-row {
+            margin-bottom: 16px;
+        }
+
+        .terms-row a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .terms-row a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-order-btn {
+            width: 100%;
+            height: 48px;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .submit-order-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .sms-note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary-box {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .checkout-container {
+                padding: 16px;
+            }
+
+            .form-row,
+            .form-row.two-cols {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+
+    <div class="checkout-container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/">Trang chủ</a>
+            <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+            <a href="/gio-hang">Giỏ hàng</a>
+            <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+            <span style="color: var(--text-main);">ĐẶT HÀNG</span>
+        </div>
+
+        <!-- Page Title -->
+        <h1 class="page-title">ĐẶT HÀNG</h1>
+
+        <!-- Progress Steps -->
+        <div class="steps-container">
+            <div class="step-item active">
+                <div class="step-number">1</div>
+                <div class="step-label">Thông tin đặt hàng</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-label">Thanh toán</div>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-label">Hoàn tất</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="checkout-grid">
+
+            <!-- Left Column: Forms -->
+            <div class="checkout-form-column">
+                <form name="frm" role="form" method="post" action="/order" enctype="multipart/form-data"
+                    class="space-y-5">
+
+                    <!-- 1. THÔNG TIN LIÊN HỆ -->
+                    <div class="form-section">
+                        <h2 class="section-heading">1. THÔNG TIN LIÊN HỆ</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Họ và tên <span>*</span></label>
+                                <input type="text" class="form-control" required name="name"
+                                    placeholder="Nguyễn Văn A">
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại <span>*</span></label>
+                                <input type="text" class="form-control" required name="sdt"
+                                    placeholder="0901 234 567">
+                            </div>
+                            <div class="form-group">
+                                <label>Email <span>*</span></label>
+                                <input type="email" class="form-control" required name="email"
+                                    placeholder="nguyenvana@gmail.com">
+                            </div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="company-invoice" name="is_company" placeholder="1">
+                            <label for="company-invoice">Đặt hàng với tư cách doanh nghiệp</label>
+                        </div>
+
+                        <!-- KHU VỰC NHẬP THÔNG TIN CÔNG TY (Sẽ ẩn/hiện dựa vào checkbox) -->
+                        <div id="company-fields-wrapper" class="company-info-fields">
+                            <div class="form-row two-cols" style="margin-bottom: 16px;">
+                                <div class="form-group">
+                                    <label>Tên công ty <span>*</span></label>
+                                    <input type="text" class="form-control" name="name_cty"
+                                        placeholder="Nhập tên công ty">
+                                </div>
+                                <div class="form-group">
+                                    <label>Mã số thuế <span>*</span></label>
+                                    <input type="text" class="form-control" name="tax"
+                                        placeholder="Nhập mã số thuế">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Địa chỉ công ty (trên hóa đơn) <span>*</span></label>
+                                <input type="text" class="form-control" name="add_cty"
+                                    placeholder="Nhập địa chỉ đăng ký kinh doanh">
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const checkboxCompany = document.getElementById("company-invoice");
+                            const companyFields = document.getElementById("company-fields-wrapper");
+
+                            if (checkboxCompany && companyFields) {
+                                checkboxCompany.addEventListener("change", function () {
+                                    if (this.checked) {
+                                        companyFields.classList.add("show");
+                                    } else {
+                                        companyFields.classList.remove("show");
+                                    }
+                                });
+                            }
+                        });
+                    </script>
+                    <style>
+                        /* Mặc định ẩn phần nhập thông tin doanh nghiệp */
+                        .company-info-fields {
+                            display: none;
+                            margin-top: 16px;
+                            padding: 16px;
+                            background: #f8fafc;
+                            border: 1px dashed var(--border-color);
+                            border-radius: 8px;
+                        }
+
+                        .company-info-fields.show {
+                            display: block;
+                        }
+                    </style>
+
+                    <!-- 2. ĐỊA CHỈ GIAO HÀNG -->
+                    <div class="form-section">
+                        <h2 class="section-heading">2. ĐỊA CHỈ GIAO HÀNG</h2>
+                        <div class="radio-options">
+                            <label class="radio-group">
+                                <input type="radio" name="shipping_receive_type" value="Giao hàng tận nơi" placeholder="delivery" checked> Giao
+                                hàng tận
+                                nơi
+                            </label>
+                            <label class="radio-group">
+                                <input type="radio" name="shipping_receive_type" value="Nhận hàng tại cửa hàng" placeholder="store_pickup"> Nhận hàng tại cửa hàng
+                            </label>
+                        </div>
+
+                        <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; margin-bottom: 16px;">
+                            <!-- TỈNH / THÀNH PHỐ -->
+                            <div class="form-group">
+                                <label>Tỉnh / Thành phố <span>*</span></label>
+                                <select class="form-control" id="province" name="thanhpho" required>
+                                    <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                                </select>
+                                <span class="error-message"
+                                    style="color: red; font-size: 12px; display: none; margin-top: 4px;"></span>
+                            </div>
+
+                            <!-- QUẬN / HUYỆN -->
+                            <div class="form-group">
+                                <label>Quận / Huyện <span>*</span></label>
+                                <select class="form-control" id="district" name="quan" required disabled>
+                                    <option value="">-- Chọn Quận/Huyện --</option>
+                                </select>
+                                <span class="error-message"
+                                    style="color: red; font-size: 12px; display: none; margin-top: 4px;"></span>
+                            </div>
+
+                            <!-- PHƯỜNG / XÃ -->
+                            <div class="form-group">
+                                <label>Phường / Xã <span>*</span></label>
+                                <select class="form-control" id="ward" name="phuong" required disabled>
+                                    <option value="">-- Chọn Phường/Xã --</option>
+                                </select>
+                                <span class="error-message"
+                                    style="color: red; font-size: 12px; display: none; margin-top: 4px;"></span>
+                            </div>
+                        </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const provinceSelect = document.getElementById("province");
+                                const districtSelect = document.getElementById("district");
+                                const wardSelect = document.getElementById("ward");
+
+                                // Lấy danh sách 63 tỉnh thành từ API công khai của Việt Nam
+                                fetch("https://provinces.open-api.vn/api/?depth=3")
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        // Đổ dữ liệu Tỉnh/Thành phố
+                                        data.forEach(province => {
+                                            let option = document.createElement("option");
+                                            option.value = province.name;
+                                            option.text = province.name;
+                                            option.dataset.code = province.code; // Lưu lại code để lọc quận/huyện
+                                            provinceSelect.appendChild(option);
+                                        });
+
+                                        // Xử lý sự kiện khi chọn Tỉnh/Thành phố
+                                        provinceSelect.addEventListener("change", function () {
+                                            const selectedCode = this.options[this.selectedIndex].dataset.code;
+
+                                            // Reset Quận/Huyện và Phường/Xã
+                                            districtSelect.innerHTML = '<option value="">-- Chọn Quận/Huyện --</option>';
+                                            wardSelect.innerHTML = '<option value="">-- Chọn Phường/Xã --</option>';
+                                            wardSelect.disabled = true;
+
+                                            if (selectedCode) {
+                                                districtSelect.disabled = false;
+                                                const selectedProvince = data.find(p => p.code == selectedCode);
+
+                                                if (selectedProvince && selectedProvince.districts) {
+                                                    selectedProvince.districts.forEach(district => {
+                                                        let option = document.createElement("option");
+                                                        option.value = district.name;
+                                                        option.text = district.name;
+                                                        option.dataset.code = district.code;
+                                                        districtSelect.appendChild(option);
+                                                    });
+                                                }
+                                            } else {
+                                                districtSelect.disabled = true;
+                                            }
+                                        });
+
+                                        // Xử lý sự kiện khi chọn Quận/Huyện
+                                        districtSelect.addEventListener("change", function () {
+                                            const selectedProvinceCode = provinceSelect.options[provinceSelect.selectedIndex].dataset.code;
+                                            const selectedDistrictCode = this.options[this.selectedIndex].dataset.code;
+
+                                            wardSelect.innerHTML = '<option value="">-- Chọn Phường/Xã --</option>';
+
+                                            if (selectedDistrictCode) {
+                                                wardSelect.disabled = false;
+                                                const selectedProvince = data.find(p => p.code == selectedProvinceCode);
+                                                const selectedDistrict = selectedProvince.districts.find(d => d.code == selectedDistrictCode);
+
+                                                if (selectedDistrict && selectedDistrict.wards) {
+                                                    selectedDistrict.wards.forEach(ward => {
+                                                        let option = document.createElement("option");
+                                                        option.value = ward.name;
+                                                        option.text = ward.name;
+                                                        wardSelect.appendChild(option);
+                                                    });
+                                                }
+                                            } else {
+                                                wardSelect.disabled = true;
+                                            }
+                                        });
+                                    })
+                                    .catch(error => console.error("Không thể tải dữ liệu hành chính:", error));
+                            });
+                        </script>
+
+                        <div class="form-group" style="margin-bottom: 16px;">
+                            <label>Địa chỉ chi tiết <span>*</span></label>
+                            <input type="text" class="form-control" name="add_chitiet"
+                                placeholder="123 Đường Cầu Giấy, Phường Dịch Vọng, Quận Cầu Giấy, Hà Nội" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ghi chú giao hàng</label>
+                            <input type="text" class="form-control" name="note"
+                                placeholder="Ví dụ: Giao hàng giờ hành chính, gọi trước khi giao...">
+                        </div>
+                    </div>
+
+                    <!-- 3. PHƯƠNG THỨC VẬN CHUYỂN -->
+<!-- 3. PHƯƠNG THỨC VẬN CHUYỂN -->
+<div class="form-section">
+    <h2 class="section-heading">3. PHƯƠNG THỨC VẬN CHUYỂN</h2>
+    <div class="option-card-list">
+        <label class="option-item">
+            <div class="option-info">
+                <input type="radio" name="shipping_method" value="Giao hàng tiêu chuẩn (1 - 3 ngày)" data-fee="30000" checked>
+                <span class="option-title">Giao hàng tiêu chuẩn (1 - 3 ngày)</span>
+            </div>
+            <span class="option-price">30.000đ</span>
+        </label>
+        <label class="option-item">
+            <div class="option-info">
+                <input type="radio" name="shipping_method" value="Giao hàng nhanh (Trong ngày)" data-fee="30000">
+                <span class="option-title">Giao hàng nhanh (Trong ngày)</span>
+            </div>
+            <span class="option-price fee">30.000đ</span>
+        </label>
+        <label class="option-item">
+            <div class="option-info">
+                <input type="radio" name="shipping_method" value="Giao hàng hỏa tốc (2 - 4 giờ)" data-fee="60000">
+                <span class="option-title">Giao hàng hỏa tốc (2 - 4 giờ)</span>
+            </div>
+            <span class="option-price fee">60.000đ</span>
+        </label>
+    </div>
+</div>
+
+                    <!-- 4. PHƯƠNG THỨC THANH TOÁN -->
+                    <div class="form-section">
+                        <h2 class="section-heading">4. PHƯƠNG THỨC THANH TOÁN</h2>
+                        <div class="option-card-list">
+                            <label class="option-item" style="align-items: flex-start;">
+                                <div class="option-info">
+                                    <input type="radio" name="payment_method" value="Thanh toán khi nhận hàng (COD)" checked
+                                        style="margin-top: 3px;">
+                                    <div class="option-text-group">
+                                        <span class="option-title">Thanh toán khi nhận hàng (COD)</span>
+                                        <span class="option-desc">Thanh toán bằng tiền mặt khi nhận hàng</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="option-item" style="align-items: flex-start;">
+                                <div class="option-info">
+                                    <input type="radio" name="payment_method" value="Chuyển khoản ngân hàng"
+                                        style="margin-top: 3px;">
+                                    <div class="option-text-group">
+                                        <span class="option-title">Chuyển khoản ngân hàng</span>
+                                        <span class="option-desc">Bạn sẽ nhận được thông tin tài khoản sau khi đặt hàng</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="option-item" style="align-items: flex-start;">
+                                <div class="option-info">
+                                    <input type="radio" name="payment_method" value="Thanh toán qua thẻ ATM / Internet Banking"
+                                        style="margin-top: 3px;">
+                                    <div class="option-text-group">
+                                        <span class="option-title">Thanh toán qua thẻ ATM / Internet Banking</span>
+                                        <span class="option-desc">Thanh toán qua cổng thanh toán an toàn</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="option-item" style="align-items: flex-start;">
+                                <div class="option-info">
+                                    <input type="radio" name="payment_method" value="Thanh toán qua MoMo, ZaloPay, VNPay" style="margin-top: 3px;">
+                                    <div class="option-text-group">
+                                        <span class="option-title">Ví điện tử</span>
+                                        <span class="option-desc">Thanh toán qua MoMo, ZaloPay, VNPay</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Submit Button Area -->
+                    <div class="terms-submit-area">
+                        <div class="checkbox-group terms-row">
+                            <!-- Đã xóa 'checked' và thêm 'required' -->
+                            <input type="checkbox" id="terms-check" name="agree_terms" value="1" required>
+                            <label for="terms-check">Tôi đồng ý với <a>Điều khoản sử dụng</a> và <a>Chính sách bảo
+                                    mật</a> của LTC Lighting</label>
+                        </div>
+                        <!-- Đổi type thành submit nếu bạn muốn nút này dùng để gửi form trực tiếp -->
+                        <button type="submit" class="submit-order-btn">
+                            <i class="fa-solid fa-lock"></i> ĐẶT HÀNG
+                        </button>
+                        <div class="sms-note">Bạn sẽ nhận được xác nhận đơn hàng qua SMS/Email</div>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const termsCheckbox = document.getElementById("terms-check");
+
+                    if (termsCheckbox) {
+                        termsCheckbox.addEventListener("invalid", function (e) {
+                            // Tùy chỉnh câu thông báo khi chưa tích
+                            this.setCustomValidity("Vui lòng đồng ý với điều khoản sử dụng để tiếp tục.");
+                        });
+
+                        termsCheckbox.addEventListener("change", function (e) {
+                            // Xóa thông báo lỗi khi người dùng đã tích vào
+                            this.setCustomValidity("");
+                        });
+                    }
+                });
+            </script>
+
+
+
+
+            <!-- Right Column: Order Summary -->
+<!-- CỘT TỔNG KẾT BÊN PHẢI -->
+<div class="checkout-summary-column">
+    <div class="order-summary-box">
+        <div class="summary-header">
+            <span>ĐƠN HÀNG CỦA BẠN (<%=cart.length%> sản phẩm)</span>
+            <a href="/gio-hang" class="edit-cart-link">Sửa đơn hàng</a>
+        </div>
+
+        <div class="summary-items-list">
+            <% for(item of cart) { %>
+            <div class="summary-item">
+                <div class="summary-item-left">
+                    <img src="../site/images/update/<%=item.thumbnail%>" class="summary-item-img" alt="<%=item.name%>">
+                    <div class="summary-item-details">
+                        <span class="summary-item-name"><%=item.name%></span>
+                        <span class="summary-item-variant"><%=item.anhsang%></span>
+                        <span class="summary-item-qty">x <%=item.qty%></span>
+                    </div>
+                </div>
+                <span class="summary-item-price"><%= Number(item.price * item.qty).toLocaleString('vi-VN') %>₫</span>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- Calculation lines -->
+        <div class="calc-row">
+            <span>Tạm tính</span>
+            <span id="sub-total" data-value="<%= totalPrice %>"><%= Number(totalPrice).toLocaleString('vi-VN') %>₫</span>
+        </div>
+        
+        <div class="calc-row">
+            <span>Phí vận chuyển</span>
+            <span id="shipping-fee-text">0đ</span>
+        </div>
+        
+        <!-- Dòng thông báo mua thêm để được freeship (chỉ hiện khi dưới 1tr và chọn tiêu chuẩn) -->
+        <div id="freeship-msg" style="font-size: 12px; color: #e11d48; margin-bottom: 8px; display: none;">
+            Mua thêm <span id="missing-amount">0</span>đ để được miễn phí vận chuyển.
+        </div>
+
+        <div class="calc-row discount">
+            <span>Giảm giá</span>
+            <span>0đ</span>
+        </div>
+
+        <!-- Total Row -->
+        <div class="total-row">
+            <span class="total-label">TỔNG CỘNG</span>
+            <div class="total-amount-group">
+                <span class="total-price-val" id="final-total"><%= Number(totalPrice).toLocaleString('vi-VN') %>₫</span>
+                <span class="vat-note">(Đã bao gồm VAT)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const subTotal = Number(document.getElementById("sub-total").getAttribute("data-value"));
+    const shippingRadios = document.querySelectorAll("input[name='shipping_method']");
+    const shippingFeeText = document.getElementById("shipping-fee-text");
+    const finalTotalEl = document.getElementById("final-total");
+    const freeshipMsg = document.getElementById("freeship-msg");
+    const missingAmountEl = document.getElementById("missing-amount");
+
+    function updateCheckout() {
+        const selectedRadio = document.querySelector("input[name='shipping_method']:checked");
+        if (!selectedRadio) return;
+
+        let baseShippingFee = Number(selectedRadio.getAttribute("data-fee"));
+        let finalShippingFee = 0;
+        let shippingText = "";
+
+        const isStandard = selectedRadio.value.includes("tiêu chuẩn");
+
+        if (isStandard) {
+            if (subTotal >= 1000000) {
+                finalShippingFee = 0;
+                shippingText = "Miễn phí";
+                freeshipMsg.style.display = "none";
+            } else {
+                finalShippingFee = 30000;
+                shippingText = "30.000đ";
+                const missing = 1000000 - subTotal;
+                missingAmountEl.textContent = missing.toLocaleString('vi-VN');
+                freeshipMsg.style.display = "block";
+            }
+        } else {
+            // Các gói nhanh hoặc hỏa tốc
+            finalShippingFee = baseShippingFee;
+            shippingText = finalShippingFee.toLocaleString('vi-VN') + "đ";
+            freeshipMsg.style.display = "none"; // Không hiện thông báo freeship khi chọn gói nhanh/hỏa tốc
+        }
+
+        // Cập nhật giao diện phí ship
+        shippingFeeText.textContent = shippingText;
+
+        // Cập nhật tổng cộng = Tạm tính + Phí vận chuyển
+        const grandTotal = subTotal + finalShippingFee;
+        finalTotalEl.textContent = grandTotal.toLocaleString('vi-VN') + "₫";
+    }
+
+    // Lắng nghe sự kiện thay đổi khi khách click chọn các hình thức vận chuyển
+    shippingRadios.forEach(radio => {
+        radio.addEventListener("change", updateCheckout);
+    });
+
+    // Chạy lần đầu khi tải trang
+    updateCheckout();
+});
+</script>
+
+
+        </div>
+    </div>
+
+
+
+    <%- include("./layouts/footer.ejs")%>

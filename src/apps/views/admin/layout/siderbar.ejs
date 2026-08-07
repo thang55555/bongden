@@ -1,0 +1,210 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <form role="search" action="/admin/search" style="padding: 15px; padding-bottom: inherit;">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search..." name="keyword">
+        </div>
+    </form>
+
+    <div class="sidenav">
+        <div class="sidebar-menu">
+
+            <a href="/admin/dashboard" class="menu-link">
+                <i class="fa fa-tachometer"></i> Dashboard
+            </a>
+
+            <button class="dropdown-btn">
+                <i class="fa fa-info-circle"></i> Thông tin trang
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/thong-tin-trang">Thông tin trang</a>
+            </div>
+            
+            <button class="dropdown-btn">
+                <i class="fa-solid fa-images"></i>
+                <span>Banner</span>
+                <i class="fa-solid fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/banner">Danh sách banner</a>
+                <a href="/admin/add-banner">Thêm banner</a>
+            </div>
+
+            <button class="dropdown-btn">
+                <i class="fa fa-th-list"></i> Danh mục sản phẩm
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/danh-muc-san-pham">Danh sách nhóm</a>
+                <a href="/admin/add-danh-muc-san-pham">Thêm mới nhóm</a>
+            </div>
+
+            <button class="dropdown-btn">
+                <i class="fa fa-tags"></i> Nhóm sản phẩm
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/nhom-san-pham">Danh sách nhóm</a>
+                <a href="/admin/add-nhom-san-pham">Thêm mới nhóm</a>
+            </div>
+
+            <button class="dropdown-btn">
+                <i class="fa fa-shopping-bag"></i> Sản phẩm
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/danh-sach-san-pham">Danh sách sản phẩm</a>
+                <a href="/admin/add-san-pham">Thêm mới sản phẩm</a>
+            </div>
+<!--        <button class="dropdown-btn">
+                <i class="fa fa-video-camera"></i> Video
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/danh-sach-video">Danh sách video</a>
+                <a href="/admin/add-video">Thêm mới video</a>
+            </div> -->
+
+            <button class="dropdown-btn">
+                <i class="fa fa-newspaper-o"></i> Tin tức
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/danh-sach-menu-tin-tuc">Menu tin tức</a>
+                <a href="/admin/danh-sach-bai-viet-tin-tuc">Danh sách bài viết</a>
+                <a href="/admin/add-bai-viet-tin-tuc">Thêm bài viết</a>
+            </div>
+
+            <button class="dropdown-btn">
+                <i class="fa fa-wrench"></i> Dự án
+                <i class="fa fa-chevron-down caret"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="/admin/menu-dich-vu">Menu dự án</a>
+                <a href="/admin/bai-viet-dich-vu">Danh sách bài viết</a>
+                <a href="/admin/add-bai-viet-dich-vu">Thêm bài viết</a>
+            </div>
+
+            <a href="/admin/danh-sach-yeu-cau-tu-van"><i class="fa fa-envelope"></i> Tư vấn</a>
+            <a href="/admin/order"><i class="fa fa-envelope"></i> Đơn hàng</a>
+            <!-- <a href="/admin/chia-se-khach-hang"><i class="fa fa-comments"></i> Khách hàng</a>
+            <a href="/admin/thuoc-lo-ban"><i class="fa fa-balance-scale"></i> Thước lỗ ban</a> -->
+            <a href="/admin/danh-sach-anh"><i class="fa fa-picture-o"></i> Album ảnh</a>
+
+        </div>
+    </div>
+</div>
+<style>
+    /* Sidebar chung */
+    .sidebar {
+        background: #1e293b;
+        /* Màu tối hiện đại */
+        min-height: 100vh;
+        padding-top: 20px;
+        color: #cbd5e1;
+    }
+
+    .sidenav a,
+    .dropdown-btn {
+        padding: 12px 20px;
+        text-decoration: none;
+        font-size: 14px;
+        color: #cbd5e1;
+        display: block;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    /* Hiệu ứng khi di chuột */
+    .sidenav a:hover,
+    .dropdown-btn:hover {
+        background: #334155;
+        color: #fff;
+    }
+
+    /* Dropdown container */
+    .dropdown-container {
+        display: none;
+        background-color: #0f172a;
+        /* Màu tối hơn để tạo phân cấp */
+        padding-left: 30px;
+    }
+
+    .dropdown-container a {
+        font-size: 13px;
+        padding: 10px;
+        color: #94a3b8;
+    }
+
+    .dropdown-container a:hover {
+        color: #fff;
+    }
+
+    /* Icon và Caret */
+    .dropdown-btn i.caret {
+        float: right;
+        font-size: 12px;
+    }
+
+    .sidebar .form-control {
+        background: #334155;
+        border: none;
+        color: #fff;
+        margin: 10px 20px;
+        width: 85%;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        bottom: 0;
+        width: 16.666667%;
+        background: #111;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .sidenav {
+        height: 100%;
+    }
+
+    .sidebar-menu {
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: 20px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .sidebar-menu::-webkit-scrollbar-thumb {
+        background: #666;
+        border-radius: 3px;
+    }
+
+    /* Loại bỏ viền xanh/đen mặc định khi click vào tất cả các phần tử */
+    *:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Riêng đối với các button hoặc link trong dashboard */
+    .panel-widget,
+    .dropdown-btn,
+    a:focus,
+    button:focus {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+</style>
+

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo, Tải và Copy Mã QR</title>
+    <!-- Nhúng FontAwesome để hiển thị icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4; }
+        .box { background: #fff; display: inline-block; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        img { display: block; margin: 0 auto 15px auto; border: 1px solid #ddd; border-radius: 4px; }
+        
+        /* Style cho các nút icon */
+        .action-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .icon-btn {
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: #283593;
+            transform: scale(1.1);
+        }
+        .toast { margin-top: 15px; font-size: 13px; color: green; display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Nếu có nhiều sản phẩm, vòng lặp sẽ render ra các khung QR tương ứng độc lập nhau -->
+        
+        <div class="box">
+            <h3>Mã QR sản phẩm</h3>
+            <!-- Dùng class thay cho id để tránh trùng lặp nếu có nhiều sản phẩm -->
+            <img class="qr-image" crossorigin="anonymous" src="https://quickchart.io/chart?cht=qr&chs=200x200&chl=ttps://cdnjs.cloudflare.com" alt="Mã QR">
+            
+            <!-- Truyền trực tiếp đường dẫn tương ứng vào nút bấm -->
+            <div class="action-btns">
+                <button class="icon-btn" onclick="copyLink('<%= productUrl %>', this)" title="Copy Link"><i class="fa-solid fa-link"></i></button>
+                <button class="icon-btn" onclick="copyImage(this)" title="Copy Ảnh QR"><i class="fa-regular fa-copy"></i></button>
+                <button class="icon-btn" onclick="downloadQR(this)" title="Tải xuống QR"><i class="fa-solid fa-download"></i></button>
+            </div>
+            <div class="toast">Thành công!</div>
+        </div>
+
+
+    <script>
+        function showNotification(buttonElement, msg) {
+            // Tìm thông báo toast nằm chung trong khung sản phẩm đó
+            const box = buttonElement.closest('.box');
+            const toast = box.querySelector('.toast');
+            toast.textContent = msg;
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 2000);
+        }
+
+        function copyLink(url, btn) {
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification(btn, "Đã copy link thành công!");
+            });
+        }
+
+        async function copyImage(btn) {
+            try {
+                const box = btn.closest('.box');
+                const imgElement = box.querySelector('.qr-image');
+                const canvas = document.createElement("canvas");
+                canvas.width = imgElement.naturalWidth || 200;
+                canvas.height = imgElement.naturalHeight || 200;
+                const ctx = canvas.getContext("2d");
+                
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.src = imgElement.src;
+                
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                });
+                
+                ctx.drawImage(img, 0, 0);
+                
+                canvas.toBlob(async (blob) => {
+                    await navigator.clipboard.write([
+                        new ClipboardItem({ "image/png": blob })
+                    ]);
+                    showNotification(btn, "Đã copy ảnh QR vào bộ nhớ tạm!");
+                });
+            } catch (err) {
+                console.error(err);
+                alert("Trình duyệt không hỗ trợ copy trực tiếp hình ảnh này!");
+            }
+        }
+
+        function downloadQR(btn) {
+            const box = btn.closest('.box');
+            const imgElement = box.querySelector('.qr-image');
+            fetch(imgElement.src)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = blobUrl;
+                    a.download = "qrcode-hopthanh.png";
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                    showNotification(btn, "Đã tải xuống ảnh QR!");
+                })
+                .catch(err => console.error("Không thể tải ảnh xuống:", err));
+        }
+    </script>
+
+</body>
+</html>

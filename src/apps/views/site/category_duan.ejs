@@ -1,0 +1,300 @@
+<%- include("./layouts/head.ejs")%>
+
+
+    <!-- Container chính -->
+    <div class="max-w-7xl mx-auto bg-white min-h-screen shadow-sm flex flex-col justify-between">
+
+        <div>
+            <!-- Banner Đầu Trang -->
+            <div class="relative bg-gradient-to-r from-blue-950 via-blue-900 to-indigo-950 text-white overflow-hidden">
+                <!-- Hình nền nội thất mờ -->
+                <div class="absolute inset-0  bg-cover bg-center "
+                    style="background-image: url('../site/images/update/<%=product.images%>');"></div>
+
+                <div class="relative px-6 sm:px-12 py-10 sm:py-14 space-y-6">
+                    <!-- Breadcrumb -->
+                    <div class="flex items-center space-x-2 text-xs sm:text-sm text-slate-300">
+                        <a href="/" class="hover:text-white transition">Trang chủ</a>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        <span class="text-white font-medium">Dự án</span>
+                    </div>
+
+                    <!-- Tiêu đề & Mô tả -->
+                    <div class="space-y-3 max-w-2xl">
+                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-wide uppercase">DỰ ÁN</h2>
+                       <%-product.content%>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nội dung chính (Layout 2 cột: Sidebar & Danh sách tin tức) -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+                <!-- Cột Trái (Sidebar) -->
+                <div class="space-y-6 lg:col-span-1">
+
+                    <!-- Danh mục tin tức -->
+                    <div class="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm space-y-3">
+                        <h3 class="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">DANH MỤC DỰ ÁN</h3>
+
+                        <div class="space-y-1 text-xs sm:text-sm">
+<!-- Nút Tất cả dự án -->
+<a href="/category-du-an"
+   class="block px-4 py-2.5 rounded-xl transition font-bold <%= !id ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium' %>">
+   Tất cả dự án
+</a>
+
+<!-- Danh sách các mục động -->
+<% for(item of menu) { %>
+    <% let isActive = (id && id.toString() === item._id.toString()); %>
+    <a href="/category-du-an?slug=<%=item.slug%>&id=<%=item._id%>"
+       class="block px-4 py-2.5 rounded-xl transition <%= isActive ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium' %>">
+       <%=item.name%>
+    </a>
+<% } %>
+                           
+                        </div>
+                    </div>
+
+
+
+                    <!-- Banner Phụ (Tiết kiệm điện) -->
+                    <div
+                        class="relative rounded-2xl p-6 text-white overflow-hidden shadow-sm flex flex-col justify-between min-h-[420px]">
+                        <!-- Hình nền banner phụ full kích thước thực tế -->
+                        <div class="absolute inset-0 bg-contain bg-center bg-no-repeat"
+                            style="background-image: url('./images/banner-tin-tuc-2.png');"></div>
+
+                        <!-- Phần dưới để trống tạo khoảng cách hiển thị trọn vẹn ảnh -->
+                        <div class="relative z-10 pt-24"></div>
+                    </div>
+
+                </div>
+
+                <!-- Cột Phải (Danh sách tin tức và bộ lọc) -->
+                <div class="lg:col-span-3 space-y-6">
+
+                    <!-- Thanh tiêu đề & Công cụ lọc -->
+                    <div
+                        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-2xl border border-slate-100">
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 uppercase">TẤT CẢ DỰ ÁN</h2>
+
+                        <div class="flex items-center space-x-3 w-full sm:w-auto">
+                            <!-- Ô tìm kiếm -->
+                            <div class="relative flex-1 sm:w-64">
+                                <input type="text" placeholder="Tìm kiếm dự án..."
+                                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs focus:outline-none focus:border-blue-500 pr-9">
+                                <i
+                                    class="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            </div>
+
+                            <!-- Dropdown sắp xếp -->
+                            <div class="relative">
+<select onchange="handleSortChange(this)"
+    class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs font-medium text-slate-700 focus:outline-none focus:border-blue-500 appearance-none pr-8 cursor-pointer">
+    <option value="newest" <%= sort === 'newest' ? 'selected' : '' %>>Mới nhất</option>
+    <option value="oldest" <%= sort === 'oldest' ? 'selected' : '' %>>Cũ nhất</option>
+    <option value="views" <%= sort === 'views' ? 'selected' : '' %>>Xem nhiều nhất</option>
+</select>
+
+<script>
+function handleSortChange(selectElement) {
+    const sortValue = selectElement.value;
+    
+    // Lấy URL hiện tại trên trình duyệt
+    const url = new URL(window.location.href);
+    
+    // Thêm hoặc cập nhật tham số 'sort' vào URL
+    url.searchParams.set('sort', sortValue);
+    
+    // Reset lại page về 1 mỗi khi thay đổi bộ lọc sắp xếp
+    url.searchParams.set('page', '1');
+    
+    // Chuyển hướng trình duyệt đến URL mới
+    window.location.href = url.toString();
+}
+</script>
+                                <i
+                                    class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lưới danh sách bài viết (6 bài) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                         <% for(item of products){%>
+                        <!-- Bài viết -->
+                            <a href="/du-an?slug=<%=item.slug%>&id=<%=item._id%>">
+                        <div
+                            class="bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col justify-between hover:shadow-md transition group">
+                            <div>
+                                <div class="w-full h-48 bg-slate-100 overflow-hidden relative flex items-center justify-center ">
+                                    <img src="../site/images/update/<%=item.image[0].images%>"
+                                        alt="<%=item.slug%>"
+                                        class=" h-full object-cover group-hover:scale-105 transition duration-300">
+                                </div>
+                                <div class="p-5 space-y-2.5">
+                                    <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider block"><%=item.menudichvu_id[0].name%></span>
+                                    <h3
+                                        class="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-blue-600 transition line-clamp-2">
+                                       <%=item.name%></h3>
+<% 
+    // 1. Lấy nội dung từ mảng hoặc chuỗi
+    let rawContent = Array.isArray(item.content) ? item.content.join('') : (item.content || '');
+    
+    // 2. Xóa các thẻ HTML (bao gồm thẻ <img>, <video>,...) và các khoảng trắng thừa
+    let plainText = String(rawContent).replace(/<[^>]*>/g, '').trim();
+    
+    // 3. Giải mã các ký tự tiếng Việt bị mã hóa (ví dụ: C&ocirc;ng -> Công)
+    // Nếu bạn đã cài thư viện 'he' (npm install he), hãy dùng he.decode(plainText). 
+    // Nếu không muốn cài thêm thư viện, có thể dùng đoạn mã xử lý thay thế bên dưới hoặc cấu hình Controller.
+    let decodedText = plainText
+        .replace(/&ocirc;/g, 'ô').replace(/&agrave;/g, 'à').replace(/&aacute;/g, 'á')
+        .replace(/&eacute;/g, 'é').replace(/&egrave;/g, 'è').replace(/&iacute;/g, 'í')
+        .replace(/&ì/g, 'ì').replace(/&oacute;/g, 'ó').replace(/&ograve;/g, 'ò')
+        .replace(/&uacute;/g, 'ú').replace(/&ugrave;/g, 'ù').replace(/&Yý;/g, 'ý')
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+    // 4. Cắt lấy 100 ký tự đầu tiên
+    let shortText = decodedText.length > 100 ? decodedText.substring(0, 100) + '...' : decodedText;
+%>
+
+<p class="text-slate-600 text-xs leading-relaxed"><%= shortText %></p>
+                                </div>
+                            </div>
+                            <div
+                                class="px-5 pb-5 pt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-50">
+                                <span><i class="fa-regular fa-calendar mr-1.5"></i><%= new Date(item.createdAt).toLocaleDateString('vi-VN') %></span>
+                                <span><i class="fa-regular fa-eye mr-1.5"></i><%=item.view || 0 %> lượt xem</span>
+                            </div>
+                        </div>
+                        </a>
+                         <%}%>
+
+                    </div>
+
+                    <!-- Phân trang (Pagination) -->
+<!-- Phân trang (Pagination) -->
+<% if (totalPages > 1) { %>
+    <div class="flex items-center justify-center space-x-2 pt-4 pb-2" id="pagination-container">
+        
+        <!-- Nút Previous -->
+        <a href="#" data-page="<%= currentPage - 1 %>" 
+           class="w-9 h-9 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition text-xs <%= currentPage === 1 ? 'pointer-events-none opacity-50' : '' %>">
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
+
+        <!-- Các nút số trang -->
+        <% 
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) { %>
+                <a href="#" data-page="1" class="w-9 h-9 rounded-xl border border-slate-200 text-slate-700 font-medium flex items-center justify-center hover:bg-slate-50 transition text-xs">1</a>
+                <% if (startPage > 2) { %> <span class="text-slate-400 px-1">...</span> <% } %>
+            <% } %>
+
+            <% for(let i = startPage; i <= endPage; i++) { %>
+                <a href="#" data-page="<%= i %>" 
+                   class="w-9 h-9 rounded-xl <%= i === currentPage ? 'bg-blue-600 text-white font-bold shadow-sm' : 'border border-slate-200 text-slate-700 font-medium hover:bg-slate-50' %> flex items-center justify-center transition text-xs">
+                    <%= i %>
+                </a>
+            <% } %>
+
+            <% if (endPage < totalPages) { %>
+                <% if (endPage < totalPages - 1) { %> <span class="text-slate-400 px-1">...</span> <% } %>
+                <a href="#" data-page="<%= totalPages %>" class="w-9 h-9 rounded-xl border border-slate-200 text-slate-700 font-medium flex items-center justify-center hover:bg-slate-50 transition text-xs"><%= totalPages %></a>
+            <% } %>
+
+        <!-- Nút Next -->
+        <a href="#" data-page="<%= currentPage + 1 %>" 
+           class="w-9 h-9 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition text-xs <%= currentPage === totalPages ? 'pointer-events-none opacity-50' : '' %>">
+            <i class="fa-solid fa-chevron-right"></i>
+        </a>
+    </div>
+
+    <!-- Script tự động giữ lại URL hiện tại và đổi số trang -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const paginationLinks = document.querySelectorAll("#pagination-container a[data-page]");
+            
+            paginationLinks.forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const targetPage = this.getAttribute("data-page");
+                    
+                    // Lấy toàn bộ URL hiện tại trên trình duyệt (đã có sẵn id, slug, sort...)
+                    const url = new URL(window.location.href);
+                    
+                    // Cập nhật hoặc thêm tham số page mới
+                    url.searchParams.set("page", targetPage);
+                    
+                    // Chuyển hướng đến URL mới
+                    window.location.href = url.toString();
+                });
+            });
+        });
+    </script>
+<% } %>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Khối dịch vụ cam kết phía dưới -->
+        <div class="border-t border-slate-100 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dịch vụ 1 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-truck-fast text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Miễn phí vận chuyển</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Cho đơn hàng từ 1.000.000đ</p>
+                    </div>
+                </div>
+                <!-- Dịch vụ 2 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Bảo hành chính hãng</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Lên đến 3 năm</p>
+                    </div>
+                </div>
+                <!-- Dịch vụ 3 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-rotate-left text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Đổi trả dễ dàng</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Trong vòng 7 ngày</p>
+                    </div>
+                </div>
+                <!-- Dịch vụ 4 -->
+                <div class="flex items-center space-x-4 p-2">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-headset text-lg"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-900">Hỗ trợ kỹ thuật 24/7</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">Tư vấn và giải đáp nhanh chóng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+ <%- include("./layouts/footer.ejs")%>

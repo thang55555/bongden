@@ -1,0 +1,292 @@
+<%- include("../layout/head", {title: "Admin danh sách sản phẩm" })%>
+	<%- include("../layout/header")%>
+		<%- include("../layout/siderbar")%>
+
+
+
+
+			<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+				<div class="row">
+					<ol class="breadcrumb">
+						<li><a href="/admin/dashboard"><svg class="glyph stroked home">
+									<use xlink:href="#stroked-home"></use>
+								</svg></a></li>
+						<li>Danh sách sản phẩm</li>
+					</ol>
+				</div><!--/.row-->
+
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header">Danh sách sản phẩm</h1>
+					</div>
+				</div><!--/.row-->
+				<div id="toolbar" class="btn-group">
+					<a href="/admin/add-san-pham" class="btn btn-success">
+						<i class="glyphicon glyphicon-plus"></i> Thêm sản phẩm
+					</a>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<table data-toolbar="#toolbar" data-toggle="table">
+
+									<thead>
+										<tr>
+											<th data-field="id" data-sortable="true">ID</th>
+											<th>Hành động</th>
+											<th>Hiển thị bài viết</th>
+											<th>Tên sản phẩm</th>
+											<th>Giá gốc</th>
+											<th>Giá khuyến mại</th>
+											<th>Danh mục</th>
+											<th>Ngày đăng</th>
+											<th>QRcode</th>
+										</tr>
+									</thead>
+									<tbody>
+										<%for(item of product){%>
+											<tr>
+												<td>
+													<%=stt++%>
+												</td>
+												<td class="form-group">
+													<a href="/admin/edit-san-pham/<%=item._id%>?page=<%=page%>"><i
+															class="fa-solid fa-pen-to-square"></i></a>
+													<a onclick="clickDelete('<%=item._id%>')"><i
+															class="fa-solid fa-trash"
+															style="color: rgb(48, 165, 255);"></i> </a>
+													<a href="/view-san-pham/<%=item.slug%>/<%=item._id%>"
+														target="_blank">
+														<i class="fa-solid fa-eye"></i> </a>
+												</td>
+												<td>
+													<div class="form-check form-switch">
+														<input onclick="clickupdate('<%=item._id%>')" <%=item.nhap==1
+															&& "checked" %> class="form-check-input" type="checkbox"
+														id="flexSwitchCheckChecked" name="nhap" value="on">
+													</div>
+												</td>
+												<td> <%=item.name%> </td>
+												<td> <%= Number(item.price).toLocaleString('vi-VN') %> đ </td>
+												<td> <%= Number(item.sale).toLocaleString('vi-VN') %> đ </td>
+												<td class="category-cell">
+
+													<% item.nhomsp_id.slice(0,3).forEach(function(nhom){ %>
+														<div>
+															<%= nhom.name %>
+														</div>
+														<% }) %>
+
+															<% if(item.nhomsp_id.length> 3){ %>
+																<span class="text-primary">+ <%= item.nhomsp_id.length -
+																		3 %> danh mục nữa</span>
+																<% } %>
+												</td>
+
+
+
+												<td>
+													<%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%>
+												</td>
+												<td>
+													 <% const productUrl = `https://hopthanh.com/${item._id}`; %>
+       												 <% const qrSrc = `https://quickchart.io/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(productUrl)}`; %>
+													  <div class="box">
+
+            <img class="qr-image" style="width: 100px;" crossorigin="anonymous" src="<%= qrSrc %>" alt="Mã QR">
+            
+            <!-- Truyền trực tiếp đường dẫn tương ứng vào nút bấm -->
+<div class="action-btns">
+    <button class="icon-btn" onclick="copyLink('<%= productUrl %>', this, event)" title="Copy Link"><i class="fa-solid fa-link"></i></button>
+    <button class="icon-btn" onclick="copyImage(this, event)" title="Copy Ảnh QR"><i class="fa-regular fa-copy"></i></button>
+    <button class="icon-btn" onclick="downloadQR(this, event)" title="Tải xuống QR"><i class="fa-solid fa-download"></i></button>
+</div>
+            <div class="toast">Thành công!</div>
+        </div>
+												</td>
+
+											</tr>
+											<%}%>
+									</tbody>
+								</table>
+							</div>
+							<nav aria-label="Page navigation example" style="text-align: center;">
+								<ul class="pagination">
+									<% if(hasPrev){%>
+										<li class="page-item"><a class="page-link"
+												href="/admin/danh-sach-san-pham?page=<%=prev%>">&laquo;</a></li>
+										<% }%>
+											<% for(i of pages){%>
+												<% if(i==="..." ){%>
+													<li class="page-item <%= page === i ? 'active' : '' %>"><span
+															class="page-link" <%=i%></span>
+													</li>
+													<% }else{%>
+														<li class="page-item <%= page === i ? 'active' : '' %>"><a
+																class="page-link"
+																href="/admin/danh-sach-san-pham?page=<%=i%>">
+																<%=i%>
+															</a></li>
+														<%}%>
+															<% }%>
+																<% if(hasNext){%>
+																	<li class="page-item"><a class="page-link"
+																			href="/admin/danh-sach-san-pham?page=<%=next%>">&raquo;</a>
+																	</li>
+																	<% }%>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div><!--/.row-->
+			</div> <!--/.main-->
+
+			<script>
+				function handleConfirm(id) {
+					const isConfirm = confirm(`Bạn có chắc chắn xóa không?`)
+					const link = () => window.location.href = `/admin/delete-san-pham/${id}?page=<%=page%>`
+					return isConfirm ? link() : false
+				}
+				const clickDelete = (id) => handleConfirm(id)
+
+				function update(id) {
+					const link = () => window.location.href = `/admin/upload-san-pham/${id}?page=<%=page%>`
+					return link()
+				}
+				const clickupdate = (id) => update(id)
+			</script>
+
+<!-- QRcode -->
+<script>
+    function showNotification(buttonElement, msg) {
+        // Tìm ô chứa hiện tại hoặc tạo một popup thông báo nổi lên trên cùng để không bị che
+        const box = buttonElement.closest('td') || buttonElement.closest('.box');
+        
+        // Tạo một thẻ thông báo nổi (floating toast) tạm thời
+        let toast = box.querySelector('.custom-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.style.cssText = "position: absolute; background: #333; color: #fff; padding: 5px 10px; font-size: 11px; border-radius: 4px; z-index: 9999; margin-top: 5px; white-space: nowrap;";
+            box.style.position = 'relative';
+            box.appendChild(toast);
+        }
+        
+        toast.textContent = msg;
+        toast.style.display = "block";
+        
+        setTimeout(() => {
+            toast.style.display = "none";
+        }, 2000);
+    }
+
+    function copyLink(url, btn, event) {
+        event.preventDefault(); // Chặn hành vi mặc định (như nhảy trang hoặc mở link)
+        event.stopPropagation(); // Chặn sự kiện lan ra ngoài (tránh bị zoom ảnh)
+        
+        navigator.clipboard.writeText(url).then(() => {
+            showNotification(btn, "Đã copy link!");
+        });
+    }
+
+    async function copyImage(btn, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        try {
+            const container = btn.closest('td') || btn.closest('.box');
+            const imgElement = container.querySelector('.qr-image');
+            
+            const canvas = document.createElement("canvas");
+            canvas.width = imgElement.naturalWidth || 200;
+            canvas.height = imgElement.naturalHeight || 200;
+            const ctx = canvas.getContext("2d");
+            
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = imgElement.src;
+            
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+            });
+            
+            ctx.drawImage(img, 0, 0);
+            
+            canvas.toBlob(async (blob) => {
+                await navigator.clipboard.write([
+                    new ClipboardItem({ "image/png": blob })
+                ]);
+                showNotification(btn, "Đã copy ảnh QR!");
+            });
+        } catch (err) {
+            console.error(err);
+            alert("Trình duyệt không hỗ trợ copy trực tiếp hình ảnh này!");
+        }
+    }
+
+    function downloadQR(btn, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const container = btn.closest('td') || btn.closest('.box');
+        const imgElement = container.querySelector('.qr-image');
+        
+        fetch(imgElement.src)
+            .then(response => response.blob())
+            .then(blob => {
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = blobUrl;
+                a.download = "qrcode-hopthanh.png";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(blobUrl);
+                showNotification(btn, "Đã tải xuống!");
+            })
+            .catch(err => console.error("Không thể tải ảnh xuống:", err));
+    }
+</script>
+	    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4; }
+        .box { background: #fff; display: inline-block;  border-radius: 8px; margin-bottom: 20px; }
+        img { display: block; margin: 0 auto 15px auto; border: 1px solid #ddd; border-radius: 4px; }
+        
+        /* Style cho các nút icon */
+        .action-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .icon-btn {
+            background-color: #30a5ff;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: #283593;
+            transform: scale(1.1);
+        }
+        .toast { margin-top: 15px; font-size: 13px; color: green; display: none; }
+    </style>
+
+
+
+			<script src="js/jquery-1.11.1.min.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+			<script src="js/bootstrap-table.js"></script>
+
+			<%- include("../layout/footer")%>
