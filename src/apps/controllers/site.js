@@ -41,7 +41,7 @@ const home = async (req, res) => {
   const tintuc = await BaiviettintucModel.aggregate([
     { $sample: { size: 4 } } // Số 4 là số lượng bản ghi ngẫu nhiên bạn muốn lấy
   ]);
-  res.render("site/index", { banner, duan, tintuc });
+  res.render("site/index", { banner, duan, tintuc,  });
 
 };
 
@@ -968,9 +968,7 @@ const productvideo = async (req, res) => {
 // GIOI THIEU
 const gioithieu = async (req, res) => {
   try {
-    const chiase = await ChiaseModel.find();
-    const product = await Gioi_thieu_trangModel.find({ web: "Nhagonamthanhphat.com" });
-    res.render("./site/gioithieu", { product, chiase });
+    res.render("./site/gioithieu", { });
   } catch (err) {
     console.error("❌ Lỗi tại gioithieu:", err);
     res.status(500).send("Có lỗi xảy ra");
