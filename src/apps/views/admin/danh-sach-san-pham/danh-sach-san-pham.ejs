@@ -15,11 +15,7 @@
 					</ol>
 				</div><!--/.row-->
 
-				<div class="row">
-					<div class="col-lg-12">
-						<h1 class="page-header">Danh sách sản phẩm</h1>
-					</div>
-				</div><!--/.row-->
+
 				<div id="toolbar" class="btn-group">
 					<a href="/admin/add-san-pham" class="btn btn-success">
 						<i class="glyphicon glyphicon-plus"></i> Thêm sản phẩm
@@ -91,7 +87,7 @@
 													<%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%>
 												</td>
 												<td>
-													 <% const productUrl = `https://hopthanh.com/${item._id}`; %>
+													 <% const productUrl = `https://denledhopthanh.com/product?san-pham/${item.slug}&id=${item._id}`; %>
        												 <% const qrSrc = `https://quickchart.io/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(productUrl)}`; %>
 													  <div class="box">
 
