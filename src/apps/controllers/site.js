@@ -88,6 +88,11 @@ const category = async (req, res) => {
       }
     }
 
+    // --- KIỂM TRA AN TOÀN: NẾU KHÔNG TÌM THẤY MENU NÀO TRONG DB ---
+    if (!menu) {
+      return res.status(404).send("Không tìm thấy danh mục sản phẩm.");
+    }
+
     // --- 1. LẤY CÁC THAM SỐ TỪ URL ---
     const { maxPrice, power, colorTemp, limit = 12, page = 1, sort } = req.query;
 
@@ -109,8 +114,6 @@ const category = async (req, res) => {
         })
       ).map(item => item._id);
 
-      // QUAN TRỌNG: Sắp xếp lại danh sách ID này theo giá (sale) từ cao xuống thấp hoặc thấp lên cao 
-      // tùy thuộc vào biến sort đang chọn, để khi phân trang không bị nhảy lung tung.
       if (matchedIds.length > 0) {
         const sortedProducts = await Product_sanphamModel.find({ _id: { $in: matchedIds } })
           .sort({ sale: sort === 'asc' ? 1 : (sort === 'desc' ? -1 : -1) });
@@ -154,10 +157,7 @@ const category = async (req, res) => {
       .skip(skip)
       .limit(limitNum);
 
-    // --- 4. TRUYỀN DỮ LIỆU RA VIEW ---
-
-    // --- TÍNH TOÁN SỐ LƯỢNG CHO TỪNG BỘ LỌC (DỰA TRÊN DANH MỤC CƠ BẢN) ---
-    // Lấy danh sách sản phẩm cơ bản của danh mục (chưa bị bóp méo bởi bộ lọc power/colorTemp hiện tại)
+    // --- TÍNH TOÁN SỐ LƯỢNG CHO TỪNG BỘ LỌC ---
     const baseProductsForCount = await Product_sanphamModel.find({
       nhap: true,
       ...(check1 ? { nhomsp_id: { $in: await Menu_nhom_sanphamModel.find({ danhmuc_id: menu._id }).then(res => res.map(i => i._id)) } } : {}),
@@ -170,7 +170,6 @@ const category = async (req, res) => {
     baseProductsForCount.forEach(item => {
       if (!item.congsuat || !Array.isArray(item.congsuat)) return;
 
-      // Đảm bảo mỗi sản phẩm chỉ tính 1 lần cho mỗi khoảng dù nó có nhiều công suất
       const matchedRanges = new Set();
       item.congsuat.forEach(valStr => {
         const num = parseInt(valStr.replace(/\D/g, ''));
@@ -211,7 +210,6 @@ const category = async (req, res) => {
     });
   } catch (error) {
     console.error("Lỗi tại controller category:", error);
-    // Tránh để trắng trang hoặc treo kết nối khi có lỗi xảy ra
     return res.status(500).send("Đã có lỗi xảy ra ở hệ thống.");
   }
 };
@@ -291,7 +289,7 @@ const categoryduan = async (req, res) => {
     } else if (!product && !id) {
       product = await Menu_dichvuModel.findOne();
     }
-
+const safeProduct = product || { name: "Chưa có danh mục", images: "default.jpg" };
     // 1. Đếm tổng số lượng bài viết thỏa mãn điều kiện
     totalProducts = await BaivietdichvuModel.countDocuments(queryCondition);
 
@@ -309,7 +307,7 @@ const categoryduan = async (req, res) => {
     res.render("./site/category_duan", {
       menu,
       products,
-      product,
+      product: safeProduct,
       id,
       sort: sortOption,
       currentPage: page,
@@ -374,14 +372,14 @@ const categoryitintuc = async (req, res) => {
   try {
     const id = req.query.id || "";
     const sortOption = req.query.sort || "newest";
-    const page = parseInt(req.query.page) || 1; // Trang hiện tại, mặc định là 1
-    const limit = 6; // Số bài viết hiển thị trên mỗi trang (bạn có thể thay đổi số này)
+    const page = parseInt(req.query.page) || 1; 
+    const limit = 6; 
     const skip = (page - 1) * limit;
 
     const menu = await Menu_tintucModel.find();
     let product = null;
     let products = [];
-    let totalProducts = 0; // Tổng số bài viết để tính tổng số trang
+    let totalProducts = 0; 
 
     // Xác định điều kiện sắp xếp
     let sortCondition = {};
@@ -404,16 +402,18 @@ const categoryitintuc = async (req, res) => {
     }
 
     if (!product && id) {
-      // Trường hợp có truyền id nhưng không hợp lệ/không tồn tại, lấy product đầu tiên làm mốc nếu cần
       product = await Menu_tintucModel.findOne();
     } else if (!product && !id) {
       product = await Menu_tintucModel.findOne();
     }
 
+    // --- AN TOÀN: Gán giá trị mặc định nếu product là null ---
+    const safeProduct = product || { name: "Tin tức", content: "" };
+
     // 1. Đếm tổng số lượng bài viết thỏa mãn điều kiện
     totalProducts = await BaiviettintucModel.countDocuments(queryCondition);
 
-    // 2. Lấy danh sách bài viết theo phân trang (.skip và .limit)
+    // 2. Lấy danh sách bài viết theo phân trang
     products = await BaiviettintucModel.find(queryCondition)
       .sort(sortCondition)
       .skip(skip)
@@ -421,13 +421,13 @@ const categoryitintuc = async (req, res) => {
       .populate({ path: "menutintuc_id" });
 
     // Tính tổng số trang
-    const totalPages = Math.ceil(totalProducts / limit);
+    const totalPages = Math.ceil(totalProducts / limit) || 1;
 
-    // Render ra view kèm theo thông tin phân trang
+    // Render ra view kèm theo thông tin an toàn
     res.render("./site/category_tintuc", {
       menu,
       products,
-      product,
+      product: safeProduct, // Dùng biến an toàn thay vì product gốc
       id,
       sort: sortOption,
       currentPage: page,
