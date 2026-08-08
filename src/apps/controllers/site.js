@@ -247,7 +247,7 @@ const productsp = async (req, res) => {
   } catch (error) {
     console.error("Lỗi tại controller product:", error);
     // Tránh để trắng trang hoặc treo kết nối khi có lỗi xảy ra
-    return res.status(500.ros).send("Đã có lỗi xảy ra ở hệ thống.");
+    return res.status(500).send("Đã có lỗi xảy ra ở hệ thống.");
   }
 };
 
