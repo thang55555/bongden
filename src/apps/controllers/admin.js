@@ -6,6 +6,7 @@ const BaiviettintucModel = require("../models/baiviet_tintuc");
 const BaivietdichvuModel = require("../models/baiviet_dichvu");
 const ChiaseModel = require("../models/chiase");
 const ImagesModel = require("../models/images");
+const OrderModel = require("../models/order");
 
 const index =  async (req, res)=>{
     const users = await UserModel.find();
@@ -17,6 +18,7 @@ const index =  async (req, res)=>{
     const dichvu = await BaivietdichvuModel.find();
     const chiase = await ChiaseModel.find();
     const image = await ImagesModel.find();
+    const order = await OrderModel.find();
     res.render("./admin/admin", {
         users: users.length,
         product: product.length,
@@ -27,6 +29,7 @@ const index =  async (req, res)=>{
         dichvu: dichvu.length,
         chiase: chiase.length,
         image: image.length,
+        order: order.length,
 
     });
 }

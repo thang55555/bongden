@@ -21,8 +21,8 @@
                         <%for(item of products){%>
                         <div style="margin-bottom: 10px; border-bottom: 1px #ccc solid;">
 
-                            <h3 class="LC20lb MBeuO DKV0Md"><a href="/admin/edit-san-pham/<%=item._id%>"><%=item.tieudesp%> </a></h3>
-                            <div><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%> — <%=item.metadescription%></div>
+                            <h3 class="LC20lb MBeuO DKV0Md"><a href="/admin/edit-san-pham/<%=item._id%>"><%=item.name%> </a></h3>
+                            <div><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%> — <%=item.description%></div>
 
                         </div>
                         <%}%>
@@ -31,8 +31,8 @@
                         <%for(item of product){%>
                             <div style="margin-bottom: 10px; border-bottom: 1px #ccc solid;">
     
-                                <h3 class="LC20lb MBeuO DKV0Md"><a href="/admin/edit-bai-viet-dich-vu/<%=item._id%>"><%=item.tieudesp%> </a></h3>
-                                <div><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%> — <%=item.metadescription%></div>
+                                <h3 class="LC20lb MBeuO DKV0Md"><a href="/admin/edit-bai-viet-dich-vu/<%=item._id%>"><%=item.name%> </a></h3>
+                                <div><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%> — <%=item.description%></div>
     
                             </div>
                             <%}%>
@@ -41,8 +41,8 @@
                             <%for(item of product2){%>
                                 <div style="margin-bottom: 10px; border-bottom: 1px #ccc solid;">
         
-                                    <h3 class="LC20lb MBeuO DKV0Md"><a href="/admin/edit-bai-viet-tin-tuc/<%=item._id%>"><%=item.tieudebaiviet%> </a></h3>
-                                    <div><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%> — <%=item.metadescription%></div>
+                                    <h3 class="LC20lb MBeuO DKV0Md"><a href="/admin/edit-bai-viet-tin-tuc/<%=item._id%>"><%=item.name%> </a></h3>
+                                    <div><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%> — <%=item.description%></div>
         
                                 </div>
                                 <%}%>

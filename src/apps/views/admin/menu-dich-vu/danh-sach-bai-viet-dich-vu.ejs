@@ -36,7 +36,6 @@
 									<th data-field="id" data-sortable="true">ID</th>
 									
 									<th>Hành động</th> 
-									<th>View bài viết</th>
 									<th>Tên bài viết</th>
 									<th>Danh mục</th> 
 									<th>Hiển thị bài viết</th> 
@@ -50,8 +49,7 @@
 									<td class="form-group">
 										<a href="/admin/edit-bai-viet-dich-vu/<%=item._id%>?page=<%=page%>" ><i class="fa-solid fa-pen-to-square"></i></a>
 										<a onclick="clickDelete('<%=item._id%>')" ><i class="fa-solid fa-trash" style="color: rgb(48, 165, 255);"></i></a>
-									</td>
-									<td><a href="/view-dich-vu/<%=item.slug%>/<%=item._id%>" target="_blank">
+										<a href="/du-an?slug=<%=item.slug%>&id=<%=item._id%>" target="_blank">
 										<i class="fa-solid fa-eye"></i> </a>
 									</td>
 									<td><div class="antext"><%=item.name%></div></td>

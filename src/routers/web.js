@@ -14,7 +14,8 @@ router.post("/upload", multipartMiddleware, ProductController.upload);
 
 
 //site
-const SiteController =require("../apps/controllers/site")
+const SiteController =require("../apps/controllers/site");
+const Product_sanphamModel = require("../apps/models/product_sanpham");
 
 
 
@@ -199,7 +200,7 @@ router.get("/category-item/:slug/:id", SiteController.categoryitem);
 router.get("/danh-sach-video", SiteController.danhsachvideo);
 router.get("/product-video/:slug/:id", SiteController.productvideo);
 router.get("/thuoc-lo-ban", SiteController.thuocloban);
-router.get("/view-san-pham/:slug/:id", SiteController.productsp);
+router.get("/view-san-pham", SiteController.productsp);
 router.get("/view-dich-vu/:slug/:id", SiteController.productdichvu);
 router.get("/view-tin-tuc/:slug/:id", SiteController.productTinTuc);
 router.get("/search", SiteController.search);
@@ -226,6 +227,7 @@ router.get("/delete/cart", SiteController.deletecart2);
 
 router.post("/order", UploadMiddleware.array("images", 20), SiteController.order);
 router.get("/checkout", SiteController.checkout);
- 
+router.get("/api/search-suggestions", SiteController.apiSearch);
+
 
 module.exports = router;

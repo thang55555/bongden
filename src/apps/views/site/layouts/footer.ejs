@@ -152,20 +152,20 @@ document.addEventListener("DOMContentLoaded", function () {
         <!-- Col 1: Logo & Info -->
         <div class="lg:pr-6 lg:border-r lg:border-slate-800">
           <div class="text-white font-black text-2xl tracking-tighter">
-          <img src="../site/images/update/<%=thongtintrang.images%>" style="max-width: 60px;">
+          <img src="../site/images/update/<%=thongtintrang.images%>" style="max-width: 60px;" width="60" height="48" alt="<%=thongtintrang.images%>">
             <div class="text-[9px] tracking-normal text-slate-400 uppercase font-semibold">Lighting The
-              Future
+              Future 
             </div>
           </div>
          <%=thongtintrang.content%>
           <div class="flex space-x-3 pt-4">
-            <a href="/"
+            <a href="/" aria-label="Facebook"
               class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
                 class="fa-brands fa-facebook-f text-xs"></i></a>
-            <a href="/"
+            <a href="/" aria-label="youtube"
               class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
                 class="fa-brands fa-youtube text-xs"></i></a>
-            <a href="/"
+            <a href="/" aria-label="linkedin"
               class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
                 class="fa-brands fa-linkedin-in text-xs"></i></a>
           </div>
@@ -173,7 +173,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <!-- Col 2: Company -->
         <div class="lg:px-6 lg:border-r lg:border-slate-800">
-          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">THÔNG TIN CÔNG TY</h4>
           <div class="text-white font-bold text-xs mb-3"><%=thongtintrang.name%></div>
           <ul class="space-y-2.5 text-xs text-slate-400">
             <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot mt-0.5 text-blue-500"></i>
@@ -238,18 +237,23 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="lg:pl-6">
           <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-2">ĐĂNG KÝ NHẬN TIN</h4>
           <p class="text-xs text-slate-400 mb-3">Nhận thông tin sản phẩm mới, ưu đãi và tin tức từ HTC.</p>
-          <form class="space-y-2.5" onsubmit="event.preventDefault();">
-            <div class="relative">
-              <input type="email" placeholder="Nhập email của bạn"
-                class="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg px-3 py-2.5 pr-8 text-white focus:outline-none focus:border-blue-500">
-              <button type="submit" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-white">
-                <i class="fa-solid fa-magnifying-glass text-xs"></i>
-              </button>
-            </div>
-            <button type="submit"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-lg transition">ĐĂNG
-              KÝ</button>
-          </form>
+<form class="space-y-3" onsubmit="event.preventDefault();">
+  <!-- Ô nhập email kết hợp nút icon bên trong -->
+  <div class="relative">
+    <input type="email" placeholder="Nhập email của bạn"
+      class="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg px-3 py-3 pr-10 text-white focus:outline-none focus:border-blue-500">
+    
+    <button type="submit" aria-label="Tìm kiếm hoặc gửi" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-white">
+      <i class="fa-solid fa-magnifying-glass text-xs"></i>
+    </button>
+  </div>
+
+  <!-- Nút ĐĂNG KÝ chính có chiều cao lớn và vùng chạm thoải mái -->
+  <button type="submit" aria-label="Đăng ký nhận thông tin"
+    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-3 rounded-lg transition">
+    ĐĂNG KÝ
+  </button>
+</form>
         </div>
 
       </div>

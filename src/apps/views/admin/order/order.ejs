@@ -47,9 +47,18 @@
 									<td><%=item.name%></td>
 									<td><%=item.sdt%></td>
 									<td><%=item.email%></td>
-									<td><%=item.diachigiaohang%></br><%=item.diachigiao%></td>
+									<td>
+                                        <div style="text-align: left !important; width: 100%;"><%=item.diachigiaohang%></br><%=item.diachigiao%></div></td>
 									<td><%=item.note%></td>
-									<td><%=item.namecty%></br><%=item.addcty%></br><%=item.tax%></td>
+									<td style="text-align: left !important; padding-left: 15px;">
+                                        <div style="text-align: left !important; width: 100%;">
+                                        <% if (item && item.namecty && item.namecty.trim() !== '') { %>
+                                       Công ty: <%=item.namecty%></br>
+                                       Địa chỉ:<%=item.addcty%></br>
+                                       MST: <%=item.tax%>
+                                       <%}%>
+                                       </div>
+                                    </td>
 									<td><%= new Intl.DateTimeFormat('en-US').format(item.createdAt)%></td>
 <td class="text-center">
     <% 
@@ -78,14 +87,12 @@
 									<td class="form-group"> 
 										<form action="/admin/edit-order/<%=item.id%>?page=<%=currentPage%>" role="form" method="post">
 								
-												<select name="trangthai" class="form-control">
+												<select name="trangthai" class="form-control" onchange="this.form.submit()">
 													<option value="<%=item.trangthai%>">Chọn</option>
 													<option value="true">Đã xử lý</option>
 													<option value="flash"> Chưa xử lý</option>
 												
 												</select>
-												
-												<button type="submit" name="sbm" class="btn btn-success"><i class="fa-solid fa-arrows-rotate"></i></button>
 											</form>
 									</td>
 								</tr>

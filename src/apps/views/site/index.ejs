@@ -6,7 +6,7 @@
   <section class="relative bg-slate-900 text-white overflow-hidden min-h-[550px] sm:min-h-[600px] lg:h-[650px]">
     <div id="hero-slider" class="relative w-full h-full min-h-[550px] sm:min-h-[600px] lg:h-[650px] overflow-hidden">
 
-      <!-- Slide 1 -->
+      <!-- Slide 1 --> 
       <% for(item of banner){%>
       <div
         class="hero-slide absolute inset-0 flex items-center px-12 sm:px-16 lg:px-24 py-12 w-full h-full opacity-100 translate-x-0 z-10 transition-all duration-700 ease-in-out"
@@ -19,11 +19,11 @@
 
 
       <!-- Mũi tên điều hướng Trái / Phải -->
-      <button onclick="prevSlide()"
+      <button onclick="prevSlide()" aria-label="Slide trước"
         class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-30 bg-black/40 hover:bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
-      <button onclick="nextSlide()"
+      <button onclick="nextSlide()" aria-label="Slide sau"
         class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-30 bg-black/40 hover:bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
@@ -135,7 +135,7 @@
         <div>
           <div class="text-2xl font-black text-blue-600 leading-none">10+</div>
           <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Năm</div>
-          <div class="text-xs text-slate-400">Kinh nghiệm</div>
+          <div class="text-xs text-slate-600">Kinh nghiệm</div>
         </div>
       </div>
 
@@ -148,7 +148,7 @@
         <div>
           <div class="text-2xl font-black text-blue-600 leading-none">500+</div>
           <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Sản phẩm</div>
-          <div class="text-xs text-slate-400">Đa dạng chủng loại</div>
+          <div class="text-xs text-slate-600">Đa dạng chủng loại</div>
         </div>
       </div>
 
@@ -161,7 +161,7 @@
         <div>
           <div class="text-2xl font-black text-blue-600 leading-none">2000+</div>
           <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Đại lý</div>
-          <div class="text-xs text-slate-400">Trên toàn quốc</div>
+          <div class="text-xs text-slate-600">Trên toàn quốc</div>
         </div>
       </div>
 
@@ -174,7 +174,7 @@
         <div>
           <div class="text-2xl font-black text-blue-600 leading-none">100%</div>
           <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wide mt-1">Hàng chính hãng</div>
-          <div class="text-xs text-slate-400">CO, CQ đầy đủ</div>
+          <div class="text-xs text-slate-600">CO, CQ đầy đủ</div>
         </div>
       </div>
 
@@ -213,7 +213,7 @@
           <i class="fa-solid fa-bolt"></i>
         </div>
         <div>
-          <h4 class="font-bold text-xs text-slate-800">TIẾT KIỆM ĐIỆN NĂNG</h4>
+          <h3 class="font-bold text-xs text-slate-800">TIẾT KIỆM ĐIỆN NĂNG</h3>
           <p class="text-[11px] text-slate-500">Giảm chi phí điện lên đến 80%</p>
         </div>
       </div>
@@ -266,7 +266,7 @@
           <!-- Cột trái: Tiêu đề và mô tả (Nền trắng) -->
           <div class="lg:col-span-4 p-8 sm:p-10 space-y-4 text-slate-900">
             <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
-              VI SAO NÊN CHỌN <br><span class="text-blue-600">ĐÈN LED LTC?</span>
+              VI SAO NÊN CHỌN <br><span class="text-blue-600">ĐÈN LED HTC?</span>
             </h2>
             <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
               LTC không ngừng nghiên cứu và ứng dụng công nghệ chiếu sáng tiên tiến để mang đến những sản
@@ -283,7 +283,7 @@
           <!-- Cột phải: Khối nền xanh tràn sát mép phải, trên, dưới và có bo tròn góc phải tương ứng -->
           <div
             class="lg:col-span-8 relative h-full min-h-[320px] text-white p-8 sm:p-10 flex items-center lg:m-2 lg:rounded-2xl"
-            style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center;">
+            style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=70&w=1200'); background-size: cover; background-position: center;">
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 w-full">
 
@@ -366,10 +366,8 @@
         </div> -->
 
       <!-- Khối trái: Banner ưu đãi (Nền xanh đậm) -->
-      <div
-        class="w-full lg:w-6/12 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden flex flex-col justify-between min-h-[240px]"
-        style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.9)), url('https://images.unsplash.com/photo-1543196929-1bced8919cd0?auto=format&fit=crop&q=80&w=800'); background-size: cover; background-position: center;">
-
+<div class="w-full lg:w-6/12 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden flex flex-col justify-between min-h-[240px]"
+     style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(30, 58, 138, 0.9));">
         <div class="relative z-10 space-y-3">
           <span
             class="inline-block bg-blue-600/40 border border-blue-400/30 text-blue-200 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
@@ -455,7 +453,7 @@
             <h3 class="font-bold text-slate-800 text-sm mb-1"><%=item.name%></h3>
             <p class="text-xs text-slate-500 flex items-center gap-1">
               
-            <div class=" pb-4 flex justify-between items-center text-xs text-slate-400">
+            <div class=" pb-4 flex justify-between items-center text-xs text-slate-600">
           <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-[10px] text-blue-600"></i> <%=item.add%></span>
           <span class="flex items-center gap-1.5"><i class="fa-regular fa-eye"></i> <%=item.view%> lượt xem</span>
         </div>
@@ -493,7 +491,7 @@
             <h3 class="font-bold text-slate-800 text-sm mb-2 line-clamp-2"><%=item.name%></h3>
           </div>
         </div>
-        <div class="px-4 pb-4 flex justify-between items-center text-xs text-slate-400">
+        <div class="px-4 pb-4 flex justify-between items-center text-xs text-slate-600">
           <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar"></i> <%= new Date(item.createdAt).toLocaleDateString('vi-VN') %></span>
           <span class="flex items-center gap-1.5"><i class="fa-regular fa-eye"></i> <%=item.view || 0 %> lượt xem</span>
         </div>

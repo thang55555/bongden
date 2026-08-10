@@ -63,7 +63,7 @@
             align-items: center;
         }
 
-        .header-text h1 {
+        .header-text h2 {
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 8px;
@@ -301,8 +301,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 12px;
             font-size: 12px;
             color: #64748b;
         }
@@ -593,7 +591,7 @@
 
         <!-- BREADCRUMB -->
         <nav class="text-sm text-gray-600 mb-6 md:mb-8">
-            <a href="#" class="hover:text-brand-blue">Trang chủ</a>
+            <a href="/" class="hover:text-brand-blue">Trang chủ</a>
             <span class="mx-1.5">›</span>
             <span class="text-gray-900 font-medium">Tìm kiếm</span>
         </nav>
@@ -605,20 +603,29 @@
     <i class="fa-solid fa-magnifying-glass text-[#003399] text-3xl md:text-5xl"></i>
 </div>
                 <div class="flex-1 min-w-0">
-                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 truncate">KẾT QUẢ TÌM KIẾM</h1>
-                    <p class="text-gray-700 mb-1">Từ khóa: <span class="font-semibold text-brand-blue break-all">"bóng đèn led"</span></p>
-                    <p class="text-gray-600 text-sm">Có 128 sản phẩm phù hợp</p>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 truncate">KẾT QUẢ TÌM KIẾM</h2>
+                    <p class="text-gray-700 mb-1">Từ khóa: <span class="font-semibold text-brand-blue break-all">"<%=keyword%>"</span></p>
+                    <p class="text-gray-600 text-sm">Có <%=totalProducts%> sản phẩm phù hợp</p>
                 </div>
             </div>
-            <div class="border-t lg:border-l lg:border-t-0 border-gray-100 pt-4 lg:pt-0 lg:pl-8 flex-shrink-0">
+            <div class="border-t lg:border-l lg:border-t-0 border-gray-100 pt-4 lg:pt-0 lg:pl-8 flex-shrink-0" style="width: 50%;">
                 <h3 class="font-semibold text-gray-900 mb-4">Gợi ý tìm kiếm phổ biến</h3>
-                <div class="flex flex-wrap gap-2.5">
-                    <a href="#" class="bg-brand-lighter text-brand-blue text-sm px-4 py-2 rounded-full hover:bg-blue-200 transition">bóng đèn led bulb</a>
-                    <a href="#" class="bg-brand-lighter text-brand-blue text-sm px-4 py-2 rounded-full hover:bg-blue-200 transition">đèn led downlight</a>
-                    <a href="#" class="bg-brand-lighter text-brand-blue text-sm px-4 py-2 rounded-full hover:bg-blue-200 transition">đèn led tuýp</a>
-                    <a href="#" class="bg-brand-lighter text-brand-blue text-sm px-4 py-2 rounded-full hover:bg-blue-200 transition">bóng đèn led 12w</a>
-                    <a href="#" class="bg-brand-lighter text-brand-blue text-sm px-4 py-2 rounded-full hover:bg-blue-200 transition">đèn led âm trần</a>
-                </div>
+<div class="flex flex-wrap gap-2.5">
+    <% if (product && product.length > 0 && product[0].keywords) { %>
+        <% 
+            // Dùng Regex /[,|.]+/ để tách chuỗi theo dấu phẩy, dấu gạch đứng hoặc dấu chấm
+            let keywordList = product[0].keywords
+                .split(/[,|.]+/)
+                .map(k => k.trim())
+                .filter(k => k.length > 0); // Lọc bỏ các phần tử rỗng nếu có
+        %>
+        <% keywordList.forEach(kw => { %>
+            <a href="/search?keyword=<%= encodeURIComponent(kw) %>" class="bg-brand-lighter text-brand-blue text-sm px-4 py-2 rounded-full hover:bg-blue-200 transition">
+                <%= kw %>
+            </a>
+        <% }) %>
+    <% } %>
+</div>
             </div>
         </header>
 
@@ -631,91 +638,145 @@
                 <div class="sidebar">
                     <div class="sidebar-section">
                         <div class="sidebar-title">Danh mục sản phẩm</div>
-                        <ul class="category-menu">
-                            <!-- Mục 1: Đang mở -->
-                            <li class="category-item active">
-                                <span class="category-text">Bóng đèn LED dân dụng</span> <span class="arrow">▲</span>
-                            </li>
-                            <ul class="sub-category">
-                                <li class="active">Bóng đèn LED Bulb</li>
-                                <li>Bóng đèn LED Tuýp</li>
-                                <li>Bóng đèn LED Downlight</li>
-                                <li>Bóng đèn LED Ốp trần</li>
-                                <li>Bóng đèn LED Spotlight</li>
-                            </ul>
 
-                            <!-- Mục 2: Đang đóng -->
-                            <li class="category-item">
-                                <span class="category-text">Bóng đèn LED công nghiệp</span> <span class="arrow">▼</span>
-                            </li>
-                            <ul class="sub-category" style="display: none;">
-                                <li>Đèn LED nhà xưởng</li>
-                                <li>Đèn pha LED</li>
-                            </ul>
+<ul class="category-menu">
+  <% if (typeof menu1 !== 'undefined' && menu1.length > 0) { %>
+    <% menu1.forEach((item, index) => { %>
+      <% 
+        // Lọc các menu2 thuộc về menu1 hiện tại dựa vào danhmuc_id
+        const subMenus = menu2.filter(sub => {
+          if (!sub.danhmuc_id) return false;
+          return sub.danhmuc_id.some(id => id.toString() === item._id.toString());
+        });
+      %>
 
-                            <!-- Mục 3: Đang đóng -->
-                            <li class="category-item">
-                                <span class="category-text">Đèn LED chiếu sáng</span> <span class="arrow">▼</span>
-                            </li>
-                            <ul class="sub-category" style="display: none;">
-                                <li>Đèn LED âm trần</li>
-                                <li>Đèn LED rọi ray</li>
-                            </ul>
+      <!-- Danh mục cha (Menu1) -->
+      <li class="category-item" >
+        <span class="category-text"><%= item.name %></span> 
+        <span class="arrow">▼</span>
+      </li>
 
-                            <!-- Mục 4: Đang đóng -->
-                            <li class="category-item">
-                                <span class="category-text">Đèn LED trang trí</span> <span class="arrow">▼</span>
-                            </li>
-                            <ul class="sub-category" style="display: none;">
-                                <li>Đèn LED dây</li>
-                                <li>Đèn thả trần</li>
-                            </ul>
+      <!-- Danh mục con (Menu2) tương ứng -->
+      <ul class="sub-category" style="display: none;">
+        <% if (subMenus.length > 0) { %>
+          <% subMenus.forEach((sub) => { %>
+            <li>
+              <a href="/category?danh-muc=<%= sub.slug %>&id=<%= sub._id %>" class="text-inherit"><%= sub.name %></a>
+            </li>
+          <% }) %>
+        <% } else { %>
+          <li class="italic text-slate-400">Đang cập nhật...</li>
+        <% } %>
+      </ul>
 
-                            <!-- Mục 5: Đang đóng -->
-                            <li class="category-item">
-                                <span class="category-text">Thiết bị điện - phụ kiện</span> <span class="arrow">▼</span>
-                            </li>
-                            <ul class="sub-category" style="display: none;">
-                                <li>Công tắc - ổ cắm</li>
-                                <li>Cầu dao, aptomat</li>
-                            </ul>
-                        </ul>
+    <% }) %>
+  <% } %>
+</ul>
+
+<!-- Script tự động nhận diện trang hiện tại để Active đúng Menu cha và Menu con -->
+<script>
+  // Tự động đồng bộ Active cho cả 2 menu dựa theo danh-muc và id hiện tại khi load trang
+  document.addEventListener("DOMContentLoaded", function () {
+    const currentParams = new URLSearchParams(window.location.search);
+    const currentDanhMuc = currentParams.get('danh-muc');
+    const currentId = currentParams.get('id');
+
+    // Hàm kiểm tra xem một đường dẫn href có chứa đúng danh-muc và id hiện tại không
+    function isMatchingCategory(href) {
+      try {
+        // Tạo đối tượng URL giả lập để bóc tách tham số từ href của menu
+        const urlObj = new URL(href, window.location.origin);
+        const linkParams = urlObj.searchParams;
+        
+        return linkParams.get('danh-muc') === currentDanhMuc && linkParams.get('id') === currentId;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    // 1. Xử lý phần sub-nav phía trên
+    const subNavLinks = document.querySelectorAll('.sub-nav-list .sub-nav-link');
+    subNavLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && isMatchingCategory(href)) {
+        const parentLi = link.closest('.sub-nav-item');
+        if (parentLi) parentLi.classList.add('active');
+      }
+    });
+
+    // 2. Xử lý phần category-menu bên sidebar (cả menu con và menu cha)
+    const subCategoryLinks = document.querySelectorAll('.category-menu .sub-category a');
+    subCategoryLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && isMatchingCategory(href)) {
+        // Active thẻ li của menu con
+        link.parentElement.classList.add('active');
+
+        // Mở ul.sub-category và active menu cha tương ứng
+        const subCategoryUl = link.closest('.sub-category');
+        if (subCategoryUl) {
+          subCategoryUl.style.display = 'block';
+
+          const parentCategoryItem = subCategoryUl.previousElementSibling;
+          if (parentCategoryItem && parentCategoryItem.classList.contains('category-item')) {
+            parentCategoryItem.classList.add('active');
+            const arrow = parentCategoryItem.querySelector('.arrow');
+            if (arrow) arrow.textContent = '▲';
+          }
+        }
+      }
+    });
+  });
+</script>
                     </div>
 
                     <div class="sidebar-section">
                         <div class="sidebar-title">Bộ lọc sản phẩm</div>
-
+<input type="hidden" name="page" value="1">
                         <div class="filter-group">
-                            <label>Khoảng giá: <span id="price-output">20.464đ</span></label>
-                            <input type="range" id="price-range" class="range-slider" min="0" max="2000000"
-                                value="20464">
+                            <label>Khoảng giá: <span id="price-output">20.000đ</span></label>
+                            <input type="range" id="price-range" class="range-slider" min="0" max="2000000" >
                             <div class="price-range-vals">
                                 <span>0₫</span>
                                 <span>2.000.000₫</span>
                             </div>
                         </div>
 
-                        <div class="filter-group">
-                            <label>Công suất</label>
-                            <label class="checkbox-label"><input type="checkbox"> Dưới 10W <span
-                                    class="count">(25)</span></label>
-                            <label class="checkbox-label"><input type="checkbox"> 10W - 20W <span
-                                    class="count">(38)</span></label>
-                            <label class="checkbox-label"><input type="checkbox"> 20W - 30W <span
-                                    class="count">(17)</span></label>
-                            <label class="checkbox-label"><input type="checkbox"> Trên 30W <span
-                                    class="count">(10)</span></label>
-                        </div>
+<div class="filter-group">
+    <label>Công suất</label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="power" value="0w-10w" <%= (currentFilters.power && (Array.isArray(currentFilters.power) ? currentFilters.power.includes('0w-10w') : currentFilters.power === '0w-10w')) ? 'checked' : '' %>> 
+        Dưới 10W <span class="count">(<%= powerCounts['0w-10w'] %>)</span>
+    </label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="power" value="10w-20w" <%= (currentFilters.power && (Array.isArray(currentFilters.power) ? currentFilters.power.includes('10w-20w') : currentFilters.power === '10w-20w')) ? 'checked' : '' %>> 
+        10W - 20W <span class="count">(<%= powerCounts['10w-20w'] %>)</span>
+    </label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="power" value="20w-30w" <%= (currentFilters.power && (Array.isArray(currentFilters.power) ? currentFilters.power.includes('20w-30w') : currentFilters.power === '20w-30w')) ? 'checked' : '' %>> 
+        20W - 30W <span class="count">(<%= powerCounts['20w-30w'] %>)</span>
+    </label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="power" value="tren-30w" <%= (currentFilters.power && (Array.isArray(currentFilters.power) ? currentFilters.power.includes('tren-30w') : currentFilters.power === 'tren-30w')) ? 'checked' : '' %>> 
+        Trên 30W <span class="count">(<%= powerCounts['tren-30w'] %>)</span>
+    </label>
+</div>
 
-                        <div class="filter-group">
-                            <label>Nhiệt độ màu</label>
-                            <label class="checkbox-label"><input type="checkbox"> Ánh sáng vàng (2700K - 3500K) <span
-                                    class="count">(22)</span></label>
-                            <label class="checkbox-label"><input type="checkbox"> Ánh sáng trung tính (4000K - 4500K)
-                                <span class="count">(25)</span></label>
-                            <label class="checkbox-label"><input type="checkbox"> Ánh sáng trắng (6000K - 6500K) <span
-                                    class="count">(35)</span></label>
-                        </div>
+<div class="filter-group">
+    <label>Nhiệt độ màu</label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="colorTemp" value="Vàng (3000k)" <%= (currentFilters.colorTemp && (Array.isArray(currentFilters.colorTemp) ? currentFilters.colorTemp.includes('Vàng (3000k)') : currentFilters.colorTemp === 'Vàng (3000k)')) ? 'checked' : '' %>> 
+        Ánh sáng vàng (2700K - 3500K) <span class="count">(<%= colorCounts['Vàng (3000k)'] %>)</span>
+    </label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="colorTemp" value="Trung Tính(4000k)" <%= (currentFilters.colorTemp && (Array.isArray(currentFilters.colorTemp) ? currentFilters.colorTemp.includes('Trung Tính(4000k)') : currentFilters.colorTemp === 'Trung Tính(4000k)')) ? 'checked' : '' %>> 
+        Ánh sáng trung tính (4000K - 4500K) <span class="count">(<%= colorCounts['Trung Tính(4000k)'] %>)</span>
+    </label>
+    <label class="checkbox-label">
+        <input type="checkbox" name="colorTemp" value="Trắng (6500k)" <%= (currentFilters.colorTemp && (Array.isArray(currentFilters.colorTemp) ? currentFilters.colorTemp.includes('Trắng (6500k)') : currentFilters.colorTemp === 'Trắng (6500k)')) ? 'checked' : '' %>> 
+        Ánh sáng trắng (6000K - 6500K) <span class="count">(<%= colorCounts['Trắng (6500k)'] %>)</span>
+    </label>
+</div>
 
                         <div class="filter-actions">
                             <button class="btn-reset" id="reset-filters">Xóa bộ lọc</button>
@@ -770,6 +831,8 @@
                             }
                         </style>
                     </div>
+
+                    
                 </div>
 
                 <!-- JAVASCRIPT XỬ LÝ CHUNG CHO TOÀN BỘ SIDEBAR -->
@@ -820,8 +883,8 @@
                     resetBtn.addEventListener('click', function () {
                         // Reset thanh trượt giá về mặc định và cập nhật lại chữ hiển thị
                         if (priceRange && priceOutput) {
-                            priceRange.value = 20464;
-                            priceOutput.textContent = formatCurrency(20464);
+                            priceRange.value = 0;
+                            priceOutput.textContent = formatCurrency(0);
                         }
 
                         // Đóng toàn bộ danh mục phụ
@@ -841,20 +904,70 @@
                     });
 
                     // 4. Xử lý sự kiện khi bấm nút Tìm kiếm
-                    const applyBtn = document.getElementById('apply-filters');
-                    applyBtn.addEventListener('click', function () {
-                        // Lấy giá trị khoảng giá hiện tại
-                        let currentPrice = priceRange.value;
+// 4. Xử lý sự kiện khi bấm nút Tìm kiếm
+const applyBtn = document.getElementById('apply-filters');
+applyBtn.addEventListener('click', function () {
+    // 1. Lấy URL hiện tại trên trình duyệt
+    let currentUrl = new URL(window.location.href);
+        // QUAN TRỌNG: Luôn reset page về 1 mỗi khi bấm tìm kiếm
+    currentUrl.searchParams.set('page', '1');
 
-                        // Lấy danh sách các công suất được chọn
-                        let selectedPower = [];
-                        document.querySelectorAll('.filter-group input[type="checkbox"]:checked').forEach(function (cb) {
-                            selectedPower.push(cb.parentElement.textContent.trim());
-                        });
+    // 2. Cập nhật hoặc thêm tham số maxPrice vào URL
+    currentUrl.searchParams.set('maxPrice', priceRange.value);
 
-                        // Tại đây bạn có thể gọi API hoặc viết logic lọc sản phẩm
-                        alert("Đang lọc sản phẩm với mức giá dưới: " + formatCurrency(currentPrice));
-                    });
+    // 3. Xóa các tham số filter/power/colorTemp cũ trước khi lấy mới (tránh bị lặp lại nếu bấm tìm kiếm nhiều lần)
+    currentUrl.searchParams.delete('power');
+    currentUrl.searchParams.delete('colorTemp');
+
+    // 4. Lấy các checkbox công suất được chọn và thêm vào URL
+    document.querySelectorAll('input[name="power"]:checked').forEach(function (cb) {
+        currentUrl.searchParams.append('power', cb.value);
+    });
+
+    // 5. Lấy các checkbox nhiệt độ màu được chọn và thêm vào URL
+    document.querySelectorAll('input[name="colorTemp"]:checked').forEach(function (cb) {
+        currentUrl.searchParams.append('colorTemp', cb.value);
+    });
+
+    // 6. Chuyển hướng trình duyệt đến URL mới đã được gom đủ tham số
+    window.location.href = currentUrl.toString();
+});
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Lấy tất cả tham số từ URL hiện tại
+    const urlParams = new URLSearchParams(window.location.search);
+
+
+    // 2. Khôi phục lại thanh trượt giá (nếu URL có maxPrice)
+    const maxPrice = urlParams.get('maxPrice');
+    if (maxPrice) {
+        const priceRange = document.getElementById('price-range');
+        const priceOutput = document.getElementById('price-output');
+        
+        priceRange.value = maxPrice;
+        // Cập nhật lại text hiển thị giá tiền
+        priceOutput.textContent = Number(maxPrice).toLocaleString('vi-VN') + 'đ';
+    }
+
+    // 3. Khôi phục lại trạng thái các checkbox Công suất
+    const selectedPowers = urlParams.getAll('power'); // Lấy tất cả giá trị power trên URL
+    if (selectedPowers.length > 0) {
+        document.querySelectorAll('input[name="power"]').forEach(function (cb) {
+            if (selectedPowers.includes(cb.value)) {
+                cb.checked = true;
+            }
+        });
+    }
+
+    // 4. Khôi phục lại trạng thái các checkbox Nhiệt độ màu
+    const selectedColorTemps = urlParams.getAll('colorTemp'); // Lấy tất cả giá trị colorTemp trên URL
+    if (selectedColorTemps.length > 0) {
+        document.querySelectorAll('input[name="colorTemp"]').forEach(function (cb) {
+            if (selectedColorTemps.includes(cb.value)) {
+                cb.checked = true;
+            }
+        });
+    }
+});
                 </script>
 
 
@@ -932,237 +1045,168 @@
                         }
                     }
                 </style>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const toggleBtn = document.getElementById("mobileFilterToggle");
-                        const sidebar = document.querySelector(".sidebar");
-                        const overlay = document.getElementById("sidebarOverlay");
 
-                        if (toggleBtn && sidebar && overlay) {
-                            // Bấm vào nút thì hiện sidebar và overlay
-                            toggleBtn.addEventListener("click", function () {
-                                sidebar.classList.add("active");
-                                overlay.classList.add("active");
-                                document.body.style.overflow = "hidden"; // Khóa cuộn trang chính
-                            });
-
-                            // Bấm vào vùng mờ (overlay) thì đóng sidebar lại
-                            overlay.addEventListener("click", function () {
-                                sidebar.classList.remove("active");
-                                overlay.classList.remove("active");
-                                document.body.style.overflow = "auto"; // Mở lại cuộn trang
-                            });
-                        }
-                    });
-                </script>
 
 
                 <!-- CONTENT -->
                 <div class="content-area">
                     <div class="content-header">
-                        <h2>Bóng đèn LED dân dụng</h2>
-                        <p>Sản phẩm LED dân dụng của LTC được thiết kế hiện đại, ánh sáng ổn định, tiết kiệm điện năng
-                            và
-                            thân thiện với môi trường, phù hợp cho mọi không gian trong ngôi nhà của bạn.</p>
+                    
 
                         <div class="sorting-bar">
-                            <span>Hiển thị 1–12 trong 125 sản phẩm</span>
+<% 
+        // Tính toán vị trí bắt đầu và kết thúc sản phẩm trên trang hiện tại
+        let startItem = product.length > 0 ? (pagination.currentPage - 1) * pagination.limit + 1 : 0;
+        let endItem = Math.min(pagination.currentPage * pagination.limit, totalProducts);
+    %>
+
+
+
+                            <span>Hiển thị <%= startItem %>–<%= endItem %> trong tổng số <%= totalProducts %> sản phẩm</span>
                             <div class="sorting-options">
-                                <span>Hiển thị:
-                                    <select>
-                                        <option>12 sản phẩm</option>
-                                        <option>24 sản phẩm</option>
-                                        <option>36 sản phẩm</option>
-                                    </select>
-                                </span>
-                                <span>Sắp xếp:
-                                    <select>
-                                        <option>Phổ biến</option>
-                                        <option>Giá tăng dần</option>
-                                        <option>Giá giảm dần</option>
-                                    </select>
-                                </span>
+                              <span>Hiển thị:
+    <select id="limit-select">
+        <option value="12">12 sản phẩm</option>
+        <option value="24">24 sản phẩm</option>
+        <option value="36">36 sản phẩm</option>
+    </select>
+</span>
+<span>Sắp xếp:
+    <select id="sort-select">
+        <option value="popular">Phổ biến</option>
+        <option value="asc">Giá tăng dần</option>
+        <option value="desc">Giá giảm dần</option>
+    </select>
+</span>
                                 <!-- Nút bấm mở bộ lọc trên mobile -->
                                 <button class="mobile-filter-toggle-btn" id="mobileFilterToggle">
                                     <i class="fa-solid fa-filter"></i> Bộ lọc
                                 </button>
                             </div>
                         </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const limitSelect = document.getElementById('limit-select');
+        const sortSelect = document.getElementById('sort-select');
+
+        // 1. Đồng bộ trạng thái đã chọn (selected) cho các select dựa theo URL khi load trang
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        const currentLimit = urlParams.get('limit');
+        if (currentLimit && limitSelect) {
+            limitSelect.value = currentLimit;
+        }
+
+        const currentSort = urlParams.get('sort');
+        if (currentSort && sortSelect) {
+            sortSelect.value = currentSort;
+        }
+
+        // 2. Hàm chung để cập nhật URL và chuyển hướng
+        function updateUrlAndNavigate(paramName, value) {
+            let currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set(paramName, value);
+            window.location.href = currentUrl.toString();
+        }
+
+        // 3. Lắng nghe sự kiện thay đổi của "Hiển thị sản phẩm"
+        if (limitSelect) {
+            limitSelect.addEventListener('change', function () {
+                updateUrlAndNavigate('limit', this.value);
+            });
+        }
+
+        // 4. Lắng nghe sự kiện thay đổi của "Sắp xếp"
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function () {
+                updateUrlAndNavigate('sort', this.value);
+            });
+        }
+    });
+</script>
+
+
                     </div>
 
                     <!-- PRODUCTS GRID -->
                     <div class="products-grid">
+                          <% for(item of product){%>
+                        <!-- Item  -->
 
-                        <!-- Item 1 -->
                         <div class="product-card">
-                            <span class="discount-badge">-20%</span>
+                            <% 
+    let price = Number(item.price);
+    let sale = Number(item.sale);
+    // Tính phần trăm giảm giá nếu giá gốc (price) lớn hơn giá sale và price khác 0
+    let discountPercent = (price > sale && price > 0) ? Math.round(((price - sale) / price) * 100) : 0;
+%>
+
+<% if (discountPercent > 0) { %>
+    <span class="discount-badge">-<%= discountPercent %>%</span>
+<% } %>
                             <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Bóng LED Bulb A60 9W</div>
-                                <div class="product-spec">Ánh sáng trắng</div>
-                                <span class="eco-tag">🌿 Tiết kiệm điện 89% điện năng</span>
+                                <a href="/product?san-pham=<%= item.slug %>&menu=<%=menu.slug%>&id=<%= item._id %>">
+                                <div class=" flex items-center justify-center mb-4 overflow-hidden "><img src="../site/images/update/<%=item.image[0].images%>"></div>
+                                <div class="product-title"><%=item.name%></div>
+                                </a>
+                                <div class="product-spec"><%=item.anhsang%></div>
+                                <% 
+    // Random một số nguyên ngẫu nhiên từ 80 đến 
+    let randomPercent = Math.floor(Math.random() * (95 - 80 + 1)) + 80;
+%>
+                                <span class="eco-tag">🌿 Tiết kiệm điện <%= randomPercent %>% điện năng</span>
                             </div>
                             <div>
                                 <div class="price-box">
-                                    <span class="current-price">32.000₫</span>
-                                    <span class="old-price">40.000₫</span>
+                                    <span class="current-price"><%= Number(item.sale).toLocaleString('vi-VN') %>₫</span>
+                                    <span class="old-price"><%= Number(item.price).toLocaleString('vi-VN') %>₫</span>
                                 </div>
-<div class="product-footer">
-    <span class="rating">★★★★★ (128) <span class="text-gray-400 text-xs font-normal">• 256 lượt xem</span></span>
-    <button class="btn-cart">🛒</button>
-</div>
+                              <div class="product-footer">
+    <span class="rating">★★★★★ (128) </span>
+    <span class="flex items-center gap-1.5"><i class="fa-regular fa-eye"></i> <%= item.view || 0 %> lượt xem</span>
+    
+    <!-- Biến nút giỏ hàng thành form AJAX giống như các phần trước -->
+    <form action="/cart/<%= item._id %>" method="POST" class="ajax-cart-form" style="display: inline;">
+        <input type="hidden" name="qty" value="1">
+        <button type="button" class="btn-cart btn-add-ajax" aria-label="Thêm vào giỏ hàng">🛒</button>
+    </form>
+    <style>
+        /* Style mặc định cho nút giỏ hàng nhỏ */
+.btn-cart {
+    background-color: #f1f5f9; /* Màu nền xám nhạt nhẹ nhàng */
+    color: #334155;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%; /* Bo tròn nút */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+    font-size: 16px;
+}
+
+/* Style khi rê chuột vào (Hover) */
+.btn-cart:hover {
+    background-color: #2563eb; /* Đổi sang màu xanh dương chủ đạo */
+    color: #ffffff; /* Đổi màu icon thành trắng */
+    transform: translateY(-3px) scale(1.05); /* Hiệu ứng nhấc nhẹ lên trên và phóng to một chút */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); /* Tạo hiệu ứng bóng đổ nổi bật */
+}
+
+/* Style khi nhấn chuột xuống (Active) */
+.btn-cart:active {
+    transform: translateY(0) scale(0.95); /* Thu nhỏ nhẹ lại khi click tạo cảm giác bấm chân thực */
+}
+    </style>
+</div> 
+
                             </div>
                         </div>
 
-                        <!-- Item 2 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-15%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Bóng LED Spotlight GU10 7W</div>
-                                <div class="product-spec">Ánh sáng vàng</div>
-                                <span class="eco-tag">🌿 Tiết kiệm điện 85% điện năng</span>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">45.000₫</span>
-                                    <span class="old-price">53.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★★ (58)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
+                            <% }%>
 
-                        <!-- Item 3 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-18%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Bóng LED Bulb A60 12W</div>
-                                <div class="product-spec">Ánh sáng trắng</div>
-                                <span class="eco-tag">🌿 Tiết kiệm điện 88% điện năng</span>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">48.000₫</span>
-                                    <span class="old-price">58.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★★ (119)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 4 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-15%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Bóng LED Bulb C37 5W</div>
-                                <div class="product-spec">Ánh sáng vàng</div>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">28.000₫</span>
-                                    <span class="old-price">33.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★☆ (75)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 5 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-12%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Bóng LED Bulb T37 7W</div>
-                                <div class="product-spec">Ánh sáng trắng</div>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">35.000₫</span>
-                                    <span class="old-price">40.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★★ (83)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 6 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-11%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Đèn LED Tuýp T8 1.2m 18W</div>
-                                <div class="product-spec">Ánh sáng trắng</div>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">62.000₫</span>
-                                    <span class="old-price">70.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★★ (112)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 7 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-20%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Đèn LED Downlight Âm Trần 9W</div>
-                                <div class="product-spec">Ánh sáng vàng</div>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">85.000₫</span>
-                                    <span class="old-price">106.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★★ (94)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item 8 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-17%</span>
-                            <div>
-                                <div class="product-img">💡</div>
-                                <div class="product-brand">LTC</div>
-                                <div class="product-title">Đèn LED Ốp Trần Vuông 12W</div>
-                                <div class="product-spec">Ánh sáng trắng</div>
-                            </div>
-                            <div>
-                                <div class="price-box">
-                                    <span class="current-price">145.000₫</span>
-                                    <span class="old-price">175.000₫</span>
-                                </div>
-                                <div class="product-footer">
-                                    <span class="rating">★★★★☆ (64)</span>
-                                    <button class="btn-cart">🛒</button>
-                                </div>
-                            </div>
-                        </div>
                         <style>
                             .product-card {
                                 /* Các thuộc tính sẵn có của bạn */
@@ -1180,19 +1224,68 @@
                         </style>
                     </div>
 
-                    <!-- PAGINATION -->
-                    <div class="pagination">
-                        <div class="page-item">&lt;</div>
-                        <div class="page-item active">1</div>
-                        <div class="page-item">2</div>
-                        <div class="page-item">3</div>
-                        <div class="page-item">4</div>
-                        <div class="page-item">5</div>
-                        <div class="page-item">...</div>
-                        <div class="page-item">11</div>
-                        <div class="page-item">&gt;</div>
-                    </div>
+                  <!-- PAGINATION -->
+<div class="pagination">
+    <% if (pagination.totalPages > 1) { %>
+        <% 
+            // Hàm helper để tạo query string an toàn không bị gom mảng thành dấu phẩy
+            const buildUrl = (targetPage) => {
+                let params = new URLSearchParams();
+                for (let key in currentFilters) {
+                    if (key === 'page') continue; // Bỏ qua page cũ để gán page mới
+                    
+                    let val = currentFilters[key];
+                    if (Array.isArray(val)) {
+                        val.forEach(item => params.append(key, item));
+                    } else {
+                        params.set(key, val);
+                    }
+                }
+                params.set('page', targetPage);
+                return `/category?${params.toString()}`;
+            };
+        %>
 
+        <!-- Nút Previous (<) -->
+        <% if (pagination.currentPage > 1) { %>
+            <a href="<%= buildUrl(pagination.currentPage - 1) %>" class="page-item">&lt;</a>
+        <% } else { %>
+            <div class="page-item disabled">&lt;</div>
+        <% } %>
+
+        <!-- Các số trang động -->
+        <% 
+            let startPage = Math.max(1, pagination.currentPage - 2);
+            let endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
+
+            if (startPage > 1) { %>
+                <a href="<%= buildUrl(1) %>" class="page-item">1</a>
+                <% if (startPage > 2) { %>
+                    <div class="page-item dot">...</div>
+                <% } %>
+            <% } 
+
+            for (let i = startPage; i <= endPage; i++) { 
+        %>
+                <a href="<%= buildUrl(i) %>" class="page-item <%= i === pagination.currentPage ? 'active' : '' %>"><%= i %></a>
+        <% } 
+
+            if (endPage < pagination.totalPages) { %>
+                <% if (endPage < pagination.totalPages - 1) { %>
+                    <div class="page-item dot">...</div>
+                <% } %>
+                <a href="<%= buildUrl(pagination.totalPages) %>" class="page-item"><%= pagination.totalPages %></a>
+        <% } %>
+
+        <!-- Nút Next (>) -->
+        <% if (pagination.currentPage < pagination.totalPages) { %>
+            <a href="<%= buildUrl(pagination.currentPage + 1) %>" class="page-item">&gt;</a>
+        <% } else { %>
+            <div class="page-item disabled">&gt;</div>
+        <% } %>
+    <% } %>
+</div>
+ 
                 </div>
             </div>
         </div>
@@ -1238,6 +1331,8 @@
                 </div>
             </div>
         </section>
+
+
 
     </div>
 

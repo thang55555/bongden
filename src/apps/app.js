@@ -117,8 +117,12 @@ app.delete('/admin/danh-sach-anh/delete-tieu-de/:id', async (req, res) => {
 
 
 app.use((req, res) => {
-  
-  res.status(404).render("./site/404",); // hoặc send(), tùy nhu cầu
+      const seo ={
+    title: "Không tìm thấy trang | Tên Website của bạn hoặc 404 - Trang không tồn tại | denledhopthanh.com",
+    keywords: "den led, bóng đèn, hợp thành, đèn led hợp thành",
+    description: "Rất tiếc, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển. Vui lòng quay về trang chủ hoặc sử dụng thanh tìm kiếm để tiếp tục."
+  }
+  res.status(404).render("./site/404",{seo}); // hoặc send(), tùy nhu cầu
 });
 
 module.exports = app;

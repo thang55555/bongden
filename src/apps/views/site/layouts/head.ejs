@@ -5,28 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/static/site/">
-  <title>LTC - Giải pháp chiếu sáng LED hiện đại, tiết kiệm và bền bỉ</title>
-  <meta name="description"
-    content="Chuyên cung cấp các giải pháp chiếu sáng LED hiện đại, tiết kiệm năng lượng và thân thiện với môi trường từ thương hiệu LTC.">
+ <!-- 1. Các thẻ SEO cơ bản -->
+    <title><%=seo.title%></title>
+    <meta name="description" content="<%=seo.description%>">
+    <meta name="keywords" content="<%=seo.keywords%>">
+    <link rel="canonical" href="<%= fullUrl %>">
+
+    <!-- 2. Thẻ Open Graph (Dành cho Facebook, Zalo, LinkedIn...) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%=fullUrl%>">
+    <meta property="og:title" content="<%=seo.title%>">
+    <meta property="og:description" content="<%=seo.description%>">
+    <meta property="og:image" content="https://denledhopthanh.com/static/site/images/update/<%=thongtintrang.images%>">
+
+    <!-- 3. Thẻ Twitter Card (Dành cho Twitter / X) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%=seo.title%>">
+    <meta name="twitter:description" content="<%=seo.description%>">
+    <meta name="twitter:image" content="https://denledhopthanh.com/static/site/images/update/<%=thongtintrang.images%>">
+<link rel="preload" fetchpriority="high" as="image" href="../site/images/update/<%=thongtintrang.images%>" type="image/png">
+
+
   <!-- Tailwind CSS CDN -->
   <script src="./them/java.js"></script>
   <!-- FontAwesome cho Icons -->
   <link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              blue: '#0052cc',
-              darkBlue: '#003399',
-              dark: '#0f172a',
-            }
-          }
-        }
-      }
-    }
-  </script>
+
   <script defer src="./them/alpine.js"></script>
 </head>
 
@@ -61,7 +65,7 @@
       <!-- Left: Mobile Menu Button & Logo -->
       <div class="flex items-center gap-3">
         <!-- Nút Hamburger cho Mobile có tích hợp đổi thành dấu X -->
-        <button id="mobile-menu-button"
+        <button id="mobile-menu-button" aria-label="Mở menu"
           class="lg:hidden text-slate-700 hover:text-blue-600 focus:outline-none p-1 w-8 h-8 flex items-center justify-center">
           <i id="menu-icon" class="fa-solid fa-bars text-xl transition-transform duration-300"></i>
         </button>
@@ -69,7 +73,7 @@
         <!-- Logo -->
         <a href="/" class="flex items-center gap-2">
           <div class="text-blue-600 font-black text-2xl tracking-tighter leading-none">
-            <img src="../site/images/update/<%=thongtintrang.images%>" style="max-width: 60px;">
+           <h1> <img src="../site/images/update/<%=thongtintrang.images%>" fetchpriority="high " style="max-width: 60px;" width="60" height="48" alt="<%=thongtintrang.images%>"></h1>
             <div class="text-[9px] tracking-normal text-slate-500 uppercase font-semibold">Lighting The
               Future</div>
           </div>
@@ -161,12 +165,73 @@
       <div class="flex items-center space-x-3">
         <!-- Ô tìm kiếm trên desktop -->
 <form action="/search" method="GET" class="relative hidden sm:block w-48 md:w-64">
-  <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..."
+  <input type="text" name="keyword" id="search-input" placeholder="Tìm kiếm sản phẩm..." autocomplete="off"
     class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
-  <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600">
+  <button type="submit" class="absolute  right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600" aria-label="Tìm kiếm">
     <i class="fa-solid fa-magnifying-glass text-xs"></i>
   </button>
+
+  <!-- Khung hiển thị gợi ý kết quả -->
+  <div id="search-suggestions" class="absolute left-0 right-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-lg hidden z-50 max-h-60 overflow-y-auto">
+    <!-- Dữ liệu gợi ý sẽ được chèn vào đây bằng JavaScript -->
+  </div>
 </form>
+<script>
+  const searchInput = document.getElementById('search-input');
+  const suggestionsBox = document.getElementById('search-suggestions');
+  let timeoutId = null;
+
+  searchInput.addEventListener('input', function() {
+    const keyword = this.value.trim();
+
+    // Xóa timeout cũ để tránh gọi API liên tục mỗi khi gõ phím (Debounce)
+    clearTimeout(timeoutId);
+
+    if (keyword.length === 0) {
+      suggestionsBox.innerHTML = '';
+      suggestionsBox.classList.add('hidden');
+      return;
+    }
+
+    // Đợi 300ms sau khi người dùng ngừng gõ mới gọi API
+    timeoutId = setTimeout(() => {
+      fetch(`/api/search-suggestions?keyword=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length > 0) {
+            let html = '';
+            data.forEach(item => {
+              // Lấy ảnh đầu tiên hoặc ảnh mặc định
+              let imgSrc = (item.image && item.image.length > 0) ? item.image[0].images : 'default.webp';
+              
+              html += `
+                <a href="/product?san-pham=${item.slug}&id=${item._id}" class="flex items-center gap-3 p-2 hover:bg-slate-50 transition border-b border-slate-100 last:border-none">
+                  <img src="../site/images/update/${imgSrc}" alt="${item.name}" class=" h-10 object-cover rounded">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs font-medium text-slate-800 truncate">${item.name}</p>
+                    <p class="text-xs text-blue-600 font-semibold">${Number(item.sale).toLocaleString()} đ</p>
+                  </div>
+                </a>
+              `;
+            });
+            suggestionsBox.innerHTML = html;
+            suggestionsBox.classList.remove('hidden');
+          } else {
+            suggestionsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Không tìm thấy sản phẩm phù hợp</div>`;
+            suggestionsBox.classList.remove('hidden');
+          }
+        })
+        .catch(err => console.error(err));
+    }, 300);
+  });
+
+  // Ẩn khung gợi ý khi click ra ngoài ô tìm kiếm
+  document.addEventListener('click', function(e) { 
+    if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.classList.add('hidden');
+    }
+  });
+</script>
         <a href="/gio-hang" class="relative p-2 text-slate-700 hover:text-blue-600 transition">
           <i class="fa-solid fa-cart-shopping text-lg"></i>
 <span id="cart-badge-count" class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">

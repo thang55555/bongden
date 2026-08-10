@@ -4,7 +4,6 @@ const path = require("path");
 const fs = require('fs');
 const transporter = require("../../common/transporter");
 const slug = require("slug");
-const Gioi_thieu_trangModel = require("../models/gioi_thieu_trang");
 const VideoModel = require("../models/video");
 const BaiviettintucModel = require("../models/baiviet_tintuc");
 const Menu_danhmuc_sanphamModel = require("../models/menu_danhmuc_sanpham");
@@ -41,17 +40,29 @@ const home = async (req, res) => {
   const tintuc = await BaiviettintucModel.aggregate([
     { $sample: { size: 4 } } // Số 4 là số lượng bản ghi ngẫu nhiên bạn muốn lấy
   ]);
-  res.render("site/index", { banner, duan, tintuc, });
+  const thongtintrang = await Thong_tin_trangModel.findOne();
+  const seo ={
+    title: thongtintrang.title,
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
+  res.render("site/index", { banner, duan, tintuc, seo});
 
 };
 
 // GIOI THIEU
 const gioithieu = async (req, res) => {
   try {
-    res.render("./site/gioithieu", {});
+      const thongtintrang = await Thong_tin_trangModel.findOne();
+  const seo ={
+    title: thongtintrang.title,
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
+    res.render("./site/gioithieu", {seo});
   } catch (err) {
     console.error("❌ Lỗi tại gioithieu:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -195,8 +206,14 @@ const category = async (req, res) => {
       });
     });
 
+  const seo ={
+    title: menu.title,
+    keywords: menu.keywords,
+    description: menu.description
+  }
+
     res.render("site/category", {
-      product,
+      product, seo,
       menu,
       totalProducts,
       powerCounts,
@@ -210,7 +227,7 @@ const category = async (req, res) => {
     });
   } catch (error) {
     console.error("Lỗi tại controller category:", error);
-    return res.status(500).send("Đã có lỗi xảy ra ở hệ thống.");
+   res.redirect('/404');
   }
 };
 
@@ -240,12 +257,17 @@ const productsp = async (req, res) => {
     const products = await Product_sanphamModel.find({
       nhomsp_id: { $in: product.nhomsp_id }
     });
-    res.render("./site/product", { product, menu, products });
+      const seo ={
+    title: product.title,
+    keywords: product.keywords,
+    description: product.description
+  }
+    res.render("./site/product", { product, menu, products, seo });
 
   } catch (error) {
     console.error("Lỗi tại controller product:", error);
     // Tránh để trắng trang hoặc treo kết nối khi có lỗi xảy ra
-    return res.status(500).send("Đã có lỗi xảy ra ở hệ thống.");
+   res.redirect('/404');
   }
 };
 
@@ -302,10 +324,15 @@ const safeProduct = product || { name: "Chưa có danh mục", images: "default.
 
     // Tính tổng số trang
     const totalPages = Math.ceil(totalProducts / limit);
+      const seo ={
+    title: product.title,
+    keywords: product.keywords,
+    description: product.description
+  };
 
     // Render ra view kèm theo thông tin phân trang
     res.render("./site/category_duan", {
-      menu,
+      menu, seo,
       products,
       product: safeProduct,
       id,
@@ -316,7 +343,7 @@ const safeProduct = product || { name: "Chưa có danh mục", images: "default.
 
   } catch (error) {
     console.error("Lỗi categoryduan:", error);
-    res.status(500).send("Lỗi Server");
+    res.redirect('/404');
   }
 };
 
@@ -356,12 +383,16 @@ const duan = async (req, res) => {
     }).populate({ path: "menudichvu_id" });
 
     const menu = await Menu_dichvuModel.find();
+      const seo ={
+    title: product.title,
+    keywords: product.keywords,
+    description: product.description
+  };
 
-
-    res.render("./site/product_duan", { product, readingTime, products, menu, });
+    res.render("./site/product_duan", { product, readingTime, products, menu, seo,});
   } catch (error) {
     console.error("Lỗi product dự án:", error);
-    res.status(500).send("Lỗi Server");
+    res.redirect('/404');
   }
 
 
@@ -422,10 +453,15 @@ const categoryitintuc = async (req, res) => {
 
     // Tính tổng số trang
     const totalPages = Math.ceil(totalProducts / limit) || 1;
+          const seo ={
+    title: product.title,
+    keywords: product.keywords,
+    description: product.description
+  };
 
     // Render ra view kèm theo thông tin an toàn
     res.render("./site/category_tintuc", {
-      menu,
+      menu,seo,
       products,
       product: safeProduct, // Dùng biến an toàn thay vì product gốc
       id,
@@ -436,7 +472,7 @@ const categoryitintuc = async (req, res) => {
 
   } catch (error) {
     console.error("Lỗi categorytintuc:", error);
-    res.status(500).send("Lỗi Server");
+    res.redirect('/404');
   }
 };
 
@@ -476,24 +512,35 @@ const productTinTuc = async (req, res) => {
     }).populate({ path: "menutintuc_id" });
 
     const menu = await Menu_tintucModel.find();
+          const seo ={
+    title: product.title,
+    keywords: product.keywords,
+    description: product.description
+  }
 
-    res.render("./site/product_tintuc", { product, readingTime, products, menu, });
+    res.render("./site/product_tintuc", { product, readingTime, products, menu, seo});
   } catch (error) {
     console.error("Lỗi product dự án:", error);
-    res.status(500).send("Lỗi Server");
+    res.redirect('/404');
   }
 
 };
 
 const tuvan = async (req, res) => {
   try {
-
+      const thongtintrang = await Thong_tin_trangModel.findOne();
+  const seo ={
+    title: "TƯ VẤN GIẢI PHÁP CHIẾU SÁNG",
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
+res.render("./site/tuvan", {seo});
 
   } catch (error) {
     console.error("Lỗi tư vấn:", error);
-    res.status(500).send("Lỗi Server");
+    res.redirect('/404');
   }
-  res.render("./site/tuvan");
+  
 }
 
 const guilienhe = async (req, res) => {
@@ -571,7 +618,7 @@ const guilienhe = async (req, res) => {
     res.redirect(`/success?id=${savedTuvan._id}&code=${savedTuvan.matuvan}`);
   } catch (err) {
     console.error("❌ Lỗi tại guilienhe:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -600,10 +647,16 @@ const success = async (req, res) => {
 
     // Sau đó bạn có thể đính kèm imageSizeInMB vào object product hoặc truyền riêng sang EJS
     product.sizeInMB = imageSizeInMB;
-    res.render("./site/success", { product });
+          const thongtintrang = await Thong_tin_trangModel.findOne();
+  const seo ={
+    title: "TƯ VẤN GIẢI PHÁP CHIẾU SÁNG",
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
+    res.render("./site/success", { product, seo });
   } catch (err) {
     console.error("❌ Lỗi tại success:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -615,11 +668,17 @@ const cart = async (req, res) => {
       { $match: { nhap: true } }, // Lọc các sản phẩm có nhap: true (thay thế cho .find({nhap: true}))
       { $sample: { size: 20 } }    // Lấy ngẫu nhiên 5 sản phẩm (bạn có thể thay đổi số lượng tùy ý)
     ]);
+          const thongtintrang = await Thong_tin_trangModel.findOne();
+  const seo ={
+    title: "Giỏ hàng",
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
 
-    res.render("./site/cart", { cart, totalPrice, products });
+    res.render("./site/cart", { cart, totalPrice, products, seo });
   } catch (err) {
     console.error("❌ Lỗi tại cart:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -724,8 +783,14 @@ const deletecart2 = async (req, res) => {
 const checkout = async (req, res) => {
   const cart = req.session.cart
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const thongtintrang = await Thong_tin_trangModel.findOne();
+  const seo ={
+    title: "Giỏ hàng",
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
 
-  res.render("./site/order", { cart, totalPrice })
+  res.render("./site/order", { cart, totalPrice, seo })
 }
 const order = async (req, res) => {
   if (!req.session.cart || req.session.cart.length === 0) {
@@ -801,10 +866,211 @@ const order = async (req, res) => {
     html
   });
   req.session.cart = [];
-  res.render("./site/success-order.ejs", { cart, saveOrder, totalPrice, finalTotalPrice, products })
+  const seo ={
+    title: "Giỏ hàng",
+    keywords: thongtintrang.keywords,
+    description: thongtintrang.description
+  }
+
+
+// 1. Tạo sẵn biến fullUrl mặc định
+const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
+
+  res.render("./site/success-order.ejs", { cart, saveOrder, totalPrice, finalTotalPrice, products, seo, fullUrl })
 }
 
+const search = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const keyword = req.query.keyword; // Đã có sẵn biến keyword ở đây
+    let check1 = null;
+    let check2 = null;
 
+    if (mongoose.isValidObjectId(id)) {
+      check1 = await Menu_danhmuc_sanphamModel.findById(id);
+      if (!check1) {
+        check2 = await Menu_nhom_sanphamModel.findById(id);
+      }
+    }
+
+    let menu;
+    let filterQuery = { nhap: true };
+
+    if (check1) {
+      menu = check1;
+      const product1 = await Menu_nhom_sanphamModel.find({ danhmuc_id: menu._id });
+      const nhomIds = product1.map(item => item._id);
+      filterQuery.nhomsp_id = { $in: nhomIds };
+    } else if (check2) {
+      menu = check2;
+      filterQuery.nhomsp_id = { $in: [menu._id] };
+    } else {
+      menu = await Menu_danhmuc_sanphamModel.findOne();
+      if (menu) {
+        const product1 = await Menu_nhom_sanphamModel.find({ danhmuc_id: menu._id });
+        const nhomIds = product1.map(item => item._id);
+        filterQuery.nhomsp_id = { $in: nhomIds };
+      }
+    }
+
+    // --- KIỂM TRA AN TOÀN: NẾU KHÔNG TÌM THẤY MENU NÀO TRONG DB ---
+    if (!menu) {
+      return res.status(404).send("Không tìm thấy danh mục sản phẩm.");
+    }
+
+    // --- BỔ SUNG: XỬ LÝ LỌC THEO KEYWORD NẾU NGƯỜI DÙNG NHẬP TỪ KHÓA ---
+    if (keyword && keyword.trim() !== '') {
+      // Dùng $regex để tìm kiếm gần đúng theo tên sản phẩm (name), 'i' để không phân biệt hoa thường
+      filterQuery.name = { $regex: keyword.trim(), $options: 'i' };
+    }
+
+    // --- 1. LẤY CÁC THAM SỐ TỪ URL ---
+    const { maxPrice, power, colorTemp, limit = 12, page = 1, sort } = req.query;
+
+    // --- 2. XỬ LÝ LỌC CÔNG SUẤT (POWER) TRƯỚC TIÊN ---
+    if (power) {
+      const powerArray = Array.isArray(power) ? power : [power];
+      const allProducts = await Product_sanphamModel.find(filterQuery);
+
+      let matchedIds = allProducts.filter(item =>
+        item.congsuat?.some(valStr => {
+          const num = parseInt(valStr.replace(/\D/g, ''));
+          if (isNaN(num)) return false;
+
+          return powerArray.some(rangeStr => {
+            if (rangeStr === 'tren-30w') return num > 30;
+            const [min, max] = rangeStr.replace(/w/g, '').split('-').map(Number);
+            return num >= min && num <= max;
+          });
+        })
+      ).map(item => item._id);
+
+      if (matchedIds.length > 0) {
+        const sortedProducts = await Product_sanphamModel.find({ _id: { $in: matchedIds } })
+          .sort({ sale: sort === 'asc' ? 1 : (sort === 'desc' ? -1 : -1) });
+
+        matchedIds = sortedProducts.map(item => item._id);
+        filterQuery._id = { $in: matchedIds };
+      } else {
+        filterQuery._id = { $in: [new mongoose.Types.ObjectId()] };
+      }
+    }
+
+    // --- 3. XỬ LÝ CÁC BỘ LỌC CÒN LẠI (Giá, Nhiệt độ màu...) VÀO FILTERQUERY ---
+    if (maxPrice) {
+      filterQuery.sale = { $lte: String(maxPrice) };
+    }
+
+    if (colorTemp) {
+      const colorArray = Array.isArray(colorTemp) ? colorTemp : [colorTemp];
+      filterQuery.anhsang = { $in: colorArray };
+    }
+
+    // --- 4. SẮP XẾP, PHÂN TRANG VÀ TRUY VẤN CUỐI CÙNG ---
+    let sortQuery = {};
+    if (sort === 'asc') {
+      sortQuery.sale = 1;
+    } else if (sort === 'desc') {
+      sortQuery.sale = -1;
+    } else {
+      sortQuery.createdAt = -1;
+    }
+
+    const limitNum = Number(limit);
+    const pageNum = Number(page);
+    const skip = (pageNum - 1) * limitNum;
+
+    const totalProducts = await Product_sanphamModel.countDocuments(filterQuery);
+    const totalPages = Math.ceil(totalProducts / limitNum);
+
+    const product = await Product_sanphamModel.find(filterQuery)
+      .sort(sortQuery)
+      .skip(skip)
+      .limit(limitNum);
+
+    // --- TÍNH TOÁN SỐ LƯỢNG CHO TỪNG BỘ LỌC ---
+    const baseProductsForCount = await Product_sanphamModel.find({
+      nhap: true,
+      ...(keyword && keyword.trim() !== '' ? { name: { $regex: keyword.trim(), $options: 'i' } } : {}),
+      ...(check1 ? { nhomsp_id: { $in: await Menu_nhom_sanphamModel.find({ danhmuc_id: menu._id }).then(res => res.map(i => i._id)) } } : {}),
+      ...(check2 ? { nhomsp_id: { $in: [menu._id] } } : {}),
+      ...(!check1 && !check2 && menu ? { nhomsp_id: { $in: await Menu_nhom_sanphamModel.find({ danhmuc_id: menu._id }).then(res => res.map(i => i._id)) } } : {})
+    });
+
+    // 1. Đếm số lượng theo Công suất
+    const powerCounts = { '0w-10w': 0, '10w-20w': 0, '20w-30w': 0, 'tren-30w': 0 };
+    baseProductsForCount.forEach(item => {
+      if (!item.congsuat || !Array.isArray(item.congsuat)) return;
+
+      const matchedRanges = new Set();
+      item.congsuat.forEach(valStr => {
+        const num = parseInt(valStr.replace(/\D/g, ''));
+        if (isNaN(num)) return;
+
+        if (num >= 0 && num <= 10) matchedRanges.add('0w-10w');
+        if (num > 10 && num <= 20) matchedRanges.add('10w-20w');
+        if (num > 20 && num <= 30) matchedRanges.add('20w-30w');
+        if (num > 30) matchedRanges.add('tren-30w');
+      });
+      matchedRanges.forEach(range => powerCounts[range]++);
+    });
+
+    // 2. Đếm số lượng theo Nhiệt độ màu
+    const colorCounts = { 'Vàng (3000k)': 0, 'Trung Tính(4000k)': 0, 'Trắng (6500k)': 0 };
+    baseProductsForCount.forEach(item => {
+      if (!item.anhsang || !Array.isArray(item.anhsang)) return;
+
+      Object.keys(colorCounts).forEach(colorKey => {
+        if (item.anhsang.includes(colorKey)) {
+          colorCounts[colorKey]++;
+        }
+      });
+    });
+  const seo ={
+    title: menu.title,
+    keywords: menu.keywords,
+    description: menu.description
+  }
+
+    res.render("site/search", {
+      product, keyword,
+      menu, seo,
+      totalProducts,
+      powerCounts,
+      colorCounts,
+      currentFilters: req.query,
+      pagination: {
+        currentPage: pageNum,
+        totalPages: totalPages,
+        limit: limitNum
+      }
+    });
+  } catch (error) {
+    console.error("Lỗi tại controller category:", error);
+    res.redirect('/404');
+  }
+};
+
+const apiSearch = async (req, res) => {
+  try {
+    const keyword = req.query.keyword;
+    if (!keyword || keyword.trim() === '') {
+      return res.json([]);
+    }
+
+    // Tìm kiếm tối đa 5 sản phẩm khớp với từ khóa
+    const products = await Product_sanphamModel.find({
+      nhap: true,
+      name: { $regex: keyword.trim(), $options: 'i' }
+    }).limit(10).select('name slug sale image');
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json([]);
+  }
+};
 
 
 
@@ -871,7 +1137,7 @@ const categoryDanhmuc = async (req, res) => {
     });
   } catch (err) {
     console.error("❌ Lỗi tại categoryDanhmuc:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -920,7 +1186,7 @@ const categoryitem = async (req, res) => {
     });
   } catch (err) {
     console.error("❌ Lỗi tại categoryitem:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -955,7 +1221,7 @@ const productdichvu = async (req, res) => {
     res.render("./site/product_dichvu", { product, category, category_noibat, imgOne, image });
   } catch (err) {
     console.error("❌ Lỗi tại productdichvu:", err);
-    res.status(500).send("Có lỗi xảy ra khi load dịch vụ");
+    res.redirect('/404');
   }
 };
 
@@ -984,7 +1250,7 @@ const danhsachvideo = async (req, res) => {
     });
   } catch (err) {
     console.error("❌ Lỗi tại danhsachvideo:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -998,7 +1264,7 @@ const productvideo = async (req, res) => {
     res.render("./site/product_video", { product, baiviet });
   } catch (err) {
     console.error("❌ Lỗi tại productvideo:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -1010,9 +1276,10 @@ const lienhe = async (req, res) => {
     res.render("./site/lienhe", { thongtin });
   } catch (err) {
     console.error("❌ Lỗi tại lienhe:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
+
 
 
 
@@ -1023,7 +1290,7 @@ const thuocloban = async (req, res) => {
     res.render("./site/thuoc-lo-ban", { product });
   } catch (err) {
     console.error("❌ Lỗi tại thuocloban:", err);
-    res.status(500).send("Có lỗi xảy ra");
+    res.redirect('/404');
   }
 };
 
@@ -1031,36 +1298,6 @@ const thuocloban = async (req, res) => {
 
 
 
-const search = async (req, res) => {
-  try {
-    const keyword = req.query.keyword || "";
-    // đảm bảo đã tạo index text trên model Product_sanphamModel nếu dùng $text
-    const products = await Product_sanphamModel
-      .find({ $text: { $search: keyword }, nhap: true })
-      .sort({ _id: -1 });
-
-    const page = parseInt(req.query.page) || 1;
-    const limit = 8;
-    const skip = (page - 1) * limit;
-    const totalRows = products.length;
-    const totalPages = Math.ceil(totalRows / limit);
-    const product = products.slice(skip, skip + limit);
-
-    res.render("./site/search", {
-      products, keyword, product,
-      page,
-      totalPages,
-      next: page + 1,
-      hasNext: page < totalPages,
-      prev: page - 1,
-      hasPrev: page > 1,
-      pages: pagination(page, totalPages),
-    });
-  } catch (err) {
-    console.error("❌ Lỗi tại search:", err);
-    res.status(500).send("Có lỗi xảy ra");
-  }
-};
 
 
 
@@ -1081,5 +1318,5 @@ module.exports = {
   tuvan,
   productvideo,
   guilienhe,
-  search, cart, addcart, updatecart, deletecart, deletecart2, order, checkout,
+  search, cart, addcart, updatecart, deletecart, deletecart2, order, checkout, apiSearch
 };
