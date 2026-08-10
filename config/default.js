@@ -10,12 +10,12 @@ module.exports = {
     session_key: "Vietpro_session",
   },
     mail:{
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
+        host: "cp02hn.emailserver.net.vn",
+        port: 465,
+        secure: true,
         auth: {
-            user: "kinhdoanh.deevisco@gmail.com",
-            pass: "knll qcns fiwb xnob",
+            user: "kinhdoanh@denledhopthanh.com",
+            pass: "Hopthanh123@",
         },
     }
 }

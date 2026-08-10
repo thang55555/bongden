@@ -860,7 +860,7 @@ const order = async (req, res) => {
   );
 
   await transporter.sendMail({
-    from: '"ĐÈN LED HỢP THÀNH" <kinhdoanh.deevisco@gmail.com>',
+    from: '"ĐÈN LED HỢP THÀNH" <kinhdoanh@denledhopthanh.com>',
     to: saveOrder.email,
     subject: `Xác nhận đơn hàng ${saveOrder.madonhang} từ Đèn Led Hợp Thành`,
     html

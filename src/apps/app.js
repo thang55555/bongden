@@ -122,7 +122,8 @@ app.use((req, res) => {
     keywords: "den led, bóng đèn, hợp thành, đèn led hợp thành",
     description: "Rất tiếc, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển. Vui lòng quay về trang chủ hoặc sử dụng thanh tìm kiếm để tiếp tục."
   }
-  res.status(404).render("./site/404",{seo}); // hoặc send(), tùy nhu cầu
+  const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  res.status(404).render("./site/404",{seo, fullUrl}); // hoặc send(), tùy nhu cầu
 });
 
 module.exports = app;

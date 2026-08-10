@@ -159,15 +159,14 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
          <%=thongtintrang.content%>
           <div class="flex space-x-3 pt-4">
-            <a href="/" aria-label="Facebook"
+            <a href="<%=thongtintrang.fb%>" aria-label="Facebook"
               class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
                 class="fa-brands fa-facebook-f text-xs"></i></a>
-            <a href="/" aria-label="youtube"
+            <a href="<%=thongtintrang.yt%>" aria-label="youtube"
               class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
                 class="fa-brands fa-youtube text-xs"></i></a>
-            <a href="/" aria-label="linkedin"
-              class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i
-                class="fa-brands fa-linkedin-in text-xs"></i></a>
+            <a href="https://zalo.me/<%=thongtintrang.zalo%>" aria-label="zalo"
+              class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition"><i class="fa-solid fa-comment text-xs"></i></a>
           </div>
         </div>
 
@@ -181,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </li>
             <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-500"></i><%=thongtintrang.email%></li>
             <li class="flex items-center gap-2"><i class="fa-solid fa-globe text-blue-500"></i>
-              www.ltc-lighting.vn</li>
+              www.denledhopthanh.com</li>
             <li class="flex items-center gap-2"><i class="fa-solid fa-file-invoice text-blue-500"></i> MST: <%=thongtintrang.mst%></li>
           </ul>
         </div>
@@ -220,14 +219,14 @@ document.addEventListener("DOMContentLoaded", function () {
               <i class="fa-solid fa-envelope text-blue-500 text-base mt-0.5"></i>
               <div>
                 <div class="text-white font-bold">Email hỗ trợ</div>
-                <div class="text-[10px]"><%=thongtintrang.email%></div>
+                <div class="text-[10px]"><a href="mailto:cskh@denledhopthanh.com" >cskh@denledhopthanh.com</a></div>
               </div>
             </div>
             <div class="flex items-start gap-2.5">
               <i class="fa-solid fa-tools text-blue-500 text-base mt-0.5"></i>
               <div>
                 <div class="text-white font-bold">Hỗ trợ kỹ thuật</div>
-                <div class="text-[10px]"><%=thongtintrang.email%></div>
+                <div class="text-[10px]"><a href="mailto:kythuat@denledhopthanh.com" >kythuat@denledhopthanh.com</a></div>
               </div>
             </div>
           </div>

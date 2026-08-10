@@ -12,6 +12,7 @@ module.exports = async (req, res, next)=>{
     res.locals.totalQty = req.session.cart.reduce((total, item) => total + item.qty, 0);
 
 
+
     
 
     res.locals.email = req.session.email;
