@@ -166,9 +166,10 @@
         <!-- Ô tìm kiếm trên desktop -->
 <form action="/search" method="GET" class="relative hidden sm:block w-48 md:w-64">
   <input type="text" name="keyword" id="search-input" placeholder="Tìm kiếm sản phẩm..." autocomplete="off"
-    class="w-full bg-slate-100 text-xs rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
-  <button type="submit" class="absolute  right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600" aria-label="Tìm kiếm">
-    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+    class="w-full bg-slate-100 text-sm text-slate-800 rounded-full py-2.5 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-transparent">
+  
+  <button type="submit" class="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-blue-600 flex items-center justify-center rounded-full" aria-label="Tìm kiếm">
+    <i class="fa-solid fa-magnifying-glass text-sm"></i>
   </button>
 
   <!-- Khung hiển thị gợi ý kết quả -->
@@ -177,60 +178,65 @@
   </div>
 </form>
 <script>
+document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById('search-input');
   const suggestionsBox = document.getElementById('search-suggestions');
-  let timeoutId = null;
+  
+  if (searchInput && suggestionsBox) {
+    let timeoutId = null;
 
-  searchInput.addEventListener('input', function() {
-    const keyword = this.value.trim();
+    searchInput.addEventListener('input', function() {
+      const keyword = this.value.trim();
 
-    // Xóa timeout cũ để tránh gọi API liên tục mỗi khi gõ phím (Debounce)
-    clearTimeout(timeoutId);
+      // Xóa timeout cũ để tránh gọi API liên tục mỗi khi gõ phím (Debounce)
+      clearTimeout(timeoutId);
 
-    if (keyword.length === 0) {
-      suggestionsBox.innerHTML = '';
-      suggestionsBox.classList.add('hidden');
-      return;
-    }
+      if (keyword.length === 0) {
+        suggestionsBox.innerHTML = '';
+        suggestionsBox.classList.add('hidden');
+        return;
+      }
 
-    // Đợi 300ms sau khi người dùng ngừng gõ mới gọi API
-    timeoutId = setTimeout(() => {
-      fetch(`/api/search-suggestions?keyword=${encodeURIComponent(keyword)}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.length > 0) {
-            let html = '';
-            data.forEach(item => {
-              // Lấy ảnh đầu tiên hoặc ảnh mặc định
-              let imgSrc = (item.image && item.image.length > 0) ? item.image[0].images : 'default.webp';
-              
-              html += `
-                <a href="/product?san-pham=${item.slug}&id=${item._id}" class="flex items-center gap-3 p-2 hover:bg-slate-50 transition border-b border-slate-100 last:border-none">
-                  <img src="../site/images/update/${imgSrc}" alt="${item.name}" class=" h-10 object-cover rounded">
-                  <div class="flex-1 min-w-0">
-                    <p class="text-xs font-medium text-slate-800 truncate">${item.name}</p>
-                    <p class="text-xs text-blue-600 font-semibold">${Number(item.sale).toLocaleString()} đ</p>
-                  </div>
-                </a>
-              `;
-            });
-            suggestionsBox.innerHTML = html;
-            suggestionsBox.classList.remove('hidden');
-          } else {
-            suggestionsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Không tìm thấy sản phẩm phù hợp</div>`;
-            suggestionsBox.classList.remove('hidden');
-          }
-        })
-        .catch(err => console.error(err));
-    }, 300);
-  });
+      // Đợi 300ms sau khi người dùng ngừng gõ mới gọi API
+      timeoutId = setTimeout(() => {
+        fetch(`/api/search-suggestions?keyword=${encodeURIComponent(keyword)}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              let html = '';
+              data.forEach(item => {
+                // Lấy ảnh đầu tiên hoặc ảnh mặc định
+                let imgSrc = (item.image && item.image.length > 0) ? item.image[0].images : 'default.webp';
+                
+                html += `
+                  <a href="/product?san-pham=${item.slug}&id=${item._id}" class="flex items-center gap-3 p-2 hover:bg-slate-50 transition border-b border-slate-100 last:border-none">
+                    <img src="../site/images/update/${imgSrc}" alt="${item.name}" class=" h-10 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs font-medium text-slate-800 truncate">${item.name}</p>
+                      <p class="text-xs text-blue-600 font-semibold">${Number(item.sale).toLocaleString()} đ</p>
+                    </div>
+                  </a>
+                `;
+              });
+              suggestionsBox.innerHTML = html;
+              suggestionsBox.classList.remove('hidden');
+            } else {
+              suggestionsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Không tìm thấy sản phẩm phù hợp</div>`;
+              suggestionsBox.classList.remove('hidden');
+            }
+          })
+          .catch(err => console.error(err));
+      }, 300);
+    });
 
-  // Ẩn khung gợi ý khi click ra ngoài ô tìm kiếm
-  document.addEventListener('click', function(e) { 
-    if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-      suggestionsBox.classList.add('hidden');
-    }
-  });
+    // Ẩn khung gợi ý khi click ra ngoài ô tìm kiếm
+    document.addEventListener('click', function(e) { 
+      if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+        suggestionsBox.classList.add('hidden');
+      }
+    });
+  }
+});
 </script>
         <a href="/gio-hang" class="relative p-2 text-slate-700 hover:text-blue-600 transition">
           <i class="fa-solid fa-cart-shopping text-lg"></i>
@@ -330,25 +336,31 @@
     </div>
 
     <!-- JavaScript cập nhật bổ sung sự kiện bấm mở danh mục sản phẩm trên mobile -->
-    <script>
-      // Xử lý mở/đóng danh mục Sản phẩm trên mobile
-      const mobileProductToggle = document.getElementById('mobile-product-toggle');
-      const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
-      const productChevron = document.getElementById('product-chevron');
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Xử lý mở/đóng danh mục Sản phẩm trên mobile
+  const mobileProductToggle = document.getElementById('mobile-product-toggle');
+  const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
+  const productChevron = document.getElementById('product-chevron');
 
-      mobileProductToggle.addEventListener('click', () => {
-        mobileProductDropdown.classList.toggle('hidden');
-        productChevron.classList.toggle('rotate-180');
-      });
-    </script>
+  if (mobileProductToggle && mobileProductDropdown && productChevron) {
+    mobileProductToggle.addEventListener('click', () => {
+      mobileProductDropdown.classList.toggle('hidden');
+      productChevron.classList.toggle('rotate-180');
+    });
+  }
+});
+</script>
   </header>
 
   <!-- JavaScript xử lý Menu Mobile (Đổi icon 3 gạch thành dấu X) và Slider -->
-  <script>
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
 
+  if (mobileMenuButton && mobileMenu && menuIcon) {
     mobileMenuButton.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
       // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
@@ -360,5 +372,6 @@
         menuIcon.classList.add('fa-xmark');
       }
     });
-
-  </script>
+  }
+});
+</script>

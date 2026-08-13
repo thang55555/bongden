@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <!-- Col 3: Customer Care (Đã bổ sung lớp border-b và pb để tạo đường kẻ ngang giữa các mục) -->
         <div class="lg:px-6 lg:border-r lg:border-slate-800">
-          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4">CHĂM SÓC KHÁCH HÀNG</h4>
+          <div class="text-white font-bold text-xs uppercase tracking-wider mb-4">CHĂM SÓC KHÁCH HÀNG</div>
           <ul class="space-y-2 text-xs text-slate-400">
             <li class="pb-2 border-b border-slate-900"><a href="/" class="hover:text-white transition block">Hướng dẫn
                 mua hàng</a></li>
@@ -259,8 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 
     <!-- Phần bản quyền và thẻ thanh toán -->
-    <div
-      class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+  <div
+      class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400">
       <div>© 2026 HTC Việt Nam. All rights reserved.</div>
       <div class="flex space-x-2 mt-4 sm:mt-0 items-center">
         <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
@@ -270,10 +270,12 @@ document.addEventListener("DOMContentLoaded", function () {
           <i class="fa-brands fa-cc-mastercard text-red-600 text-lg"></i>
         </div>
         <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
-          <span class="text-[10px] font-extrabold text-pink-700 tracking-tighter">MOMO</span>
+          <!-- Đổi text-pink-700 thành text-pink-800 để đậm hơn trên nền trắng -->
+          <span class="text-[10px] font-extrabold text-pink-800 tracking-tighter">MOMO</span>
         </div>
         <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
-          <span class="text-[10px] font-extrabold text-teal-600 tracking-tighter">ZaloPay</span>
+          <!-- Đổi text-teal-400 thành text-teal-700 để đủ độ tương phản trên nền trắng -->
+          <span class="text-[10px] font-extrabold text-teal-700 tracking-tighter">ZaloPay</span>
         </div>
       </div>
     </div>
