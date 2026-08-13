@@ -26,12 +26,17 @@
 <link rel="preload" fetchpriority="high" as="image" href="../site/images/update/<%=thongtintrang.images%>" type="image/png">
 
 
-  <!-- Tailwind CSS CDN -->
-  <script src="./them/java.js"></script>
-  <!-- FontAwesome cho Icons -->
-  <link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css">
+<!-- Tailwind CSS CDN (Nếu có) -->
 
-  <script defer src="./them/alpine.js"></script>
+<!-- 1. Tối ưu file JS: Thêm thuộc tính defer để tải ngầm, không chặn hiển thị trang -->
+<script src="./them/java.js" defer></script>
+
+<!-- 2. Tối ưu file CSS (FontAwesome): Dùng kỹ thuật Preload bất đồng bộ để tránh chặn render -->
+<link rel="preload" href="./fontawesome-free-6.4.0-web/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css"></noscript>
+
+<!-- Alpine.js (Đã có defer, rất chuẩn xác) -->
+<script defer src="./them/alpine.js"></script>
 </head>
 
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
