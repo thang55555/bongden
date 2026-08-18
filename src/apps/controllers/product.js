@@ -1773,6 +1773,7 @@ while (body[`product_name_${index}`]) {
             nhomsp_id: [],
             name: productName,
             slug: slug(productName),
+            nvbh: body.salesperson,
             sku: " ",
             price: cleanPrice,
             sale: cleanPrice,
@@ -1819,6 +1820,7 @@ while (body[`product_name_${index}`]) {
             trangthai: false,
         };
         const saveOrder = await new OrderModel(product).save();
+console.log(body);
 
 
         res.redirect('/admin/order',);
