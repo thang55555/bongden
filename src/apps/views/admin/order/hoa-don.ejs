@@ -382,10 +382,10 @@
                 const itemDiv = document.createElement('div');
                 // QUAN TRỌNG: Thêm class 'autocomplete-item' để nhận diện
                 itemDiv.className = 'autocomplete-item'; 
-                itemDiv.innerHTML = `<strong>${customer.name}</strong> - ${customer.sdt || 'Không có SĐT'}`;
+                itemDiv.innerHTML = `<strong>${customer.name}</strong>  ${customer.sdt || 'Không có SĐT'}`;
                 
                 itemDiv.addEventListener('click', function() {
-                    buyerInput.innerText = `${customer.name} - ${customer.sdt || ''}`;
+                    buyerInput.innerText = `${customer.name}  ${customer.sdt || ''}`;
                     unitInput.innerText = customer.donvi || 'Khách lẻ';
                     addressInput.innerText = customer.diachigiao || '';
                     salespersonInput.innerText = customer.nvbh || '';
