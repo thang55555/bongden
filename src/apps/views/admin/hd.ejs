@@ -208,7 +208,7 @@
     <div class="invoice-container">
         <div class="header">
             <div class="logo-box">
-               <img src="../../static/site/images/update/<%=thongtintrang.images%>" style=" max-width: 120px; max-height: 80px;" >
+               <img src="../../static/site/images/update/logo.png" style=" max-width: 120px; max-height: 80px;" >
     
             </div>
             <div class="company-info">
@@ -242,23 +242,17 @@
             </div>
             <div class="info-row">
                 <div class="info-left">
-                    <div><span class="bold">Đơn vị:</span> Khách lẻ</div>
-                </div>
-                <div class="info-right">
-                    <div><span class="bold">Tk nợ:</span> 1311</div>
+                    <div><span class="bold">Đơn vị:</span> <%=hoaDon.donvi || "khách lẻ"%></div>
                 </div>
             </div>
             <div class="info-row">
                 <div class="info-left">
                     <div><span class="bold">Địa chỉ:</span> <%=hoaDon.diachigiao%></div>
                 </div>
-                <div class="info-right">
-                    <div><span class="bold">Tk có:</span> 5111</div>
-                </div>
             </div>
             <div class="info-row">
                 <div class="info-left">
-                    <div><span class="bold">Nhân viên bán hàng:</span> </div>
+                    <div><span class="bold">Nhân viên bán hàng: </span> <%=hoaDon.nvbh%> </div>
                 </div>
             </div>
             <div class="info-row">
@@ -288,10 +282,10 @@
         <tr>
             <td class="text-center"><%= stt++ %></td>
             <td class="text-left"><%= items.name %></td>
-            <td class="text-center">Cái</td>
-            <td class="text-center"><%= items.qty %></td>
+            <td class="text-center"><%=items.dvt || "Hộp"%></td>
+            <td class="text-center"><%= Number(items.qty).toLocaleString('vi-VN') %></td>
             <td class="text-center"><%= Number(items.price).toLocaleString('vi-VN') %></td>
-            <td class="text-center">0</td>
+            <td class="text-center"> <%= Number(items.chietkhau).toLocaleString('vi-VN') || "0" %></td>
             <td class="text-right"><%= Number(items.price * items.qty).toLocaleString('vi-VN') %></td>
         </tr>
     <% } %>

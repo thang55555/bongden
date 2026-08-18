@@ -1,131 +1,221 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Tạo, Tải và Copy Mã QR</title>
-    <!-- Nhúng FontAwesome để hiển thị icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4; }
-        .box { background: #fff; display: inline-block; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        img { display: block; margin: 0 auto 15px auto; border: 1px solid #ddd; border-radius: 4px; }
-        
-        /* Style cho các nút icon */
-        .action-btns {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .icon-btn {
-            background-color: #1a237e;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-        .icon-btn:hover {
-            background-color: #283593;
-            transform: scale(1.1);
-        }
-        .toast { margin-top: 15px; font-size: 13px; color: green; display: none; }
-    </style>
-</head>
-<body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    <!-- Nếu có nhiều sản phẩm, vòng lặp sẽ render ra các khung QR tương ứng độc lập nhau -->
-        
-        <div class="box">
-            <h3>Mã QR sản phẩm</h3>
-            <!-- Dùng class thay cho id để tránh trùng lặp nếu có nhiều sản phẩm -->
-            <img class="qr-image" crossorigin="anonymous" src="https://quickchart.io/chart?cht=qr&chs=200x200&chl=ttps://cdnjs.cloudflare.com" alt="Mã QR">
-            
-            <!-- Truyền trực tiếp đường dẫn tương ứng vào nút bấm -->
-            <div class="action-btns">
-                <button class="icon-btn" onclick="copyLink('<%= productUrl %>', this)" title="Copy Link"><i class="fa-solid fa-link"></i></button>
-                <button class="icon-btn" onclick="copyImage(this)" title="Copy Ảnh QR"><i class="fa-regular fa-copy"></i></button>
-                <button class="icon-btn" onclick="downloadQR(this)" title="Tải xuống QR"><i class="fa-solid fa-download"></i></button>
-            </div>
-            <div class="toast">Thành công!</div>
-        </div>
+  // 1. Tìm kiếm và gợi ý sản phẩm
+  const searchInput = document.getElementById('search-input');
+  const suggestionsBox = document.getElementById('search-suggestions');
+  
+  if (searchInput && suggestionsBox) {
+    let timeoutId = null;
 
+    searchInput.addEventListener('input', function() {
+      const keyword = this.value.trim();
 
-    <script>
-        function showNotification(buttonElement, msg) {
-            // Tìm thông báo toast nằm chung trong khung sản phẩm đó
-            const box = buttonElement.closest('.box');
-            const toast = box.querySelector('.toast');
-            toast.textContent = msg;
-            toast.style.display = "block";
-            setTimeout(() => {
-                toast.style.display = "none";
-            }, 2000);
-        }
+      // Xóa timeout cũ để tránh gọi API liên tục mỗi khi gõ phím (Debounce)
+      clearTimeout(timeoutId);
 
-        function copyLink(url, btn) {
-            navigator.clipboard.writeText(url).then(() => {
-                showNotification(btn, "Đã copy link thành công!");
-            });
-        }
+      if (keyword.length === 0) {
+        suggestionsBox.innerHTML = '';
+        suggestionsBox.classList.add('hidden');
+        return;
+      }
 
-        async function copyImage(btn) {
-            try {
-                const box = btn.closest('.box');
-                const imgElement = box.querySelector('.qr-image');
-                const canvas = document.createElement("canvas");
-                canvas.width = imgElement.naturalWidth || 200;
-                canvas.height = imgElement.naturalHeight || 200;
-                const ctx = canvas.getContext("2d");
+      // Đợi 300ms sau khi người dùng ngừng gõ mới gọi API
+      timeoutId = setTimeout(() => {
+        fetch(`/api/search-suggestions?keyword=${encodeURIComponent(keyword)}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length > 0) {
+              let html = '';
+              data.forEach(item => {
+                // Lấy ảnh đầu tiên hoặc ảnh mặc định
+                let imgSrc = (item.image && item.image.length > 0) ? item.image[0].images : 'default.webp';
                 
-                const img = new Image();
-                img.crossOrigin = "anonymous";
-                img.src = imgElement.src;
-                
-                await new Promise((resolve, reject) => {
-                    img.onload = resolve;
-                    img.onerror = reject;
-                });
-                
-                ctx.drawImage(img, 0, 0);
-                
-                canvas.toBlob(async (blob) => {
-                    await navigator.clipboard.write([
-                        new ClipboardItem({ "image/png": blob })
-                    ]);
-                    showNotification(btn, "Đã copy ảnh QR vào bộ nhớ tạm!");
-                });
-            } catch (err) {
-                console.error(err);
-                alert("Trình duyệt không hỗ trợ copy trực tiếp hình ảnh này!");
+                html += `
+                  <a href="/product?san-pham=${item.slug}&id=${item._id}" class="flex items-center gap-3 p-2 hover:bg-slate-50 transition border-b border-slate-100 last:border-none">
+                    <img src="../site/images/update/${imgSrc}" alt="${item.name}" class=" h-10 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs font-medium text-slate-800 truncate">${item.name}</p>
+                      <p class="text-xs text-blue-600 font-semibold">${Number(item.sale).toLocaleString()} đ</p>
+                    </div>
+                  </a>
+                `;
+              });
+              suggestionsBox.innerHTML = html;
+              suggestionsBox.classList.remove('hidden');
+            } else {
+              suggestionsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Không tìm thấy sản phẩm phù hợp</div>`;
+              suggestionsBox.classList.remove('hidden');
             }
-        }
+          })
+          .catch(err => console.error(err));
+      }, 300);
+    });
 
-        function downloadQR(btn) {
-            const box = btn.closest('.box');
-            const imgElement = box.querySelector('.qr-image');
-            fetch(imgElement.src)
-                .then(response => response.blob())
-                .then(blob => {
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = blobUrl;
-                    a.download = "qrcode-hopthanh.png";
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(blobUrl);
-                    showNotification(btn, "Đã tải xuống ảnh QR!");
-                })
-                .catch(err => console.error("Không thể tải ảnh xuống:", err));
-        }
-    </script>
+    // Ẩn khung gợi ý khi click ra ngoài ô tìm kiếm
+    document.addEventListener('click', function(e) { 
+      if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+        suggestionsBox.classList.add('hidden');
+      }
+    });
+  }
 
-</body>
-</html>
+
+  // 2. Xử lý mở/đóng danh mục Sản phẩm trên mobile
+  const mobileProductToggle = document.getElementById('mobile-product-toggle');
+  const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
+  const productChevron = document.getElementById('product-chevron');
+
+  if (mobileProductToggle && mobileProductDropdown && productChevron) {
+    mobileProductToggle.addEventListener('click', () => {
+      mobileProductDropdown.classList.toggle('hidden');
+      productChevron.classList.toggle('rotate-180');
+    });
+  }
+
+
+  // 3. Xử lý Menu mobile (Hamburger menu)
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+
+  if (mobileMenuButton && mobileMenu && menuIcon) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
+      if (mobileMenu.classList.contains('hidden')) {
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+      } else {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-xmark');
+      }
+    });
+  }
+
+
+  // 4. Các hàm và sự kiện giỏ hàng, thông báo Toast
+  // Hàm tạo và hiển thị hiệu ứng thông báo thả rơi động (hỗ trợ xếp chồng khi bấm liên tục)
+  function showToast(message = "Thêm vào giỏ hàng thành công!") {
+      // 1. Tạo phần tử toast mới
+      const toast = document.createElement("div");
+      toast.className = "dynamic-toast-item";
+      toast.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${message}`;
+
+      // 2. Định nghĩa style trực tiếp cho thông báo động
+      Object.assign(toast.style, {
+          position: "fixed",
+          top: "-60px",
+          right: "20px",
+          backgroundColor: "#10B981",
+          color: "white",
+          padding: "12px 20px",
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+          zIndex: "9999",
+          fontWeight: "bold",
+          transition: "all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+          opacity: "0"
+      });
+
+      // 3. Đưa thông báo vào body của trang
+      document.body.appendChild(toast);
+
+      // 4. Tính toán vị trí xếp chồng nếu đang có các toast khác hiển thị trên màn hình
+      const existingToasts = document.querySelectorAll(".dynamic-toast-item");
+      let topPosition = 20; // Vị trí mặc định cách đỉnh 20px
+      
+      existingToasts.forEach(t => {
+          if (t !== toast) {
+              // Lấy khoảng cách top hiện tại của các toast cũ và cộng dồn chiều cao để xếp chồng xuống dưới
+              const currentTop = parseInt(t.style.top) || 20;
+              topPosition = Math.max(topPosition, currentTop + t.offsetHeight + 10);
+          }
+      });
+
+      // 5. Kích hoạt hiệu ứng rơi xuống
+      requestAnimationFrame(() => {
+          toast.style.opacity = "1";
+          toast.style.top = `${topPosition}px`;
+      });
+
+      // 6. Sau 3 giây thì trượt ngược lên trên và tự hủy khỏi DOM
+      setTimeout(() => {
+          toast.style.top = "-60px";
+          toast.style.opacity = "0";
+          setTimeout(() => {
+              toast.remove(); // Xóa hẳn phần tử khỏi HTML
+          }, 400); // Khớp với thời gian transition 0.4s
+      }, 3000);
+  }
+
+  // Hàm chung xử lý AJAX gọi lên server thêm vào giỏ hàng
+  function handleAddToCart(form) {
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+              'Accept': 'application/json'
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              // Cập nhật số lượng giỏ hàng trên header
+              const cartBadge = document.getElementById("cart-badge-count");
+              if (cartBadge) {
+                  cartBadge.textContent = data.totalQty;
+              }
+
+              // Gọi hàm hiển thị thông báo thả rơi động
+              showToast("Thêm vào giỏ hàng thành công!");
+
+          } else {
+              alert("Có lỗi xảy ra khi thêm vào giỏ hàng!");
+          }
+      })
+      .catch(error => {
+          console.error("Lỗi:", error);
+          alert("Không thể kết nối đến máy chủ.");
+      });
+  }
+
+  // --- BẮT SỰ KIỆN CÁC NÚT BẤM ---
+
+  // 1. Trang chi tiết sản phẩm (Nút chọn màu và nút thêm to)
+  const colorButtons = document.querySelectorAll(".color-options .color-btn");
+  const hiddenInput = document.getElementById("selected-anhsang");
+  const productForm = document.getElementById("product-form");
+  const btnAddToCart = document.getElementById("btn-add-to-cart");
+
+  if (colorButtons.length > 0 && hiddenInput) {
+      colorButtons.forEach(button => {
+          button.addEventListener("click", function () {
+              colorButtons.forEach(btn => btn.classList.remove("active"));
+              this.classList.add("active");
+              hiddenInput.value = this.getAttribute("data-color");
+          });
+      });
+  }
+
+  if (btnAddToCart && productForm) {
+      btnAddToCart.addEventListener("click", function () {
+          handleAddToCart(productForm);
+      });
+  }
+
+  // 2. Trang danh sách sản phẩm (Các nút icon giỏ hàng nhỏ trong card)
+  const ajaxForms = document.querySelectorAll(".ajax-cart-form");
+  ajaxForms.forEach(form => {
+      const btn = form.querySelector(".btn-add-ajax");
+      if (btn) {
+          btn.addEventListener("click", function () {
+              handleAddToCart(form);
+          });
+      }
+  });
+
+});
+</script>

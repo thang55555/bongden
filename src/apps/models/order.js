@@ -38,6 +38,18 @@ const orderSchema = new mongoose.Schema({
     note:{
         type: String,
     },
+    donvi:{
+        type: String,
+    },
+    dvt:{
+        type: String,
+    },
+    chietkhau:{
+        type: Number,
+    },
+    nvbh:{
+        type: String,
+    },
     
     vanchuyen:{
         type: String,

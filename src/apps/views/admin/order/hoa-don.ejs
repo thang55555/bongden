@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Đơn Bán Hàng</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #000;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice-container {
+            width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .logo-box {
+            width: 140px;
+            margin-right: 15px;
+        }
+
+        .company-info h2 {
+            margin: 0 0 4px 0;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .company-info p {
+            margin: 2px 0;
+            font-size: 12px;
+        }
+
+        /* Title */
+        .title-box {
+            text-align: center;
+            margin: 15px 0 10px 0;
+            position: relative;
+        }
+
+        .title-box h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .title-date {
+            font-style: italic;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .doc-no {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .doc-no span {
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* Customer Info */
+        .info-section {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .info-row {
+            margin-bottom: 4px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        th {
+            padding: 6px 4px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12px;
+            background-color: #fff;
+        }
+
+        td {
+            padding: 6px 6px;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .total-row td {
+            font-weight: bold;
+        }
+
+        /* Amount in words */
+        .words-section {
+            margin: 10px 0 25px 0;
+            font-size: 12px;
+        }
+
+        /* Signatures */
+        .signature-date {
+            text-align: right;
+            font-style: italic;
+            margin-bottom: 10px;
+            padding-right: 20px;
+            font-size: 12px;
+        }
+
+        .signature-grid {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .sig-col {
+            width: 20%;
+        }
+
+        .sig-title {
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .sig-sub {
+            font-style: italic;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .invoice-container {
+                box-shadow: none;
+                width: 100%;
+                padding: 0;
+            }
+        }
+
+        /* Hiển thị dấu chấm khi thẻ trống */
+        .editable-span:empty:before {
+            content: "...................";
+            color: #999;
+            pointer-events: none;
+            display: inline-block;
+        }
+
+        /* Khung chứa danh sách gợi ý (Dropdown) */
+        .autocomplete-items {
+            position: absolute;
+            z-index: 9999;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .autocomplete-items div {
+            padding: 8px 10px;
+            cursor: pointer;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="invoice-container">
+        <form id="productForm" name="frm" role="form" method="post" enctype="multipart/form-data" action="/admin/add-don-hang">
+            
+            <div class="header">
+                <div class="logo-box">
+                    <img src="../../static/site/images/update/logo.png" style="max-width: 120px; max-height: 80px;">
+                </div>
+                <div class="company-info">
+                    <h2>CÔNG TY TNHH LED HỢP THÀNH</h2>
+                    <p>Số 123, Đường ABC, P. Cầu Giấy, Q. Nam Từ Liêm, Hà Nội</p>
+                    <p>ĐT: 0325.686.222</p>
+                </div>
+            </div>
+
+            <div class="title-box">
+                <h1>HÓA ĐƠN BÁN HÀNG</h1>
+                <div class="title-date"><%=dateString%></div>
+                <div class="doc-no">Mã đơn hàng: <span contenteditable="true" class="editable-span" name="doc_no"></span></div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-row" style="position: relative;">
+                    <span class="bold">Họ tên người mua hàng:</span> 
+                    <span contenteditable="true" class="editable-span" id="buyerInput" name="buyer_name" style="display: inline-block; min-width: 300px;"></span>
+                    <div id="autocompleteList" class="autocomplete-items autocomplete-item"></div>
+                </div>
+                <div class="info-row">
+                    <div><span class="bold">Đơn vị:</span> <span contenteditable="true" class="editable-span" id="unitInput" name="unit"></span></div>
+                </div>
+                <div class="info-row">
+                    <div><span class="bold">Địa chỉ:</span> <span contenteditable="true" class="editable-span" id="addressInput" name="address"></span></div>
+                </div>
+                <div class="info-row">
+                    <div><span class="bold">Nhân viên bán hàng:</span> <span contenteditable="true" class="editable-span" name="salesperson"></span></div>
+                </div>
+                <div class="info-row">
+                    <div><span class="bold">Nội dung: </span> <span contenteditable="true" class="editable-span" id="contentInput" name="content"></span></div>
+                </div>
+            </div>
+
+            <!-- Nút điều khiển -->
+            <div style="display: flex; align-items: center; gap: 10px; margin: 15px 0;">
+                <button type="button" id="addRowBtn" class="btn btn-primary" onclick="addNewRow()">+ Thêm dòng sản phẩm</button>
+                <button name="sbm" type="submit" class="btn btn-success">Thêm mới</button>
+            </div>
+
+            <!-- Bảng sản phẩm -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">Stt</th>
+                        <th style="width: 32%;">Tên hàng</th>
+                        <th style="width: 8%;">ĐVT</th>
+                        <th style="width: 8%;">Số lượng</th>
+                        <th style="width: 10%;">Đơn giá</th>
+                        <th style="width: 8%;">Chiết khấu</th>
+                        <th style="width: 14%;">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dòng sản phẩm mẫu đầu tiên -->
+                    <tr class="product-row">
+                        <td class="text-center row-index">1</td>
+                        <td class="text-left" style="position: relative;">
+                            <span contenteditable="true" class="editable-span product-name-input" name="product_name_1" style="width: 100%; display: block; min-height: 18px;"></span>
+                            <div class="product-autocomplete-list "></div>
+                        </td>
+                        <td class="text-center"><span contenteditable="true" class="editable-span" name="product_unit_1">Hộp</span></td>
+                        <td class="text-center"><span contenteditable="true" class="editable-span product-qty" name="product_qty_1">1</span></td>
+                        <td class="text-center"><span contenteditable="true" class="editable-span product-price" name="product_price_1">0</span></td>
+                        <td class="text-center"><span contenteditable="true" class="editable-span product-discount" name="product_discount_1">0</span></td>
+                        <td class="text-right product-total">0</td>
+                    </tr>
+
+                    <!-- Các dòng tổng tiền -->
+                    <tr class="total-row">
+                        <td colspan="6" class="text-right" style="padding-right: 15px;">Cộng tiền hàng:</td>
+                        <td class="text-right" id="subTotal">0</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="6" class="text-right" style="padding-right: 15px;">Phí vận chuyển:</td>
+                        <td class="text-right">
+                            <span contenteditable="true" class="editable-span" id="shippingFee" name="shipping_fee">0</span>
+                        </td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="6" class="text-right" style="padding-right: 15px;">Tổng thanh toán:</td>
+                        <td class="text-right" id="grandTotal">0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+
+        <!-- Phần đọc số tiền bằng chữ -->
+        <div class="words-section" style="margin-top: 10px;">
+            <span style="font-style: italic;">Bằng chữ: </span>
+            <span style="font-style: italic; font-weight: bold;" id="amountInWords">Không đồng.</span>
+        </div>
+
+        <div class="signature-date"><%=dateString%></div>
+
+        <div class="signature-grid">
+            <div class="sig-col">
+                <div class="sig-title">NGƯỜI LẬP PHIẾU</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">NHÂN VIÊN GIAO HÀNG</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">NGƯỜI MUA HÀNG</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">THỦ KHO</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">KẾ TOÁN TRƯỞNG</div>
+                <div class="sig-sub">(Ký, họ tên)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script dữ liệu và xử lý giao diện -->
+    <script>
+        const customersData = <%- JSON.stringify(typeof listCustomers !== 'undefined' ? listCustomers : []) %>;
+        const productsData = <%- JSON.stringify(typeof product !== 'undefined' ? product : []) %>;
+
+        // 1. Gợi ý Khách hàng
+        const buyerInput = document.getElementById('buyerInput');
+        const autocompleteList = document.getElementById('autocompleteList');
+        const unitInput = document.getElementById('unitInput');
+        const addressInput = document.getElementById('addressInput');
+        const contentInput = document.getElementById('contentInput');
+
+        let currentFocus = -1; // Biến lưu vị trí item đang được chọn bằng phím mũi tên
+
+        buyerInput.addEventListener('input', function() {
+            const keyword = this.innerText.trim().toLowerCase();
+            autocompleteList.innerHTML = '';
+            currentFocus = -1; // Reset lại vị trí mỗi khi gõ tìm kiếm mới
+            if (!keyword) return;
+
+            const matches = customersData.filter(item => {
+                const name = (item.name || '').toLowerCase();
+                const sdt = (item.sdt || '').toLowerCase();
+                return name.includes(keyword) || sdt.includes(keyword);
+            });
+
+            matches.forEach(customer => {
+                const itemDiv = document.createElement('div');
+                // QUAN TRỌNG: Thêm class 'autocomplete-item' để nhận diện
+                itemDiv.className = 'autocomplete-item'; 
+                itemDiv.innerHTML = `<strong>${customer.name}</strong> - ${customer.sdt || 'Không có SĐT'}`;
+                
+                itemDiv.addEventListener('click', function() {
+                    buyerInput.innerText = `${customer.name} - ${customer.sdt || ''}`;
+                    unitInput.innerText = customer.donvi || 'Khách lẻ';
+                    addressInput.innerText = customer.diachigiao || '';
+                    contentInput.innerText = customer.note || '';
+                    autocompleteList.innerHTML = '';
+                    currentFocus = -1;
+                });
+                autocompleteList.appendChild(itemDiv);
+            });
+        });
+
+        // 2. Bắt sự kiện phím điều hướng (Mũi tên lên, xuống, Enter) trên thẻ contenteditable
+        buyerInput.addEventListener('keydown', function(e) {
+            const items = autocompleteList.getElementsByClassName('autocomplete-item');
+            if (items.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault(); // Chặn con trỏ văn bản chạy linh tinh trong contenteditable
+                currentFocus++;
+                if (currentFocus >= items.length) currentFocus = 0; // Vòng lại từ đầu nếu ở cuối
+                setActive(items);
+            } 
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                currentFocus--;
+                if (currentFocus < 0) currentFocus = items.length - 1; // Vòng xuống cuối nếu ở đầu
+                setActive(items);
+            } 
+            else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (currentFocus > -1 && items[currentFocus]) {
+                    items[currentFocus].click(); // Tự động kích hoạt sự kiện click vào item đang chọn
+                    currentFocus = -1;
+                }
+            }
+        });
+
+        // Hàm đổi màu làm nổi bật (active) item đang trỏ tới
+        function setActive(items) {
+            if (!items || items.length === 0) return;
+            
+            // Xóa active cũ
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('autocomplete-active');
+            }
+            
+            // Thêm active mới
+            if (currentFocus >= items.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = items.length - 1;
+            
+            items[currentFocus].classList.add('autocomplete-active');
+        }
+        // 2. Định dạng tiền tệ và Đọc số thành chữ chuẩn xác
+        function formatCurrency(number) {
+            return new Intl.NumberFormat('vi-VN').format(Math.round(number));
+        }
+
+        function DocSoTien(so) {
+            if (so === 0) return "Không đồng.";
+            var ChuSo = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+            function dochangchuc(so, dau) {
+                var chu_so = "";
+                var chuc = Math.floor(so / 10);
+                var donvi = so % 10;
+                if (chuc > 1) {
+                    chu_so = " " + ChuSo[chuc] + " mươi";
+                    if (donvi === 1) chu_so += " mốt";
+                    else if (donvi === 5) chu_so += " năm";
+                    else if (donvi > 0) chu_so += " " + ChuSo[donvi];
+                } else if (chuc === 1) {
+                    chu_so = " mười";
+                    if (donvi === 1) chu_so += " một";
+                    else if (donvi === 5) chu_so += " năm";
+                    else if (donvi > 0) chu_so += " " + ChuSo[donvi];
+                } else if (dau && donvi > 0) {
+                    chu_so = " lẻ " + ChuSo[donvi];
+                } else if (donvi > 0) {
+                    chu_so = " " + ChuSo[donvi];
+                }
+                return chu_so;
+            }
+            function docblock(so, full) {
+                var ngang = "";
+                var tram = Math.floor(so / 100);
+                so = so % 100;
+                if (tram > 0 || full) {
+                    ngang = " " + ChuSo[tram] + " trăm";
+                    ngang += dochangchuc(so, true);
+                } else {
+                    ngang = dochangchuc(so, false);
+                }
+                return ngang;
+            }
+            var Tien = ["", " nghìn", " triệu", " tỷ", " nghìn tỷ", " triệu tỷ"];
+            var i, ketqua = "";
+            if (so < 0) return "Số âm";
+            var chuoi = so.toString();
+            var arr = [];
+            while (chuoi.length > 0) {
+                arr.push(chuoi.slice(Math.max(0, chuoi.length - 3)));
+                chuoi = chuoi.slice(0, -3);
+            }
+            for (i = 0; i < arr.length; i++) {
+                var block = parseInt(arr[i]);
+                if (block > 0) {
+                    var str = docblock(block, i > 0 && arr.length > i + 1 && parseInt(arr[i+1]) < 100);
+                    ketqua = str + Tien[i] + ketqua;
+                } else if (arr.length > 1 && i > 0 && block === 0) {
+                    // Kiểm tra block rỗng giữa các nhóm số lớn
+                }
+            }
+            ketqua = ketqua.trim();
+            return ketqua.charAt(0).toUpperCase() + ketqua.slice(1) + " đồng.";
+        }
+
+        // 3. Tính toán lại tổng tiền hàng, tổng thanh toán
+        function calculateTotals() {
+            let subTotal = 0;
+            const rows = document.querySelectorAll('table tbody tr.product-row');
+            
+            rows.forEach(row => {
+                const qtyEl = row.querySelector('.product-qty');
+                const priceEl = row.querySelector('.product-price');
+                const discountEl = row.querySelector('.product-discount');
+                const totalEl = row.querySelector('.product-total');
+
+                const qty = parseFloat(qtyEl.innerText.replace(/\./g, '').replace(/,/g, '.')) || 0;
+                const price = parseFloat(priceEl.innerText.replace(/\./g, '').replace(/,/g, '.')) || 0;
+                const discount = parseFloat(discountEl.innerText.replace(/\./g, '').replace(/,/g, '.')) || 0;
+
+                let lineTotal = (qty * price) - discount;
+                if (lineTotal < 0) lineTotal = 0;
+
+                totalEl.innerText = formatCurrency(lineTotal);
+                subTotal += lineTotal;
+            });
+
+            document.getElementById('subTotal').innerText = formatCurrency(subTotal);
+
+            const shippingEl = document.getElementById('shippingFee');
+            const shippingFee = parseFloat(shippingEl.innerText.replace(/\./g, '').replace(/,/g, '.')) || 0;
+
+            const grandTotal = subTotal + shippingFee;
+            document.getElementById('grandTotal').innerText = formatCurrency(grandTotal);
+            document.getElementById('amountInWords').innerText = DocSoTien(grandTotal);
+        }
+
+        // 4. Thiết lập sự kiện gợi ý sản phẩm cho từng dòng
+        function setupRowEvents(row) {
+            const nameInput = row.querySelector('.product-name-input');
+            const listDiv = row.querySelector('.product-autocomplete-list');
+            const unitInput = row.querySelector('[name^="product_unit"]');
+            const priceInput = row.querySelector('.product-price');
+
+            nameInput.addEventListener('input', function() {
+                const keyword = this.innerText.trim().toLowerCase();
+                listDiv.innerHTML = '';
+                if (!keyword) return;
+
+                const matches = productsData.filter(p => (p.name || '').toLowerCase().includes(keyword));
+
+                matches.forEach(product => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `<strong>${product.name}</strong> - Giá: ${formatCurrency(product.price || 0)} đ`;
+
+                    div.addEventListener('click', function() {
+                        nameInput.innerText = product.name;
+                        if (unitInput) unitInput.innerText = product.dvt || 'Hộp';
+                        if (priceInput) priceInput.innerText = formatCurrency(product.price || 0);
+                        
+                        listDiv.innerHTML = '';
+                        calculateTotals();
+                    });
+                    listDiv.appendChild(div);
+                });
+            });
+
+            const inputs = row.querySelectorAll('.product-qty, .product-price, .product-discount');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateTotals);
+            });
+        }
+
+        document.querySelectorAll('tr.product-row').forEach(setupRowEvents);
+        document.getElementById('shippingFee').addEventListener('input', calculateTotals);
+
+        // 5. Thêm dòng sản phẩm mới
+        let rowIndex = 1;
+        function addNewRow() {
+            rowIndex++;
+            const tbody = document.querySelector('table tbody');
+            const totalRows = tbody.querySelectorAll('.total-row');
+            const currentRowsCount = tbody.querySelectorAll('.product-row').length + 1;
+
+            const newRow = document.createElement('tr');
+            newRow.className = 'product-row';
+            newRow.innerHTML = `
+                <td class="text-center row-index">${currentRowsCount}</td>
+                <td class="text-left" style="position: relative;">
+                    <span contenteditable="true" class="editable-span product-name-input" name="product_name_${rowIndex}" style="width: 100%; display: block; min-height: 18px;"></span>
+                    <div class="product-autocomplete-list autocomplete-items"></div>
+                </td>
+                <td class="text-center"><span contenteditable="true" class="editable-span" name="product_unit_${rowIndex}">Hộp</span></td>
+                <td class="text-center"><span contenteditable="true" class="editable-span product-qty" name="product_qty_${rowIndex}">1</span></td>
+                <td class="text-center"><span contenteditable="true" class="editable-span product-price" name="product_price_${rowIndex}">0</span></td>
+                <td class="text-center"><span contenteditable="true" class="editable-span product-discount" name="product_discount_${rowIndex}">0</span></td>
+                <td class="text-right product-total">0</td>
+            `;
+
+            if (totalRows.length > 0) {
+                tbody.insertBefore(newRow, totalRows[0]);
+            } else {
+                tbody.appendChild(newRow);
+            }
+
+            setupRowEvents(newRow);
+            calculateTotals();
+        }
+
+        // Ẩn bảng gợi ý khi click ra ngoài
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.product-name-input') && !e.target.closest('.product-autocomplete-list')) {
+                document.querySelectorAll('.product-autocomplete-list').forEach(el => el.innerHTML = '');
+            }
+            if (!e.target.closest('#buyerInput') && !e.target.closest('#autocompleteList')) {
+                autocompleteList.innerHTML = '';
+            }
+        });
+
+        // Xử lý gửi Form
+        document.getElementById('productForm').addEventListener('submit', function() {
+            const form = this;
+            form.querySelectorAll('input.dynamic-hidden').forEach(input => input.remove());
+
+            form.querySelectorAll('.editable-span').forEach(el => {
+                const fieldName = el.getAttribute('name');
+                if (fieldName) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.className = 'dynamic-hidden';
+                    hiddenInput.name = fieldName;
+                    hiddenInput.value = el.innerText.trim();
+                    form.appendChild(hiddenInput);
+                }
+            });
+        });
+
+        // Tính toán ban đầu khi load trang
+        calculateTotals();
+
+        // 4. Thiết lập sự kiện gợi ý và định dạng số cho từng dòng sản phẩm
+function setupRowEvents(row) {
+    const nameInput = row.querySelector('.product-name-input');
+    const listDiv = row.querySelector('.product-autocomplete-list');
+    const unitInput = row.querySelector('[name^="product_unit"]');
+    const priceInput = row.querySelector('.product-price');
+
+    nameInput.addEventListener('input', function() {
+        const keyword = this.innerText.trim().toLowerCase();
+        listDiv.innerHTML = '';
+        if (!keyword) return;
+
+        const matches = productsData.filter(p => (p.name || '').toLowerCase().includes(keyword));
+
+        matches.forEach(product => {
+            const div = document.createElement('div');
+            div.innerHTML = `<strong>${product.name}</strong> - Giá: ${formatCurrency(product.price || 0)} đ`;
+
+            div.addEventListener('click', function() {
+                nameInput.innerText = product.name;
+                if (unitInput) unitInput.innerText = product.dvt || 'Hộp';
+                if (priceInput) priceInput.innerText = formatCurrency(product.price || 0);
+                
+                listDiv.innerHTML = '';
+                calculateTotals();
+            });
+            listDiv.appendChild(div);
+        });
+    });
+
+    // Lắng nghe sự kiện trên các ô số lượng, đơn giá, chiết khấu
+    const inputs = row.querySelectorAll('.product-qty, .product-price, .product-discount');
+    inputs.forEach(input => {
+        // Khi đang gõ: tính lại tiền tổng tạm thời
+        input.addEventListener('input', calculateTotals);
+
+        // Khi bấm ra ngoài (blur): tự động định dạng lại số cho đẹp mắt
+        input.addEventListener('blur', function() {
+            const val = parseFloat(this.innerText.replace(/\./g, '').replace(/,/g, '.')) || 0;
+          
+                this.innerText = formatCurrency(val);
+            
+            calculateTotals();
+        });
+    });
+}
+
+
+const shippingEl = document.getElementById('shippingFee');
+shippingEl.addEventListener('input', calculateTotals);
+shippingEl.addEventListener('blur', function() {
+    const val = parseFloat(this.innerText.replace(/\./g, '').replace(/,/g, '.')) || 0;
+    this.innerText = formatCurrency(val);
+    calculateTotals();
+});
+    </script>
+
+
+
+<style>
+    .autocomplete-items div.autocomplete-active {
+    background-color: #e9e9e9 !important;
+    font-weight: bold;
+}
+
+</style>
+
+
+</body>
+</html>

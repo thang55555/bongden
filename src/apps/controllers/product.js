@@ -55,9 +55,9 @@ const upload = (req, res) => {
                     }
                     new ImagesModel(add).save();
 
-let funcNum=req.query.CKEditorFuncNum;
+                    let funcNum = req.query.CKEditorFuncNum;
 
-res.send("<script>window.parent.CKEDITOR.tools.callFunction('"+funcNum+"','"+url+"','Upload thành công');</script>");
+                    res.send("<script>window.parent.CKEDITOR.tools.callFunction('" + funcNum + "','" + url + "','Upload thành công');</script>");
                 }
             });
         });
@@ -68,31 +68,32 @@ res.send("<script>window.parent.CKEDITOR.tools.callFunction('"+funcNum+"','"+url
 }
 
 const list = async (req, res) => {
-const tieude = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } }
-]);
+    const tieude = await ImagesModel.aggregate([
+        { $match: { note: "02" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+        { $sort: { _id: -1 } }
+    ]);
 
-const content = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } }
-]);
+    const content = await ImagesModel.aggregate([
+        { $match: { note: "01" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+        { $sort: { _id: -1 } }
+    ]);
 
-    res.render("./admin/image-browser",{tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content)
+    res.render("./admin/image-browser", {
+        tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content)
     });
 
 }
@@ -259,7 +260,7 @@ const adddanhmucsanpham = async (req, res) => {
     res.render("./admin/menu-danh-muc/add-menu-danh-muc", { data: {} })
 }
 const adddanhmuc = async (req, res) => {
-      const { body, files } = req;
+    const { body, files } = req;
     const sosanh = await Menu_danhmuc_sanphamModel.find({ name: body.name });
     if (sosanh.length < 1) {
         const add = {
@@ -271,7 +272,7 @@ const adddanhmuc = async (req, res) => {
             keywords: body.keywords,
             icon: body.icon
         }
-                        if (files && files.length > 0) {
+        if (files && files.length > 0) {
             for (const file of files) {
                 // Kiểm tra loại file dựa theo mimetype
                 if (file.mimetype.startsWith("image/")) {
@@ -308,34 +309,34 @@ const updatedanhmuc = async (req, res) => {
     const id = req.params.id;
     const { body, files } = req;
     const danhmuc = {
-            name: body.name,
-            slug: slug(body.name),
-            content: body.content,
-            title: body.title,
-            description: body.description,
-            keywords: body.keywords,
-            icon: body.icon
+        name: body.name,
+        slug: slug(body.name),
+        content: body.content,
+        title: body.title,
+        description: body.description,
+        keywords: body.keywords,
+        icon: body.icon
     }
-                            if (files && files.length > 0) {
-            for (const file of files) {
-                // Kiểm tra loại file dựa theo mimetype
-                if (file.mimetype.startsWith("image/")) {
-                    danhmuc["images"] = file.originalname;
+    if (files && files.length > 0) {
+        for (const file of files) {
+            // Kiểm tra loại file dựa theo mimetype
+            if (file.mimetype.startsWith("image/")) {
+                danhmuc["images"] = file.originalname;
 
-                    // Lưu vào bảng ImagesModel nếu muốn
-                    await new ImagesModel({
-                        images: file.originalname,
-                        note: "02",
-                    }).save();
-                } else if (file.mimetype.startsWith("video/")) {
-                    danhmuc["video"] = file.originalname;
-                }
-
-                // Di chuyển file vào thư mục đích
-                const destPath = path.resolve("src/public/site/images/update", file.originalname);
-                fs.renameSync(file.path, destPath);
+                // Lưu vào bảng ImagesModel nếu muốn
+                await new ImagesModel({
+                    images: file.originalname,
+                    note: "02",
+                }).save();
+            } else if (file.mimetype.startsWith("video/")) {
+                danhmuc["video"] = file.originalname;
             }
+
+            // Di chuyển file vào thư mục đích
+            const destPath = path.resolve("src/public/site/images/update", file.originalname);
+            fs.renameSync(file.path, destPath);
         }
+    }
     await Menu_danhmuc_sanphamModel.updateOne({ _id: id }, { $set: danhmuc });
     res.redirect("/admin/danh-muc-san-pham");
 }
@@ -385,7 +386,7 @@ const addnhomsp = async (req, res) => {
             description: body.description,
             keywords: body.keywords,
         }
-                if (files && files.length > 0) {
+        if (files && files.length > 0) {
             for (const file of files) {
                 // Kiểm tra loại file dựa theo mimetype
                 if (file.mimetype.startsWith("image/")) {
@@ -423,34 +424,34 @@ const updatenhomsanpham = async (req, res) => {
     const id = req.params.id;
     const { body, files } = req;
     const update = {
-            danhmuc_id: body.danhmuc_id,
-            name: body.name,
-            slug: slug(body.name),
-            content: body.content,
-            title: body.title,
-            description: body.description,
-            keywords: body.keywords,
+        danhmuc_id: body.danhmuc_id,
+        name: body.name,
+        slug: slug(body.name),
+        content: body.content,
+        title: body.title,
+        description: body.description,
+        keywords: body.keywords,
     };
-                    if (files && files.length > 0) {
-            for (const file of files) {
-                // Kiểm tra loại file dựa theo mimetype
-                if (file.mimetype.startsWith("image/")) {
-                    update["images"] = file.originalname;
+    if (files && files.length > 0) {
+        for (const file of files) {
+            // Kiểm tra loại file dựa theo mimetype
+            if (file.mimetype.startsWith("image/")) {
+                update["images"] = file.originalname;
 
-                    // Lưu vào bảng ImagesModel nếu muốn
-                    await new ImagesModel({
-                        images: file.originalname,
-                        note: "02",
-                    }).save();
-                } else if (file.mimetype.startsWith("video/")) {
-                    update["video"] = file.originalname;
-                }
-
-                // Di chuyển file vào thư mục đích
-                const destPath = path.resolve("src/public/site/images/update", file.originalname);
-                fs.renameSync(file.path, destPath);
+                // Lưu vào bảng ImagesModel nếu muốn
+                await new ImagesModel({
+                    images: file.originalname,
+                    note: "02",
+                }).save();
+            } else if (file.mimetype.startsWith("video/")) {
+                update["video"] = file.originalname;
             }
+
+            // Di chuyển file vào thư mục đích
+            const destPath = path.resolve("src/public/site/images/update", file.originalname);
+            fs.renameSync(file.path, destPath);
         }
+    }
     await Menu_nhom_sanphamModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/nhom-san-pham")
 }
@@ -570,29 +571,29 @@ const addsanpham = async (req, res) => {
     const danhmuc = await Menu_nhom_sanphamModel.find();
     const dichvu = await Menu_dichvuModel.find();
     const tieude = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } },
-]);
+        { $match: { note: "02" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+        { $sort: { _id: -1 } },
+    ]);
 
-const content = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    
-    { $sort: { _id: -1 } },
-]);
+    const content = await ImagesModel.aggregate([
+        { $match: { note: "01" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+
+        { $sort: { _id: -1 } },
+    ]);
 
     res.render("./admin/danh-sach-san-pham/add-san-pham", { danhmuc, dichvu, tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content) })
 }
@@ -601,30 +602,30 @@ const addproduct = async (req, res) => {
     const { files, body } = req;
     let congsuatArray = [];
 
-if (body.congsuat) {
-    congsuatArray = body.congsuat
-        .split(',')                  // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
-        .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
-        .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
-}
+    if (body.congsuat) {
+        congsuatArray = body.congsuat
+            .split(',')                  // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
+            .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
+            .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
+    }
     const products = {
-        nhomsp_id: body.danhmuc_id,
-        name: body.name,
-        slug: slug(body.name),
-        sku: body.sku,
-        price:body.price,
-        sale: body.sale,
-        content: body.content,
-        anhsang: body.anhsang,
-        congsuat: congsuatArray,
-        title: body.title,
-        description: body.description,
-        keywords: body.keywords,
-        noibat: body.noibat,
-        thongso: body.thongso,
-        mota: body.mota,
-        huongdan: body.huongdan,
-        baohanh: body.baohanh,
+        nhomsp_id: body.danhmuc_id || " ",
+        name: body.name || " ",
+        slug: slug(body.name) || " ",
+        sku: body.sku || " ",
+        price: body.price || " ",
+        sale: body.sale || " ",
+        content: body.content || " ",
+        anhsang: body.anhsang || " ",
+        congsuat: congsuatArray || " ",
+        title: body.title || " ",
+        description: body.description || " ",
+        keywords: body.keywords || " ",
+        noibat: body.noibat || " ",
+        thongso: body.thongso || " ",
+        mota: body.mota || " ",
+        huongdan: body.huongdan || " ",
+        baohanh: body.baohanh || " ",
         nhap: body.nhap == "on",
     };
 
@@ -672,30 +673,30 @@ const editsanpham = async (req, res) => {
     const danhmuc = await Menu_nhom_sanphamModel.find();
     const product = await Product_sanphamModel.findById(id);
     const dichvu = await Menu_dichvuModel.find();
-const tieude = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } },
-]);
+    const tieude = await ImagesModel.aggregate([
+        { $match: { note: "02" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+        { $sort: { _id: -1 } },
+    ]);
 
-const content = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    
-    { $sort: { _id: -1 } },
-]);
+    const content = await ImagesModel.aggregate([
+        { $match: { note: "01" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+
+        { $sort: { _id: -1 } },
+    ]);
 
     res.render("./admin/danh-sach-san-pham/edit-san-pham", { danhmuc, product, dichvu, page, tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content) })
 }
@@ -703,20 +704,20 @@ const content = await ImagesModel.aggregate([
 const uploadsanpham = async (req, res) => {
     const id = req.params.id;
     const { files, body } = req;
-        let congsuatArray = [];
+    let congsuatArray = [];
 
-if (body.congsuat) {
-    congsuatArray = body.congsuat
-        .split(',')                  // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
-        .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
-        .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
-}
+    if (body.congsuat) {
+        congsuatArray = body.congsuat
+            .split(',')                  // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
+            .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
+            .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
+    }
     const products = {
         nhomsp_id: body.danhmuc_id,
         name: body.name,
         slug: slug(body.name),
         sku: body.sku,
-        price:body.price,
+        price: body.price,
         sale: body.sale,
         content: body.content,
         anhsang: body.anhsang,
@@ -832,13 +833,13 @@ const editmenutintuc = async (req, res) => {
 }
 const updatemenutintuc = async (req, res) => {
     const id = req.params.id;
-     const body = req.body;
+    const body = req.body;
     const update = {
         name: body.name,
-            slug: slug(body.name),
-            title: body.title,
-            description: body.description,
-            keywords: body.keywords,
+        slug: slug(body.name),
+        title: body.title,
+        description: body.description,
+        keywords: body.keywords,
     }
     await Menu_tintucModel.updateOne({ _id: id }, { $set: update });
     res.redirect("/admin/danh-sach-menu-tin-tuc")
@@ -924,7 +925,7 @@ const updatebaiviettintuc = async (req, res) => {
     const id = req.params.id;
     const { files, body } = req;
     const product = {
-       menutintuc_id: body.menutintuc_id,
+        menutintuc_id: body.menutintuc_id,
         name: body.name,
         slug: slug(body.name),
         content: body.content,
@@ -1021,12 +1022,12 @@ const updatemenudichvu = async (req, res) => {
     const id = req.params.id;
     const { file, body } = req;
     const category = {
-            name: body.name,
-            slug: slug(body.name),
-            content: body.content,
-            title: body.title,
-            description: body.description,
-            keywords: body.keywords,
+        name: body.name,
+        slug: slug(body.name),
+        content: body.content,
+        title: body.title,
+        description: body.description,
+        keywords: body.keywords,
     }
     if (file) {
         const images = file.originalname;
@@ -1085,29 +1086,29 @@ const baivietdichvu = async (req, res) => {
 const addbaivietdichvu = async (req, res) => {
     const category = await Menu_dichvuModel.find();
     const tieude = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } },
-]);
+        { $match: { note: "02" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+        { $sort: { _id: -1 } },
+    ]);
 
-const content = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    
-    { $sort: { _id: -1 } },
-]);
+    const content = await ImagesModel.aggregate([
+        { $match: { note: "01" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+
+        { $sort: { _id: -1 } },
+    ]);
 
     res.render("./admin/menu-dich-vu/add-bai-viet-dich-vu", { category, tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content) })
 }
@@ -1166,30 +1167,30 @@ const editbaivietdichvu = async (req, res) => {
     const page = req.query.page;
     const product = await BaivietdichvuModel.findById(id);
     const category = await Menu_dichvuModel.find();
-        const tieude = await ImagesModel.aggregate([
-    { $match: { note: "02" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    { $sort: { _id: -1 } },
-]);
+    const tieude = await ImagesModel.aggregate([
+        { $match: { note: "02" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+        { $sort: { _id: -1 } },
+    ]);
 
-const content = await ImagesModel.aggregate([
-    { $match: { note: "01" } },
-    {
-        $group: {
-            _id: "$images",
-            doc: { $first: "$$ROOT" }
-        }
-    },
-    { $replaceRoot: { newRoot: "$doc" } },
-    
-    { $sort: { _id: -1 } },
-]);
+    const content = await ImagesModel.aggregate([
+        { $match: { note: "01" } },
+        {
+            $group: {
+                _id: "$images",
+                doc: { $first: "$$ROOT" }
+            }
+        },
+        { $replaceRoot: { newRoot: "$doc" } },
+
+        { $sort: { _id: -1 } },
+    ]);
     res.render("./admin/menu-dich-vu/edit-bai-viet-dich-vu", { product, category, page, tieudeJson: JSON.stringify(tieude), contentJson: JSON.stringify(content) });
 }
 const updatebaivietdichvu = async (req, res) => {
@@ -1204,7 +1205,7 @@ const updatebaivietdichvu = async (req, res) => {
         description: body.description,
         keywords: body.keywords,
         nhap: body.nhap === "on",
-           add: body.add,
+        add: body.add,
     }
     // 1. Khởi tạo mảng chứa tất cả ảnh (cả upload và album)
     if (files && files.length > 0 || body.album_image_ids && body.album_image_ids.length > 0) {
@@ -1272,36 +1273,36 @@ const deletebaivietdichvu = async (req, res) => {
 
 
 const yeucautuvan = async (req, res) => {
-try {
-    // Lấy số trang từ query (mặc định là trang 1 nếu không có)
-      const stt = 1;
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10; // Số lượng bản ghi hiển thị trên mỗi trang
-    const skip = (page - 1) * limit;
+    try {
+        // Lấy số trang từ query (mặc định là trang 1 nếu không có)
+        const stt = 1;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10; // Số lượng bản ghi hiển thị trên mỗi trang
+        const skip = (page - 1) * limit;
 
-    // Đếm tổng số lượng bản ghi có trong TuvanModel
-    const totalDocs = await TuvanModel.countDocuments();
-    
-    // Tính tổng số trang
-    const totalPages = Math.ceil(totalDocs / limit);
+        // Đếm tổng số lượng bản ghi có trong TuvanModel
+        const totalDocs = await TuvanModel.countDocuments();
 
-    // Lấy dữ liệu phân trang, sắp xếp mới nhất lên đầu
-    const product = await TuvanModel.find()
-      .sort({ _id: -1 })
-      .skip(skip)
-      .limit(limit);
+        // Tính tổng số trang
+        const totalPages = Math.ceil(totalDocs / limit);
 
-    // Render ra view kèm theo dữ liệu phân trang
-    res.render("./admin/tu-van/yeu-cau-tu-van", { 
-      product, stt,
-      currentPage: page, 
-      totalPages: totalPages 
-    });
+        // Lấy dữ liệu phân trang, sắp xếp mới nhất lên đầu
+        const product = await TuvanModel.find()
+            .sort({ _id: -1 })
+            .skip(skip)
+            .limit(limit);
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Lỗi server");
-  }
+        // Render ra view kèm theo dữ liệu phân trang
+        res.render("./admin/tu-van/yeu-cau-tu-van", {
+            product, stt,
+            currentPage: page,
+            totalPages: totalPages
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Lỗi server");
+    }
 }
 const edityeucautuvan = async (req, res) => {
     const page = req.body.page || req.query.page || 1;
@@ -1310,40 +1311,40 @@ const edityeucautuvan = async (req, res) => {
         trangthai: req.body.trangthai == "true"
     }
     await TuvanModel.updateOne({ _id: id }, { $set: product });
-   res.redirect(`/admin/danh-sach-yeu-cau-tu-van?page=${page}`);
+    res.redirect(`/admin/danh-sach-yeu-cau-tu-van?page=${page}`);
 }
 
 const order = async (req, res) => {
-try {
-    // Lấy số trang từ query (mặc định là trang 1 nếu không có)
-      const stt = 1;
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10; // Số lượng bản ghi hiển thị trên mỗi trang
-    const skip = (page - 1) * limit;
+    try {
+        // Lấy số trang từ query (mặc định là trang 1 nếu không có)
+        const stt = 1;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10; // Số lượng bản ghi hiển thị trên mỗi trang
+        const skip = (page - 1) * limit;
 
-    // Đếm tổng số lượng bản ghi có trong TuvanModel
-    const totalDocs = await OrderModel.countDocuments();
-    
-    // Tính tổng số trang
-    const totalPages = Math.ceil(totalDocs / limit);
+        // Đếm tổng số lượng bản ghi có trong TuvanModel
+        const totalDocs = await OrderModel.countDocuments();
 
-    // Lấy dữ liệu phân trang, sắp xếp mới nhất lên đầu
-    const product = await OrderModel.find()
-      .sort({ _id: -1 })
-      .skip(skip)
-      .limit(limit);
-      
-    // Render ra view kèm theo dữ liệu phân trang
-    res.render("./admin/order/order", { 
-      product, stt,
-      currentPage: page, 
-      totalPages: totalPages 
-    });
+        // Tính tổng số trang
+        const totalPages = Math.ceil(totalDocs / limit);
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Lỗi server");
-  }
+        // Lấy dữ liệu phân trang, sắp xếp mới nhất lên đầu
+        const product = await OrderModel.find()
+            .sort({ _id: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        // Render ra view kèm theo dữ liệu phân trang
+        res.render("./admin/order/order", {
+            product, stt,
+            currentPage: page,
+            totalPages: totalPages
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Lỗi server");
+    }
 }
 const editorder = async (req, res) => {
     const page = req.body.page || req.query.page || 1;
@@ -1352,7 +1353,7 @@ const editorder = async (req, res) => {
         trangthai: req.body.trangthai == "true"
     }
     await OrderModel.updateOne({ _id: id }, { $set: product });
-   res.redirect(`/admin/order?page=${page}`);
+    res.redirect(`/admin/order?page=${page}`);
 }
 
 
@@ -1683,34 +1684,144 @@ const deletebanner = async (req, res) => {
 }
 const hoadon = async (req, res) => {
 
-    
-  try {
+
+    try {
         const hoaDonId = req.params.id;
 
         // Lấy dữ liệu hóa đơn tương ứng từ database (ví dụ từ TuvanModel hoặc OrderModel)
-        const hoaDon = await OrderModel.findById(hoaDonId); 
+        const hoaDon = await OrderModel.findById(hoaDonId);
         const thongtintrang = await Thong_tin_trangModel.findOne();
         const stt = 1;
         const totalPrice = hoaDon.item.reduce((sum, item) => sum + (item.price * item.qty), 0);
         const update = {
             hoadon: hoaDon.hoadon + 1 || 1
         }
-         await OrderModel.updateOne({ _id: hoaDonId }, { $set: update });
-        
-        
+        await OrderModel.updateOne({ _id: hoaDonId }, { $set: update });
+
+
         // Render ra file view hd.ejs và truyền dữ liệu sang
-        res.render('./admin/hd', { hoaDon, thongtintrang, stt, totalPrice }); 
+        res.render('./admin/hd', { hoaDon, thongtintrang, stt, totalPrice });
     } catch (error) {
         console.error(error);
         res.status(500).send("Không thể tải hóa đơn");
     }
 }
+
 const solanin = async (req, res) => {
- try {
+    try {
         const id = req.params.id;
         // Dùng $inc của MongoDB để tự động cộng thêm 1 vào trường hoadon
         await OrderModel.updateOne({ _id: id }, { $inc: { hoadon: 1 } });
         res.json({ success: true, message: "Cập nhật thành công" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Lỗi server" });
+    }
+}
+
+const donhang = async (req, res) => {
+    try {
+        const listCustomers = await OrderModel.find(); // Lấy danh sách khách hàng từ database
+        const product = await Product_sanphamModel.find();
+        // Tự động cập nhật ngày tháng năm hiện tại vào hóa đơn
+
+        const today = new Date();
+        const day = today.getDate();
+        const month = today.getMonth() + 1; // Tháng từ 0-11 nên phải +1
+        const year = today.getFullYear();
+
+        const dateString = `Ngày ${day < 10 ? '0' + day : day} tháng ${month < 10 ? '0' + month : month} năm ${year}`;
+
+
+
+        res.render('./admin/order/hoa-don', { listCustomers, product, dateString }); // Truyền sang view với tên listCustomers
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Lỗi server" });
+    }
+}
+const adddonhang = async (req, res) => {
+    try {
+        const body = req.body;
+        const items = [];
+        let index = 1;
+
+while (body[`product_name_${index}`]) {
+    const productName = body[`product_name_${index}`];
+    const cleanPrice = Number(body[`product_price_${index}`]?.replace(/\./g, '')) || 0;
+    const cleanQty = Number(body[`product_qty_${index}`]?.replace(/\./g, '')) || 0;
+    const cleanDiscount = Number(body[`product_discount_${index}`]?.replace(/\./g, '')) || 0;
+    const productUnit = body[`product_unit_${index}`] || "";
+
+    // 1. Push dữ liệu vào mảng `items` để lưu vào hóa đơn/đơn hàng
+    items.push({
+        name: productName,
+        anhsang: "",
+        thumbnail: " ",
+        price: cleanPrice,
+        qty: cleanQty,
+        chietkhau: cleanDiscount,
+        dvt: productUnit,
+        sku: " "
+    });
+
+    // 2. Kiểm tra xem sản phẩm đã có trong kho/database sản phẩm chưa, chưa có thì thêm mới
+    const existingProduct = await Product_sanphamModel.findOne({ name: productName });
+
+    if (!existingProduct) {
+        const newProductData = {
+            nhomsp_id: [],
+            name: productName,
+            slug: slug(productName),
+            sku: " ",
+            price: cleanPrice,
+            sale: cleanPrice,
+            content: body.content || " ",
+            anhsang: " ",
+            congsuat: " ",
+            title: " ",
+            description: " ",
+            keywords: " ",
+            noibat: " ",
+            thongso: " ",
+            mota: " ",
+            huongdan: " ",
+            baohanh: " ",
+            nhap: body.nhap == "on",
+        };
+
+        await new Product_sanphamModel(newProductData).save();
+    }
+
+    index++;
+}
+
+
+        const product = {
+            madonhang: body.doc_no || " ",
+            name: body.buyer_name || " ",
+            sdt: body.sdt || " ",
+            email: body.email || " ",
+            namecty: body.name_cty || " ",
+            tax: body.tax || " ",
+            addcty: body.add_cty || " ",
+            diachigiaohang: " ",
+            diachigiao: body.address || " ",
+            nvbh: body.salesperson || " ",
+            note: body.content || " ",
+            donvi: body.unit || "khách lẻ",
+            dvt: "Hộp",
+            chietkhau: "0",
+            vanchuyen: " ",
+            thanhtoan: " ",
+            ship: Number(body.shipping_fee?.replace(/\./g, '')) || 0,
+            item: items,
+            trangthai: false,
+        };
+        const saveOrder = await new OrderModel(product).save();
+
+
+        res.redirect('/admin/order',);
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Lỗi server" });
@@ -1734,5 +1845,5 @@ module.exports = {
     editchiasekhachhang, updatechiasekhachhang, deletechiasekhachhang, video, addvideo, uploadvideo, editvideo,
     updatevideo, deletevideo, search, uploadsanpham2, updatebaiviettintuc2, updatebaivietdichvu2,
     thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, list,
-    banner, addbanner, uploadbanner, editbanner, updatebanner, deletebanner, order, editorder, hoadon, solanin
+    banner, addbanner, uploadbanner, editbanner, updatebanner, deletebanner, order, editorder, hoadon, solanin, adddonhang, donhang
 }

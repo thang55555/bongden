@@ -711,7 +711,7 @@ const addcart = async (req, res) => {
         thumbnail: product.image && product.image[0] ? product.image[0].images : '',
         price: product.sale,
         qty: qty,
-        sku: product.sku
+        sku: product.sku,
       });
     }
   }
@@ -843,9 +843,13 @@ const order = async (req, res) => {
     diachigiaohang: body.shipping_receive_type || " ",
     diachigiao: body.add_chitiet + ", " + body.phuong + ", " + body.quan + ", " + body.thanhpho || " ",
     note: body.note,
+    donvi: "khách lẻ",
+    dvt: "Hộp",
+    chietkhau: "0",
     vanchuyen: body.shipping_method,
     thanhtoan: body.payment_method,
     ship: ship,
+    nvbh: "Bán hàng online",
     item: req.session.cart,
     trangthai: false,
   };

@@ -188,6 +188,8 @@ router.post("/admin/update-banner/:id",  AuthMiddleware.checkAdmin,
 router.get("/admin/delete-banner/:id", AuthMiddleware.checkAdmin, ProductController.deletebanner);
 router.get("/admin/in-hoa-don/:id", AuthMiddleware.checkAdmin, ProductController.hoadon);
 router.get("/admin/tang-so-lan-in/:id", AuthMiddleware.checkAdmin, ProductController.solanin);
+router.get("/admin/add-don-hang", AuthMiddleware.checkAdmin, ProductController.donhang);
+router.post("/admin/add-don-hang", AuthMiddleware.checkAdmin,  UploadMiddleware.single("images"),  ProductController.adddonhang);
 
 
 
