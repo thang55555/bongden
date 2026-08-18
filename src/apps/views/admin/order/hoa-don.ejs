@@ -361,6 +361,7 @@
         const autocompleteList = document.getElementById('autocompleteList');
         const unitInput = document.getElementById('unitInput');
         const addressInput = document.getElementById('addressInput');
+        const salespersonInput = document.getElementById('salespersonInput');
         const contentInput = document.getElementById('contentInput');
 
         let currentFocus = -1; // Biến lưu vị trí item đang được chọn bằng phím mũi tên
@@ -387,6 +388,7 @@
                     buyerInput.innerText = `${customer.name} - ${customer.sdt || ''}`;
                     unitInput.innerText = customer.donvi || 'Khách lẻ';
                     addressInput.innerText = customer.diachigiao || '';
+                    salespersonInput.innerText = customer.nvbh || '';
                     contentInput.innerText = customer.note || '';
                     autocompleteList.innerHTML = '';
                     currentFocus = -1;
