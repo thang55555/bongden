@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <!-- Col 5: Newsletter -->
         <div class="lg:pl-6">
           <div class="text-white font-bold text-xs uppercase tracking-wider mb-2">ĐĂNG KÝ NHẬN TIN</div>
-          <p class="text-xs text-slate-400 mb-3">Nhận thông tin sản phẩm mới, ưu đãi và tin tức từ HTC.</p>
+          <p class="text-xs text-slate-400 mb-3">Nhận thông tin sản phẩm mới, ưu đãi và tin tức từ LTC.</p>
 <form class="space-y-3" onsubmit="event.preventDefault();">
   <!-- Ô nhập email kết hợp nút icon bên trong -->
   <div class="relative">
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <!-- Phần bản quyền và thẻ thanh toán -->
   <div
       class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400">
-      <div>© 2026 HTC Việt Nam. All rights reserved.</div>
+      <div>© 2026 LTC Việt Nam. All rights reserved.</div>
       <div class="flex space-x-2 mt-4 sm:mt-0 items-center">
         <div class="bg-white rounded-md px-2 py-1 shadow-sm flex items-center justify-center">
           <i class="fa-brands fa-cc-visa text-blue-700 text-lg"></i>
@@ -289,6 +289,39 @@ document.addEventListener("DOMContentLoaded", function () {
     .mb-8 {
       margin-bottom: 1rem
     }
+    /* Định dạng chung cho vùng hiển thị mô tả từ CKEditor */
+.product-description, /* Thay bằng class hoặc ID của khung chứa nội dung mô tả ngoài site */
+.tab-content {
+    line-height: 1.6;
+    color: #334155;
+    font-size: 15px;
+}
+
+/* Làm đẹp các đoạn văn bản */
+.product-description p, 
+.tab-content p {
+    margin-bottom: 12px;
+}
+
+/* Khôi phục lại dấu chấm tròn và khoảng cách cho danh sách ul/li */
+.product-description ul, 
+.tab-content ul {
+    list-style-type: disc !important;
+    padding-left: 24px !important;
+    margin-bottom: 16px;
+}
+
+.product-description li, 
+.tab-content li {
+    margin-bottom: 8px;
+}
+
+/* Làm nổi bật tiêu đề hoặc chữ đậm bên trong danh sách nếu có */
+.product-description strong, 
+.tab-content strong {
+    color: #0f172a;
+    font-weight: 600;
+}
   </style>
 
 

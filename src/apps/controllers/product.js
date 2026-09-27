@@ -599,72 +599,84 @@ const addsanpham = async (req, res) => {
 }
 
 const addproduct = async (req, res) => {
-    const { files, body } = req;
-    let congsuatArray = [];
+    try {
+        const { files, body } = req;
+        let congsuatArray = [];
 
-    if (body.congsuat) {
-        congsuatArray = body.congsuat
-            .split(',')                  // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
-            .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
-            .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
-    }
-    const products = {
-        nhomsp_id: body.danhmuc_id || " ",
-        name: body.name || " ",
-        slug: slug(body.name) || " ",
-        sku: body.sku || " ",
-        price: body.price || " ",
-        sale: body.sale || " ",
-        content: body.content || " ",
-        anhsang: body.anhsang || " ",
-        congsuat: congsuatArray || " ",
-        title: body.title || " ",
-        description: body.description || " ",
-        keywords: body.keywords || " ",
-        noibat: body.noibat || " ",
-        thongso: body.thongso || " ",
-        mota: body.mota || " ",
-        huongdan: body.huongdan || " ",
-        baohanh: body.baohanh || " ",
-        nhap: body.nhap == "on",
-    };
-
-    // 1. Khởi tạo mảng chứa tất cả ảnh (cả upload và album)
-    let allImages = [];
-
-    // 2. Xử lý file upload (nếu có)
-    if (files && files.length > 0) {
-        for (const item of files) {
-            // Rename file từ tmp sang thư mục chính
-            fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
-
-            // Lưu vào DB ImagesModel
-            await new ImagesModel({
-                images: item.originalname,
-                note: "02"
-            }).save();
-
-            // Thêm tên file vào mảng tổng
-            allImages.push(item.originalname);
+        if (body.congsuat) {
+            congsuatArray = body.congsuat
+                .split(',')               // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
+                .map(item => item.trim())   // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
+                .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
         }
+
+        const products = {
+            nhomsp_id: body.danhmuc_id || " ",
+            name: body.name || " ",
+            slug: slug(body.name) || " ",
+            sku: body.sku || " ",
+            price: body.price || " ",
+            sale: body.sale || " ",
+            content: body.content || " ",
+            anhsang: body.anhsang || " ",
+            congsuat: congsuatArray || " ",
+            title: body.title || " ",
+            description: body.description || " ",
+            keywords: body.keywords || " ",
+            noibat: body.noibat || " ",
+            thongso: body.thongso || " ",
+            mota: body.mota || " ",
+            huongdan: body.huongdan || " ",
+            baohanh: body.baohanh || " ",
+            nhap: body.nhap === "on",
+        };
+
+        // 1. Khởi tạo mảng chứa tất cả ảnh (cả upload và album)
+        let allImages = [];
+
+        // 2. Xử lý file upload (giữ nguyên thứ tự chuẩn xác bằng Promise.all và map)
+        if (files && files.length > 0) {
+            files.sort((a, b) => a.originalname.localeCompare(b.originalname, undefined, { numeric: true, sensitivity: 'base' }));
+            const uploadPromises = files.map(async (item) => {
+                // Rename file từ tmp sang thư mục chính
+                fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
+
+                // Lưu vào DB ImagesModel
+                await new ImagesModel({
+                    images: item.originalname,
+                    note: "02"
+                }).save();
+
+                // Trả về tên file để giữ nguyên vị trí trong mảng
+                return item.originalname;
+            });
+
+            // Chờ tất cả file hoàn tất việc đổi tên và lưu DB theo đúng thứ tự
+            const uploadedFiles = await Promise.all(uploadPromises);
+            allImages = allImages.concat(uploadedFiles);
+        }
+
+        // 3. Xử lý ảnh từ Album (nếu có)
+        if (body.album_image_ids) {
+            const albumFiles = body.album_image_ids.split(',').map(item => item.trim());
+            allImages = allImages.concat(albumFiles);
+        }
+
+        // 4. Tạo mảng định dạng {stt, images} để gán vào sản phẩm
+        products["image"] = allImages.map((imgName, index) => ({
+            stt: index + 1, // Bắt đầu từ 1 cho trực quan
+            images: imgName
+        }));
+
+        // 5. Lưu sản phẩm vào database và chờ hoàn tất trước khi chuyển hướng
+        await new Product_sanphamModel(products).save();
+        res.redirect("/admin/danh-sach-san-pham");
+
+    } catch (error) {
+        console.error("Lỗi khi thêm sản phẩm:", error);
+        res.status(500).send("Đã xảy ra lỗi trong quá trình thêm sản phẩm.");
     }
-
-    // 3. Xử lý ảnh từ Album (nếu có)
-    if (body.album_image_ids) {
-        // Chuyển chuỗi "anh1.jpg,anh2.png" thành mảng ["anh1.jpg", "anh2.png"]
-        const albumFiles = body.album_image_ids.split(',');
-        allImages = allImages.concat(albumFiles);
-    }
-
-    // 4. Tạo mảng định dạng {stt, images} để gán vào sản phẩm
-    products["image"] = allImages.map((imgName, index) => ({
-        stt: index,
-        images: imgName
-    }));
-    new Product_sanphamModel(products).save();
-    res.redirect("/admin/danh-sach-san-pham");
-
-}
+};
 
 
 const editsanpham = async (req, res) => {
@@ -702,44 +714,47 @@ const editsanpham = async (req, res) => {
 }
 
 const uploadsanpham = async (req, res) => {
-    const id = req.params.id;
-    const { files, body } = req;
-    let congsuatArray = [];
+    try {
+        const id = req.params.id;
+        const { files, body } = req;
+        let congsuatArray = [];
 
-    if (body.congsuat) {
-        congsuatArray = body.congsuat
-            .split(',')                  // Cắt chuỗi thành mảng theo dấu phẩy -> ["10w", " 20w", ...]
-            .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối mỗi phần tử -> ["10w", "20w", ...]
-            .filter(item => item !== '');// Lọc bỏ các phần tử rỗng (nếu có)
-    }
-    const products = {
-        nhomsp_id: body.danhmuc_id,
-        name: body.name,
-        slug: slug(body.name),
-        sku: body.sku,
-        price: body.price,
-        sale: body.sale,
-        content: body.content,
-        anhsang: body.anhsang,
-        congsuat: congsuatArray,
-        title: body.title,
-        description: body.description,
-        keywords: body.keywords,
-        noibat: body.noibat,
-        thongso: body.thongso,
-        mota: body.mota,
-        huongdan: body.huongdan,
-        baohanh: body.baohanh,
-        nhap: body.nhap == "on",
-    };
+        if (body.congsuat) {
+            congsuatArray = body.congsuat
+                .split(',')                    // Cắt chuỗi thành mảng theo dấu phẩy
+                .map(item => item.trim())    // Xóa khoảng trắng thừa ở đầu/cuối
+                .filter(item => item !== '');// Lọc bỏ các phần tử rỗng
+        }
 
-    // 1. Khởi tạo mảng chứa tất cả ảnh (cả upload và album)
-    if (files && files.length > 0 || body.album_image_ids && body.album_image_ids.length > 0) {
+        const products = {
+            nhomsp_id: body.danhmuc_id,
+            name: body.name,
+            slug: slug(body.name),
+            sku: body.sku,
+            price: body.price,
+            sale: body.sale,
+            content: body.content,
+            anhsang: body.anhsang,
+            congsuat: congsuatArray,
+            title: body.title,
+            description: body.description,
+            keywords: body.keywords,
+            noibat: body.noibat,
+            thongso: body.thongso,
+            mota: body.mota,
+            huongdan: body.huongdan,
+            baohanh: body.baohanh,
+            nhap: body.nhap == "on",
+        };
+
         let allImages = [];
+        let hasNewImages = false;
 
-        // 2. Xử lý file upload (nếu có)
+        // 1. Xử lý file upload mới (nếu có)
         if (files && files.length > 0) {
-            for (const item of files) {
+            files.sort((a, b) => a.originalname.localeCompare(b.originalname, undefined, { numeric: true, sensitivity: 'base' }));
+            hasNewImages = true;
+            const uploadPromises = files.map(async (item) => {
                 // Rename file từ tmp sang thư mục chính
                 fs.renameSync(item.path, path.resolve("src/public/site/images/update", item.originalname));
 
@@ -749,27 +764,41 @@ const uploadsanpham = async (req, res) => {
                     note: "02"
                 }).save();
 
-                // Thêm tên file vào mảng tổng
-                allImages.push(item.originalname);
-            }
+                return item.originalname;
+            });
+
+            const uploadedFiles = await Promise.all(uploadPromises);
+            allImages = allImages.concat(uploadedFiles);
         }
 
-        // 3. Xử lý ảnh từ Album (nếu có)
+        // 2. Xử lý ảnh từ Album được chọn thêm (nếu có)
         if (body.album_image_ids) {
-            // Chuyển chuỗi "anh1.jpg,anh2.png" thành mảng ["anh1.jpg", "anh2.png"]
-            const albumFiles = body.album_image_ids.split(',');
+            hasNewImages = true;
+            const albumFiles = body.album_image_ids.split(',').map(item => item.trim());
             allImages = allImages.concat(albumFiles);
         }
 
-        // 4. Tạo mảng định dạng {stt, images} để gán vào sản phẩm
-        products["image"] = allImages.map((imgName, index) => ({
-            stt: index,
-            images: imgName
-        }));
-    }
+        // 3. Xử lý cập nhật mảng ảnh:
+        // - Nếu có upload ảnh mới hoặc chọn album mới -> Cập nhật lại toàn bộ mảng image theo danh sách mới.
+        // - Nếu không chọn gì mới -> Không cập nhật trường "image" để giữ nguyên ảnh cũ trong Database.
+        if (hasNewImages) {
+            products["image"] = allImages.map((imgName, index) => ({
+                stt: index + 1, // Bắt đầu từ 1 (hoặc để index nếu DB của bạn dùng từ 0)
+                images: imgName
+            }));
+        }
 
-    await Product_sanphamModel.updateOne({ _id: id }, { $set: products });
-    res.redirect('/admin/danh-sach-san-pham?page=' + req.query.page);
+        // Thực hiện update vào Database
+        await Product_sanphamModel.updateOne({ _id: id }, { $set: products });
+        
+        // Chuyển hướng về danh sách kèm theo số trang hiện tại
+        const page = req.query.page || 1;
+        res.redirect('/admin/danh-sach-san-pham?page=' + page);
+
+    } catch (error) {
+        console.error("Lỗi cập nhật sản phẩm:", error);
+        res.status(500).send("Có lỗi xảy ra khi cập nhật sản phẩm: " + error.message);
+    }
 }
 
 

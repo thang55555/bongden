@@ -129,13 +129,15 @@
                                     <div class="form-group">
                                         <label>Giới thiệu trang</label>
                                         <textarea id="description2" name="gioithieu" class="form-control" value=""
-                                            rows="3"><%=thongtin.gioithieu%></textarea>
+                                            rows="3"><%-thongtin.gioithieu%></textarea>
                                         <script>
                                             CKEDITOR.replace('description2', {
                                                 extraPlugins: 'filebrowser',
                                                 filebrowserBrowseUrl: '/list',//upload location
                                                 filebrowserUploadMethod: 'form',
-                                                filebrowserUploadUrl: '/upload'//route
+                                                filebrowserUploadUrl: '/upload',//route
+                                                // Thêm cấu hình này để không bị xóa thẻ i (font-awesome), style và span
+                                                allowedContent: true
                                             });
                                         </script>
                                     </div>

@@ -1,221 +1,1282 @@
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+<!DOCTYPE html>
+<html lang="vi">
 
-  // 1. Tìm kiếm và gợi ý sản phẩm
-  const searchInput = document.getElementById('search-input');
-  const suggestionsBox = document.getElementById('search-suggestions');
-  
-  if (searchInput && suggestionsBox) {
-    let timeoutId = null;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    searchInput.addEventListener('input', function() {
-      const keyword = this.value.trim();
+  <title>Giới thiệu | LTC LED</title>
 
-      // Xóa timeout cũ để tránh gọi API liên tục mỗi khi gõ phím (Debounce)
-      clearTimeout(timeoutId);
 
-      if (keyword.length === 0) {
-        suggestionsBox.innerHTML = '';
-        suggestionsBox.classList.add('hidden');
-        return;
+
+
+</head>
+
+<body>
+
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="container header-wrapper">
+
+      <div class="logo">
+        <h2>LTC <span>LED</span></h2>
+        <small>LIGHTING THE FUTURE</small>
+      </div>
+
+
+      <nav class="menu">
+
+        <a href="#">TRANG CHỦ</a>
+
+        <a href="#" class="active">
+          GIỚI THIỆU
+        </a>
+
+        <a href="#">
+          SẢN PHẨM⌄
+        </a>
+
+        <a href="#">DỰ ÁN</a>
+
+        <a href="#">TIN TỨC</a>
+
+        <a href="#">LIÊN HỆ</a>
+
+      </nav>
+
+
+      <div class="header-right">
+
+        <div class="search">
+          <input type="text" placeholder="Tìm kiếm sản phẩm...">
+          🔍
+        </div>
+
+        <div class="cart">
+          🛒
+          <span>0</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #285fc3;
+      --primary-dark: #0b2d63;
+      --text: #17243a;
+      --gray: #697386;
+      --border: #e4e9f0;
+      --bg: #f7f9fc;
+      --footer: #06152c;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1450px;
+      margin: auto;
+      padding: 0 35px;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e8edf4;
+      background: #fff;
+    }
+
+    .header-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .logo {
+      min-width: 180px;
+    }
+
+    .logo h2 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #17376c;
+      line-height: 1;
+    }
+
+    .logo h2 span {
+      color: #2f66c9;
+    }
+
+    .logo small {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #68758a;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .menu a {
+      font-size: 15px;
+      font-weight: 600;
+      color: #354052;
+      padding: 27px 0;
+      position: relative;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      color: var(--primary);
+    }
+
+    .menu a.active::after {
+      content: "";
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .search {
+      width: 300px;
+      height: 42px;
+      background: #f1f4f8;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+    }
+
+    .search input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .cart {
+      font-size: 26px;
+      position: relative;
+    }
+
+    .cart span {
+      position: absolute;
+      top: -7px;
+      right: -8px;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      font-size: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ================= HERO ================= */
+
+    .about-section {
+      padding: 35px 0 30px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 42% 58%;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .about-tag {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .about-title {
+      font-size: 58px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .about-subtitle {
+      font-size: 25px;
+      font-weight: 700;
+      color: #315b9d;
+      margin-bottom: 22px;
+    }
+
+    .about-line {
+      width: 55px;
+      height: 3px;
+      background: var(--primary);
+      margin-bottom: 15px;
+    }
+
+    .about-desc {
+      max-width: 570px;
+      color: #4f5b6d;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    /* ================= FEATURE ================= */
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      transition: 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(30, 60, 110, 0.1);
+    }
+
+    .feature-icon {
+      width: 45px;
+      height: 45px;
+      min-width: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2f70d8, #174a9f);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+    }
+
+    .feature-card h4 {
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .feature-card p {
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ================= HERO IMAGE ================= */
+
+    .hero-image {
+      height: 380px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(to bottom,
+          rgba(15, 48, 100, 0.1),
+          rgba(7, 28, 67, 0.7)),
+        url("images/cong-ty.jpg") center/cover;
+    }
+
+    .hero-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg,
+          #3969aa,
+          #0c2855);
+    }
+
+    /* ================= STAT ================= */
+
+    .stats {
+      position: absolute;
+      bottom: 15px;
+      left: 30px;
+      right: 30px;
+      background: rgba(13, 41, 86, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 15px 10px;
+      color: #fff;
+    }
+
+    .stat-item {
+      text-align: center;
+      border-right: 1px solid rgba(255, 255, 255, .15);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-item h3 {
+      font-size: 27px;
+      margin-bottom: 0;
+    }
+
+    .stat-item p {
+      font-size: 12px;
+      color: #d6dfec;
+    }
+
+    /* ================= CONTENT ================= */
+
+    .content-section {
+      padding-bottom: 20px;
+    }
+
+    .content-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 40% 32% 28%;
+      gap: 25px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      color: #1f4d96;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    /* ================= CORE VALUES ================= */
+
+    .core-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .core-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 10px;
+      text-align: center;
+      transition: .3s;
+    }
+
+    .core-card:hover {
+      border-color: #aac5f0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .06);
+      transform: translateY(-4px);
+    }
+
+    .core-icon {
+      font-size: 38px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .core-card h4 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .core-card p {
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ================= TIMELINE ================= */
+
+    .timeline {
+      border-left: 2px solid #dce6f5;
+      padding-left: 25px;
+      margin-left: 10px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 19px;
+      display: grid;
+      grid-template-columns: 55px 1fr;
+      gap: 10px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      left: -31px;
+      top: 5px;
+    }
+
+    .timeline-year {
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .timeline-text {
+      color: #5e6978;
+      font-size: 12px;
+    }
+
+    /* ================= GALLERY ================= */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 85%;
+    }
+
+    .gallery-item {
+      height: 95px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #dbe4f1;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: var(--footer);
+      color: white;
+      margin-top: 10px;
+    }
+
+    .footer-main {
+      padding: 35px 0 20px;
+      display: grid;
+      grid-template-columns: 1.2fr 1.3fr 1fr 1.2fr 1.3fr;
+      gap: 25px;
+    }
+
+    .footer-logo h2 {
+      font-size: 32px;
+      margin-bottom: 2px;
+    }
+
+    .footer-logo small {
+      font-size: 9px;
+      letter-spacing: 1px;
+      color: #c4cfdf;
+    }
+
+    .footer-desc {
+      color: #b7c2d3;
+      font-size: 13px;
+      margin-top: 15px;
+      line-height: 1.7;
+    }
+
+    .footer-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .footer-list {
+      list-style: none;
+    }
+
+    .footer-list li {
+      color: #aeb9c9;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .footer-contact p {
+      font-size: 13px;
+      color: #b8c2d1;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .social {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .social a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #2455a5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ================= NEWSLETTER ================= */
+
+    .newsletter p {
+      color: #b6c0ce;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      background: #14243e;
+      border: 1px solid #263955;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 42px;
+      margin-bottom: 10px;
+    }
+
+    .newsletter-form input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0 15px;
+      color: white;
+    }
+
+    .newsletter button {
+      width: 100%;
+      height: 42px;
+      border: none;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #275cc0, #356fd8);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, .1);
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 12px;
+      color: #9eabbd;
+    }
+
+    .payment {
+      display: flex;
+      gap: 10px;
+    }
+
+    .payment span {
+      background: white;
+      color: #17243a;
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width: 1100px) {
+
+      .menu {
+        gap: 20px;
       }
 
-      // Đợi 300ms sau khi người dùng ngừng gõ mới gọi API
-      timeoutId = setTimeout(() => {
-        fetch(`/api/search-suggestions?keyword=${encodeURIComponent(keyword)}`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.length > 0) {
-              let html = '';
-              data.forEach(item => {
-                // Lấy ảnh đầu tiên hoặc ảnh mặc định
-                let imgSrc = (item.image && item.image.length > 0) ? item.image[0].images : 'default.webp';
-                
-                html += `
-                  <a href="/product?san-pham=${item.slug}&id=${item._id}" class="flex items-center gap-3 p-2 hover:bg-slate-50 transition border-b border-slate-100 last:border-none">
-                    <img src="../site/images/update/${imgSrc}" alt="${item.name}" class=" h-10 object-cover rounded">
-                    <div class="flex-1 min-w-0">
-                      <p class="text-xs font-medium text-slate-800 truncate">${item.name}</p>
-                      <p class="text-xs text-blue-600 font-semibold">${Number(item.sale).toLocaleString()} đ</p>
-                    </div>
-                  </a>
-                `;
-              });
-              suggestionsBox.innerHTML = html;
-              suggestionsBox.classList.remove('hidden');
-            } else {
-              suggestionsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Không tìm thấy sản phẩm phù hợp</div>`;
-              suggestionsBox.classList.remove('hidden');
-            }
-          })
-          .catch(err => console.error(err));
-      }, 300);
-    });
-
-    // Ẩn khung gợi ý khi click ra ngoài ô tìm kiếm
-    document.addEventListener('click', function(e) { 
-      if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-        suggestionsBox.classList.add('hidden');
+      .search {
+        width: 200px;
       }
-    });
-  }
 
-
-  // 2. Xử lý mở/đóng danh mục Sản phẩm trên mobile
-  const mobileProductToggle = document.getElementById('mobile-product-toggle');
-  const mobileProductDropdown = document.getElementById('mobile-product-dropdown');
-  const productChevron = document.getElementById('product-chevron');
-
-  if (mobileProductToggle && mobileProductDropdown && productChevron) {
-    mobileProductToggle.addEventListener('click', () => {
-      mobileProductDropdown.classList.toggle('hidden');
-      productChevron.classList.toggle('rotate-180');
-    });
-  }
-
-
-  // 3. Xử lý Menu mobile (Hamburger menu)
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
-
-  if (mobileMenuButton && mobileMenu && menuIcon) {
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      // Chuyển đổi giữa icon 3 gạch (fa-bars) và dấu X (fa-xmark)
-      if (mobileMenu.classList.contains('hidden')) {
-        menuIcon.classList.remove('fa-xmark');
-        menuIcon.classList.add('fa-bars');
-      } else {
-        menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-xmark');
+      .about-grid {
+        grid-template-columns: 1fr;
       }
-    });
-  }
 
-
-  // 4. Các hàm và sự kiện giỏ hàng, thông báo Toast
-  // Hàm tạo và hiển thị hiệu ứng thông báo thả rơi động (hỗ trợ xếp chồng khi bấm liên tục)
-  function showToast(message = "Thêm vào giỏ hàng thành công!") {
-      // 1. Tạo phần tử toast mới
-      const toast = document.createElement("div");
-      toast.className = "dynamic-toast-item";
-      toast.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${message}`;
-
-      // 2. Định nghĩa style trực tiếp cho thông báo động
-      Object.assign(toast.style, {
-          position: "fixed",
-          top: "-60px",
-          right: "20px",
-          backgroundColor: "#10B981",
-          color: "white",
-          padding: "12px 20px",
-          borderRadius: "8px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          zIndex: "9999",
-          fontWeight: "bold",
-          transition: "all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
-          opacity: "0"
-      });
-
-      // 3. Đưa thông báo vào body của trang
-      document.body.appendChild(toast);
-
-      // 4. Tính toán vị trí xếp chồng nếu đang có các toast khác hiển thị trên màn hình
-      const existingToasts = document.querySelectorAll(".dynamic-toast-item");
-      let topPosition = 20; // Vị trí mặc định cách đỉnh 20px
-      
-      existingToasts.forEach(t => {
-          if (t !== toast) {
-              // Lấy khoảng cách top hiện tại của các toast cũ và cộng dồn chiều cao để xếp chồng xuống dưới
-              const currentTop = parseInt(t.style.top) || 20;
-              topPosition = Math.max(topPosition, currentTop + t.offsetHeight + 10);
-          }
-      });
-
-      // 5. Kích hoạt hiệu ứng rơi xuống
-      requestAnimationFrame(() => {
-          toast.style.opacity = "1";
-          toast.style.top = `${topPosition}px`;
-      });
-
-      // 6. Sau 3 giây thì trượt ngược lên trên và tự hủy khỏi DOM
-      setTimeout(() => {
-          toast.style.top = "-60px";
-          toast.style.opacity = "0";
-          setTimeout(() => {
-              toast.remove(); // Xóa hẳn phần tử khỏi HTML
-          }, 400); // Khớp với thời gian transition 0.4s
-      }, 3000);
-  }
-
-  // Hàm chung xử lý AJAX gọi lên server thêm vào giỏ hàng
-  function handleAddToCart(form) {
-      const formData = new FormData(form);
-
-      fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: {
-              'Accept': 'application/json'
-          }
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              // Cập nhật số lượng giỏ hàng trên header
-              const cartBadge = document.getElementById("cart-badge-count");
-              if (cartBadge) {
-                  cartBadge.textContent = data.totalQty;
-              }
-
-              // Gọi hàm hiển thị thông báo thả rơi động
-              showToast("Thêm vào giỏ hàng thành công!");
-
-          } else {
-              alert("Có lỗi xảy ra khi thêm vào giỏ hàng!");
-          }
-      })
-      .catch(error => {
-          console.error("Lỗi:", error);
-          alert("Không thể kết nối đến máy chủ.");
-      });
-  }
-
-  // --- BẮT SỰ KIỆN CÁC NÚT BẤM ---
-
-  // 1. Trang chi tiết sản phẩm (Nút chọn màu và nút thêm to)
-  const colorButtons = document.querySelectorAll(".color-options .color-btn");
-  const hiddenInput = document.getElementById("selected-anhsang");
-  const productForm = document.getElementById("product-form");
-  const btnAddToCart = document.getElementById("btn-add-to-cart");
-
-  if (colorButtons.length > 0 && hiddenInput) {
-      colorButtons.forEach(button => {
-          button.addEventListener("click", function () {
-              colorButtons.forEach(btn => btn.classList.remove("active"));
-              this.classList.add("active");
-              hiddenInput.value = this.getAttribute("data-color");
-          });
-      });
-  }
-
-  if (btnAddToCart && productForm) {
-      btnAddToCart.addEventListener("click", function () {
-          handleAddToCart(productForm);
-      });
-  }
-
-  // 2. Trang danh sách sản phẩm (Các nút icon giỏ hàng nhỏ trong card)
-  const ajaxForms = document.querySelectorAll(".ajax-cart-form");
-  ajaxForms.forEach(form => {
-      const btn = form.querySelector(".btn-add-ajax");
-      if (btn) {
-          btn.addEventListener("click", function () {
-              handleAddToCart(form);
-          });
+      .content-box {
+        grid-template-columns: 1fr;
       }
-  });
 
-});
-</script>
+      .footer-main {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media(max-width: 768px) {
+
+      .container {
+        padding: 0 20px;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .about-title {
+        font-size: 42px;
+      }
+
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item {
+        margin: 10px 0;
+      }
+
+      .core-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+  <!-- ================= ABOUT ================= -->
+
+  <section class="about-section">
+
+    <div class="container">
+
+      <div class="about-grid">
+
+
+        <!-- LEFT -->
+
+        <div class="about-content">
+
+          <div class="about-tag">
+            VỀ CHÚNG TÔI
+          </div>
+
+
+          <h1 class="about-title">
+            LTC LED
+          </h1>
+
+
+          <div class="about-subtitle">
+            GIẢI PHÁP CHIẾU SÁNG HIỆN ĐẠI
+          </div>
+
+
+          <div class="about-line"></div>
+
+
+          <p class="about-desc">
+
+            Công ty TNHH MTV Thiết Bị Chiếu Sáng LTC LED
+            chuyên cung cấp các sản phẩm và giải pháp chiếu sáng
+            LED chất lượng cao, tiết kiệm năng lượng và thân thiện
+            với môi trường.
+
+          </p>
+
+
+          <p class="about-desc">
+
+            Chúng tôi không ngừng đổi mới công nghệ nhằm mang đến
+            những sản phẩm bền bỉ, hiệu quả và đáp ứng nhu cầu
+            đa dạng của khách hàng.
+
+          </p>
+
+
+          <!-- FEATURES -->
+
+          <div class="feature-list">
+
+
+            <div class="feature-card">
+
+              <div class="feature-icon">
+                ◈
+              </div>
+
+              <div>
+                <h4>Chất lượng vượt trội</h4>
+
+                <p>
+                  Sản phẩm đạt tiêu chuẩn chất lượng cao
+                </p>
+              </div>
+
+            </div>
+
+
+            <div class="feature-card">
+
+              <div class="feature-icon">
+                ⚡
+              </div>
+
+              <div>
+                <h4>Tiết kiệm năng lượng</h4>
+
+                <p>
+                  Giải pháp chiếu sáng hiệu quả
+                </p>
+              </div>
+
+            </div>
+
+
+            <div class="feature-card">
+
+              <div class="feature-icon">
+                ♫
+              </div>
+
+              <div>
+                <h4>Dịch vụ chuyên nghiệp</h4>
+
+                <p>
+                  Tư vấn tận tâm, hỗ trợ nhanh chóng
+                </p>
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="hero-image">
+
+          <img src="../site/images/update/b138f264-4712-4977-afd5-514dbea33da5.jpg">
+
+          <div class="stats">
+
+
+            <div class="stat-item">
+              <h3>10+</h3>
+              <p>Năm kinh nghiệm</p>
+            </div>
+
+
+            <div class="stat-item">
+              <h3>500+</h3>
+              <p>Dự án thực hiện</p>
+            </div>
+
+
+            <div class="stat-item">
+              <h3>1000+</h3>
+              <p>Khách hàng tin tưởng</p>
+            </div>
+
+
+            <div class="stat-item">
+              <h3>50+</h3>
+              <p>Đối tác đồng hành</p>
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= CORE CONTENT ================= -->
+
+  <section class="content-section">
+
+    <div class="container">
+
+      <div class="content-box">
+
+
+        <!-- CORE VALUES -->
+
+        <div>
+
+          <h3 class="section-title">
+            GIÁ TRỊ CỐT LÕI
+          </h3>
+
+
+          <div class="core-grid">
+
+
+            <div class="core-card">
+
+              <div class="core-icon">◇</div>
+
+              <h4>CHẤT LƯỢNG</h4>
+
+              <p>
+                Đặt chất lượng sản phẩm làm nền tảng cho mọi hoạt động.
+              </p>
+
+            </div>
+
+
+            <div class="core-card">
+
+              <div class="core-icon">☼</div>
+
+              <h4>SÁNG TẠO</h4>
+
+              <p>
+                Không ngừng đổi mới công nghệ và giải pháp.
+              </p>
+
+            </div>
+
+
+            <div class="core-card">
+
+              <div class="core-icon">🤝</div>
+
+              <h4>TẬN TÂM</h4>
+
+              <p>
+                Luôn lắng nghe và phục vụ khách hàng.
+              </p>
+
+            </div>
+
+
+            <div class="core-card">
+
+              <div class="core-icon">♧</div>
+
+              <h4>BỀN VỮNG</h4>
+
+              <p>
+                Hướng đến sự phát triển lâu dài và bảo vệ môi trường.
+              </p>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- TIMELINE -->
+
+        <div>
+
+          <h3 class="section-title">
+            QUÁ TRÌNH HÌNH THÀNH
+          </h3>
+
+
+          <div class="timeline">
+
+
+            <div class="timeline-item">
+
+              <div class="timeline-year">
+                2021
+              </div>
+
+              <div class="timeline-text">
+                Thành lập Công ty TNHH MTV Thiết Bị Chiếu Sáng LTC LED
+              </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+              <div class="timeline-year">
+                2022
+              </div>
+
+              <div class="timeline-text">
+                Ổn định bộ máy tổ chức, đưa ra thị trường các dòng sản phẩm LED chất lượng cao và xây dựng mạng lưới
+                khách hàng ban đầu.
+              </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+              <div class="timeline-year">
+                2023
+              </div>
+
+              <div class="timeline-text">
+                Mở rộng thị trường, tăng cường hợp tác với các đối tác lớn và nâng cao năng lực cung ứng dịch vụ.
+              </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+              <div class="timeline-year">
+                2025-2026
+              </div>
+
+              <div class="timeline-text">
+                Tiếp tục đổi mới sáng tạo, phát triển bền vững, mở rộng quy mô và nâng cao chất lượng giải pháp chiếu
+                sáng toàn diện.
+              </div>
+
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- GALLERY -->
+
+        <div>
+
+          <h3 class="section-title">
+            HÌNH ẢNH HOẠT ĐỘNG
+          </h3>
+
+
+          <div class="gallery-grid">
+
+            <div class="gallery-item">
+              <img src="../site/images/update/a9e82238-9502-44aa-a32c-80646ffd087a.jpg">
+            </div>
+
+            <div class="gallery-item">
+              <img src="../site/images/update/091d323d-2645-456c-9a30-2a2d6e14cf77.jpg">
+            </div>
+
+            <div class="gallery-item">
+              <img src="../site/images/update/d94ba7a5-500b-42f3-8f73-51e710c0108d.jpg">
+            </div>
+
+            <div class="gallery-item">
+              <img src="../site/images/update/e3b08aa3-7b2c-41b0-ae0f-032584995098.jpg">
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+
+    <div class="container">
+
+
+      <div class="footer-main">
+
+
+        <!-- COMPANY -->
+
+        <div>
+
+          <div class="footer-logo">
+
+            <h2>LTC LED</h2>
+
+            <small>
+              LIGHTING THE FUTURE
+            </small>
+
+          </div>
+
+
+          <h4 style="
+                        margin-top:20px;
+                        font-size:14px;
+                        line-height:1.6;
+                    ">
+
+            CÔNG TY TNHH MTV<br>
+            THIẾT BỊ CHIẾU SÁNG LTC LED
+
+          </h4>
+
+
+          <p class="footer-desc">
+
+            Chuyên cung cấp các sản phẩm và giải pháp
+            chiếu sáng LED chất lượng cao, tiết kiệm
+            năng lượng và thân thiện với môi trường.
+
+          </p>
+
+
+          <div class="social">
+
+            <a href="#">f</a>
+
+            <a href="#">▶</a>
+
+            <a href="#">●</a>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CONTACT -->
+
+        <div>
+
+          <h3 class="footer-title">
+            THÔNG TIN LIÊN HỆ
+          </h3>
+
+
+          <div class="footer-contact">
+
+            <p>
+              📍 Số nhà ..., đường ..., quận ..., Hà Nội
+            </p>
+
+            <p>
+              ☎ 0986 733 999
+            </p>
+
+            <p>
+              ✉ info@ltcled.vn
+            </p>
+
+            <p>
+              🌐 www.ltcled.vn
+            </p>
+
+            <p>
+              ▣ MST: 0108542103
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- POLICY -->
+
+        <div>
+
+          <h3 class="footer-title">
+            CHÍNH SÁCH
+          </h3>
+
+
+          <ul class="footer-list">
+
+            <li>Hướng dẫn mua hàng</li>
+
+            <li>Chính sách thanh toán</li>
+
+            <li>Chính sách vận chuyển</li>
+
+            <li>Chính sách đổi trả</li>
+
+            <li>Chính sách bảo hành</li>
+
+            <li>Điều khoản sử dụng</li>
+
+          </ul>
+
+        </div>
+
+
+
+        <!-- SUPPORT -->
+
+        <div>
+
+          <h3 class="footer-title">
+            HỖ TRỢ KHÁCH HÀNG
+          </h3>
+
+
+          <div class="footer-contact">
+
+            <p>
+              ☎ <b>0986 733 999</b><br>
+              (8h00 - 21h00, T2 - CN)
+            </p>
+
+            <p>
+              ✉ cskh@ltcled.vn
+            </p>
+
+            <p>
+              🛠 <b>Hỗ trợ kỹ thuật</b><br>
+              kythuat@ltcled.vn
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- NEWSLETTER -->
+
+        <div class="newsletter">
+
+          <h3 class="footer-title">
+            ĐĂNG KÝ NHẬN TIN
+          </h3>
+
+
+          <p>
+            Nhận thông tin sản phẩm mới,
+            ưu đãi và tin tức từ LTC LED.
+          </p>
+
+
+          <div class="newsletter-form">
+
+            <input type="email" placeholder="Nhập email của bạn">
+
+            🔍
+
+          </div>
+
+
+          <button>
+            ĐĂNG KÝ
+          </button>
+
+        </div>
+
+
+      </div>
+
+
+
+      <!-- FOOTER BOTTOM -->
+
+      <div class="footer-bottom">
+
+        <p>
+          © 2026 LTC LED. All rights reserved.
+        </p>
+
+
+        <div class="payment">
+
+          <span>VISA</span>
+
+          <span>MasterCard</span>
+
+          <span>momo</span>
+
+          <span>ZaloPay</span>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </footer>
+
+
+</body>
+
+</html>

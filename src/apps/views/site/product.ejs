@@ -795,7 +795,7 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="/">Trang chủ</a> <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
             <a href="/san-pham">Sản phẩm</a> <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
-            <a href="/category"><%=menu%></a> <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
+            <a href="/category"><%=menu || product.nhomsp_id[0].name%></a> <i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i>
             <span><%=product.name%></span>
         </nav>
 
@@ -1185,7 +1185,7 @@
         <% if (discountPercent > 0) { %>
             <span class="card-badge-sale">-<%= discountPercent %>%</span>
         <% } %>
-            <a href="/product?<%=item.slug%>&id=<%=item._id%>">
+            <a href="/product?<%=item.slug%>&menu=<%=menu || product.nhomsp_id[0].name%>&id=<%=item._id%>">
         <div class="card-img-wrap">
             <img src="../site/images/update/<%= item.image && item.image.length > 0 ? item.image[0].images : '' %>" alt="<%= item.name %>">
         </div> </a>

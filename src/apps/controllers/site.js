@@ -253,7 +253,7 @@ const productsp = async (req, res) => {
 
     // Khi dùng trong Controller của bạn:
     const menu = slugToTitle(req.query.menu);
-    const product = await Product_sanphamModel.findById(id);
+    const product = await Product_sanphamModel.findById(id).populate({ path: "nhomsp_id" });
     const products = await Product_sanphamModel.find({
       nhomsp_id: { $in: product.nhomsp_id }
     });

@@ -34,6 +34,7 @@
 											<th>Hành động</th>
 											<th>Hiển thị bài viết</th>
 											<th>Tên sản phẩm</th>
+											<th>Ảnh đại diện</th>
 											<th>Giá gốc</th>
 											<th>Giá khuyến mại</th>
 											<th>Danh mục</th>
@@ -65,6 +66,8 @@
 													</div>
 												</td>
 												<td> <%=item.name%> </td>
+												<td style="text-align: center"><img width="130" height="180"
+                                                        src="../site/images/update/<%=item.image[0].images%>" /></td>
 												<td> <%= Number(item.price).toLocaleString('vi-VN') %> đ </td>
 												<td> <%= Number(item.sale).toLocaleString('vi-VN') %> đ </td>
 												<td class="category-cell">

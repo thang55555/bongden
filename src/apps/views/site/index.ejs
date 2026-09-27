@@ -190,13 +190,13 @@
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-            <% for(item of menu1.slice(0, 5)){%>
+           <% for(item of [...menu1].sort(() => 0.5 - Math.random()).slice(0, 5)){ %>
       <div
         class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition text-center group">
         <div class="h-36 flex items-center justify-center mb-4 overflow-hidden ">
 <a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>">
           <img src="../site/images/update/<%=item.images%>"
-            alt="<%=item.name%>" class="object-contain h-full group-hover:scale-105 transition duration-300">
+            alt="<%=item.name%>" class="object-contain h-full group-hover:scale-105 transition duration-300" style="height: 180px;">
 </a>
         </div>
         <h3 class="font-bold text-slate-800 text-sm mb-2"><%=item.name%></h3>
@@ -266,7 +266,7 @@
           <!-- Cột trái: Tiêu đề và mô tả (Nền trắng) -->
           <div class="lg:col-span-4 p-8 sm:p-10 space-y-4 text-slate-900">
             <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-snug">
-              VI SAO NÊN CHỌN <br><span class="text-blue-600">ĐÈN LED HTC?</span>
+              VI SAO NÊN CHỌN <br><span class="text-blue-600">ĐÈN LED LTC?</span>
             </h2>
             <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
               LTC không ngừng nghiên cứu và ứng dụng công nghệ chiếu sáng tiên tiến để mang đến những sản
