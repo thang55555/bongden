@@ -77,6 +77,9 @@
 <div class="form-group">
     <label>Ánh sáng:</label>
     <select name="anhsang" class="form-control" multiple="">
+                <option value="Đổi Mầu">
+		Đổi mầu
+		</option>
         <option value="Trắng (6500k)" <%= Array.isArray(product.anhsang) && product.anhsang.includes("Trắng (6500k)") ? 'selected' : '' %>>
             Trắng 6500k
         </option>
@@ -88,14 +91,15 @@
         <option value="Vàng (3000k)" <%= Array.isArray(product.anhsang) && product.anhsang.includes("Vàng (3000k)") ? 'selected' : '' %>>
             Vàng 3000k
         </option>
+
     </select>
 </div>
 
-                                        <!-- <div class="form-group">
+                                        <div class="form-group">
                                             <label>Công suất: (Cách nhau 1 dấu ,)</label>
                                             <input required name="congsuat" type="text" class="form-control" value="<%=product.congsuat%>"
                                                 placeholder="10W, 20W, 30w ...">
-                                        </div> -->
+                                        </div>
                                         <!-- 3 thẻ sale -->
 <div class="form-group">
     <label>Thẻ title <span id="label_title"></span></label>
