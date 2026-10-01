@@ -852,9 +852,33 @@ const productsp = async (req, res) => {
     // Khi dùng trong Controller của bạn:
     const menu = slugToTitle(req.query.menu);
     const product = await Product_sanphamModel.findById(id).populate({ path: "nhomsp_id" });
-    const products = await Product_sanphamModel.find({
-      nhomsp_id: { $in: product.nhomsp_id }
-    });
+    // Lấy tất cả ID menu cha
+const danhmucIds = product.nhomsp_id.flatMap(item => item.danhmuc_id || []);
+
+// Lấy tất cả menu con thuộc các menu cha đó
+const menuCon = await Menu_nhom_sanphamModel.find({
+    danhmuc_id: { $in: danhmucIds }
+}).select("_id");
+
+// Lấy tất cả ID menu con
+const menuConIds = menuCon.map(item => item._id);
+
+// Lấy sản phẩm ngẫu nhiên
+const products = await Product_sanphamModel.aggregate([
+    {
+        $match: {
+            nhomsp_id: { $in: menuConIds },
+            _id: { $ne: product._id },
+            nhap: true
+        }
+    },
+    {
+        $sample: {
+            size:12
+        }
+    }
+]);
+    
     const seo = {
       title: product.title,
       keywords: product.keywords,
