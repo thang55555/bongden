@@ -112,6 +112,34 @@ app.delete('/admin/danh-sach-anh/delete-tieu-de/:id', async (req, res) => {
     res.status(500).json({ message: "Lỗi server" });
   }
 });
+app.delete('/admin/danh-sach-anh/delete-danh-gia/:id', async (req, res) => {
+  try {
+    const result = await ImagesModel.findByIdAndDelete(req.params.id);
+
+    if (!result) {
+      return res.status(404).json({ message: "Không tìm thấy ảnh" });
+    }
+
+    // Lấy tên file ảnh từ thuộc tính images trong DB
+    const fileName = result.images;
+
+    // Đường dẫn thực tế đến ảnh trên máy chủ
+    const imagePath = path.join(__dirname, '..', '..', 'src', 'public', 'site', 'images', 'danh-gia', fileName);
+
+    // Xoá ảnh khỏi ổ đĩa nếu tồn tại
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.warn(`⚠️ Không thể xoá ảnh vật lý: ${fileName}`, err.message);
+        // Tiếp tục xử lý dù xoá file vật lý lỗi
+      }
+    });
+
+    res.status(200).json({ message: "Xoá thành công" });
+  } catch (error) {
+    console.error("❌ Lỗi khi xoá ảnh:", error);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+});
 
 
 

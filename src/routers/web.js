@@ -170,6 +170,7 @@ router.get("/admin/search", AuthMiddleware.checkAdmin, ProductController.search)
 router.get("/admin/danh-sach-anh", AuthMiddleware.checkAdmin, ProductController.dsanh);
 router.get("/admin/danh-sach-anh/tieu-de", AuthMiddleware.checkAdmin, ProductController.dsanhtieude);
 router.get("/admin/danh-sach-anh/content", AuthMiddleware.checkAdmin, ProductController.dsanhconent);
+router.get("/admin/danh-sach-anh/danh-gia", AuthMiddleware.checkAdmin, ProductController.dsanhdanhgia);
 
 
 router.get("/list", AuthMiddleware.checkAdmin, ProductController.list);
@@ -230,6 +231,10 @@ router.get("/delete/cart", SiteController.deletecart2);
 router.post("/order", UploadMiddleware.array("images", 20), SiteController.order);
 router.get("/checkout", SiteController.checkout);
 router.get("/api/search-suggestions", SiteController.apiSearch);
+router.post("/danh-gia", UploadMiddleware.array("images", 20), SiteController.danhgia);
+router.get("/danh-gia", UploadMiddleware.array("images", 20), SiteController.updatedanhgia);
+router.get("/api/danh-gia/load-more", UploadMiddleware.array("images", 20), SiteController.loadMoreReviews);
+router.get("/api/danh-gia/sort", UploadMiddleware.array("images", 20), SiteController.sortReviews);
 
 
 module.exports = router;

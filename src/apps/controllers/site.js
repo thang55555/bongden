@@ -22,6 +22,7 @@ const mongoose = require('mongoose');
 const BannerModel = require("../models/banner");
 const ImagesModel = require("../models/images");
 const OrderModel = require("../models/order");
+const DanhgiaModel = require("../models/danh_gia");
 
 // Helper: validate ObjectId or treat as slug
 const findByIdOrSlug = async (Model, idOrSlug, slugField = "slug") => {
@@ -853,38 +854,43 @@ const productsp = async (req, res) => {
     const menu = slugToTitle(req.query.menu);
     const product = await Product_sanphamModel.findById(id).populate({ path: "nhomsp_id" });
     // Lấy tất cả ID menu cha
-const danhmucIds = product.nhomsp_id.flatMap(item => item.danhmuc_id || []);
+    const danhmucIds = product.nhomsp_id.flatMap(item => item.danhmuc_id || []);
 
-// Lấy tất cả menu con thuộc các menu cha đó
-const menuCon = await Menu_nhom_sanphamModel.find({
-    danhmuc_id: { $in: danhmucIds }
-}).select("_id");
+    // Lấy tất cả menu con thuộc các menu cha đó
+    const menuCon = await Menu_nhom_sanphamModel.find({
+      danhmuc_id: { $in: danhmucIds }
+    }).select("_id");
 
-// Lấy tất cả ID menu con
-const menuConIds = menuCon.map(item => item._id);
+    // Lấy tất cả ID menu con
+    const menuConIds = menuCon.map(item => item._id);
 
-// Lấy sản phẩm ngẫu nhiên
-const products = await Product_sanphamModel.aggregate([
-    {
+    // Lấy sản phẩm ngẫu nhiên
+    const products = await Product_sanphamModel.aggregate([
+      {
         $match: {
-            nhomsp_id: { $in: menuConIds },
-            _id: { $ne: product._id },
-            nhap: true
+          nhomsp_id: { $in: menuConIds },
+          _id: { $ne: product._id },
+          nhap: true
         }
-    },
-    {
+      },
+      {
         $sample: {
-            size:12
+          size: 12
         }
-    }
-]);
-    
+      }
+    ]);
+
     const seo = {
       title: product.title,
       keywords: product.keywords,
       description: product.description
     }
-    res.render("./site/product", { product, menu, products, seo });
+
+    const limit = 5;
+    const danhgia = await DanhgiaModel.find({productId: id}).sort({_id: -1}).limit(limit);;
+    const totaldanhgia = await DanhgiaModel.find({productId: id});
+    const hasMore = totaldanhgia.length > limit;
+    res.render("./site/product", { product, menu, products, seo, danhgia, totaldanhgia, productId : id, hasMore });
 
   } catch (error) {
     console.error("Lỗi tại controller product:", error);
@@ -1918,15 +1924,174 @@ const thuocloban = async (req, res) => {
     console.error("❌ Lỗi tại thuocloban:", err);
     res.redirect('/404');
   }
+};  
+
+
+const danhgia = async (req, res) => {
+  try {
+    const { files } = req;
+    
+    // 1. Phân tích chuỗi fullUrl để lấy productId
+    let productId = null;
+    if (req.body.fullUrl) {
+      try {
+        const parsedUrl = new URL(req.body.fullUrl);
+        productId = parsedUrl.searchParams.get('id');
+      } catch (e) {
+        console.log("Không parse được fullUrl:", e);
+      }
+    }
+
+    const danhgiaData = {
+      productId: productId,
+      name: req.body.title || "Khách hàng",
+      content: req.body.content || " ",
+      rating: req.body.rating || "5",
+    };
+
+    let allImages = [];
+    // 2. Xử lý file upload
+    if (files && files.length > 0) {
+      files.sort((a, b) => a.originalname.localeCompare(b.originalname, undefined, { numeric: true, sensitivity: 'base' }));
+      
+      const uploadPromises = files.map(async (item) => {
+        // Đổi tên/chuyển file vào thư mục chính
+        fs.renameSync(item.path, path.resolve("src/public/site/images/danh-gia", item.originalname));
+
+        // Lưu vào DB ImagesModel nếu cần
+        await new ImagesModel({
+          images: item.originalname,
+          note: "03"
+        }).save();
+
+        return item.originalname;
+      });
+
+      const uploadedFiles = await Promise.all(uploadPromises);
+      allImages = allImages.concat(uploadedFiles);
+    }
+    
+    danhgiaData["images"] = allImages;
+
+    // 3. Lưu vào Database
+    const newdanhgia = await new DanhgiaModel(danhgiaData).save();
+
+    // 4. Trả về kết quả JSON thay vì redirect để client xử lý AJAX
+    return res.status(200).json({
+      success: true,
+      message: "Đánh giá thành công!",
+      newReview: newdanhgia
+    });
+
+  } catch (err) {
+    console.error("❌ Lỗi tại đánh giá:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra từ máy chủ."
+    });
+  }
 };
 
 
+const updatedanhgia = async (req, res) => {
+  try {
+    const id = req.query.id;
+    if (!id) {
+      return res.status(400).json({ success: false, message: "ID không hợp lệ!" });
+    }
+
+    // Tăng trường like lên 1 đơn vị một cách nguyên tử (atomic)
+    const updatedReview = await DanhgiaModel.findOneAndUpdate(
+      { _id: id },
+      { $inc: { like: 1 } },
+      { new: true } // Trả về document sau khi đã cập nhật
+    );
+
+    if (!updatedReview) {
+      return res.status(404).json({ success: false, message: "Không tìm thấy đánh giá!" });
+    }
+    
+    // Trả về JSON thành công kèm theo số like mới nếu cần
+    return res.status(200).json({
+      success: true,
+      message: "Cập nhật hữu ích thành công!",
+      like: updatedReview.like
+    });
+    
+  } catch (err) {
+    console.error("❌ Lỗi tại cập nhật like đánh giá:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Lỗi máy chủ nội bộ."
+    });
+  }
+};
 
 
+const loadMoreReviews = async (req, res) => {
+  try {
+    const productId = req.query.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5; // Mỗi lần hiển thị 10 đánh giá
+    const skip = (page - 1) * limit;
 
+    // Đếm tổng số đánh giá để biết còn hay hết
+    const totalReviews = await DanhgiaModel.countDocuments({ productId: productId });
 
+    // Lấy 10 đánh giá tiếp theo
+    const danhgia = await DanhgiaModel.find({ productId: productId })
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(limit);
 
+    // Kiểm tra xem còn trang sau nữa không
+    const hasMore = (skip + danhgia.length) < totalReviews;
 
+    return res.status(200).json({
+      success: true,
+      danhgia: danhgia,
+      hasMore: hasMore
+    });
+  } catch (err) {
+    console.error("❌ Lỗi load thêm đánh giá:", err);
+    return res.status(500).json({ success: false, message: "Lỗi máy chủ" });
+  }
+};
+
+const sortReviews = async (req, res) => {
+  try {
+    const productId = req.query.id;
+    const sortType = req.query.sort; // nhận giá trị: newest, highest, lowest
+    const limit = 5; // Lấy 10 đánh giá đầu tiên cho mỗi lần đổi kiểu sắp xếp
+
+    let sortQuery = { _id: -1 }; // Mặc định: Mới nhất
+
+    if (sortType === 'highest') {
+      sortQuery = { rating: -1, _id: -1 }; // Đánh giá cao nhất (5 sao -> 1 sao)
+    } else if (sortType === 'lowest') {
+      sortQuery = { rating: 1, _id: -1 };  // Đánh giá thấp nhất (1 sao -> 5 sao)
+    }
+
+    // Truy vấn dữ liệu theo điều kiện sắp xếp
+    const danhgia = await DanhgiaModel.find({ productId: productId })
+      .sort(sortQuery)
+      .limit(limit);
+
+    // Kiểm tra xem còn dữ liệu để hiển thị nút "Xem thêm" hay không
+    const totalReviews = await DanhgiaModel.countDocuments({ productId: productId });
+    const hasMore = totalReviews > limit;
+
+    return res.status(200).json({
+      success: true,
+      danhgia: danhgia,
+      hasMore: hasMore
+    });
+
+  } catch (err) {
+    console.error("❌ Lỗi sắp xếp đánh giá:", err);
+    return res.status(500).json({ success: false, message: "Lỗi máy chủ" });
+  }
+};
 
 
 
@@ -1945,4 +2110,5 @@ module.exports = {
   productvideo,
   guilienhe,
   search, cart, addcart, updatecart, deletecart, deletecart2, order, checkout, apiSearch, 
+  danhgia, updatedanhgia, loadMoreReviews, sortReviews
 };

@@ -942,7 +942,7 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(<%=totaldanhgia.length%> đánh giá)</span> <span ><i class="fa-regular fa-eye"></i> <%=product.view || 0%> lượt xem</span>
+                        <span>(<%=danhgia.length%> đánh giá)</span> <span ><i class="fa-regular fa-eye"></i> <%=product.view || 0%> lượt xem</span>
                        
                     </div>
                     <span>|</span>
@@ -1054,7 +1054,7 @@
                 <div class="tab-item" data-tab="desc">MÔ TẢ SẢN PHẨM</div>
                 <div class="tab-item" data-tab="guide">HƯỚNG DẪN SỬ DỤNG</div>
                 <div class="tab-item" data-tab="warranty">CHÍNH SÁCH BẢO HÀNH</div>
-                <div class="tab-item" data-tab="reviews">ĐÁNH GIÁ (<%=totaldanhgia.length%>)</div>
+                <div class="tab-item" data-tab="reviews">ĐÁNH GIÁ (<%=danhgia.length%>)</div>
             </div>
 
             <!-- KHỐI NỘI DUNG 1: THÔNG SỐ KỸ THUẬT (Mặc định đang active) -->
@@ -1090,13 +1090,13 @@
             </div>
 
 <% 
-    // 1. Tính toán tổng quan từ mảng totaldanhgia
-    const totalReviews = totaldanhgia.length;
+    // 1. Tính toán tổng quan từ mảng danhgia
+    const totalReviews = danhgia.length;
     let totalScore = 0;
     const starCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
     if (totalReviews > 0) {
-        totaldanhgia.forEach(item => {
+        danhgia.forEach(item => {
             const rating = Number(item.rating) || 5;
             totalScore += rating;
             if (starCounts[rating] !== undefined) {
@@ -1170,57 +1170,18 @@
             <div>
                 <div class="flex justify-end mb-4">
                     <div class="relative inline-block">
-                        <select style=" padding-top: 8px;" id="sortReviewSelect" onchange="sortReviews(this.value)"  class="appearance-none bg-white border border-gray-200 text-gray-700 text-sm rounded-lg px-4 py-2 pr-8 focus:outline-none focus:border-blue-500 cursor-pointer" >
-                             <option value="newest">Sắp xếp: Mới nhất</option>
-                             <option value="highest">Đánh giá cao nhất</option>
-                             <option value="lowest">Đánh giá thấp nhất</option>
+                        <select class="appearance-none bg-white border border-gray-200 text-gray-700 text-sm rounded-lg px-4 py-2 pr-8 focus:outline-none focus:border-blue-500 cursor-pointer">
+                            <option>Sắp xếp: Mới nhất</option>
+                            <option>Đánh giá cao nhất</option>
+                            <option>Đánh giá thấp nhất</option>
                         </select>
-
-                        <script>
-                            async function sortReviews(sortType) {
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-
-        const response = await fetch(`/api/danh-gia/sort?id=${productId}&sort=${sortType}`);
-        const result = await response.json();
-
-        if (result.success) {
-            const listContainer = document.getElementById('reviewsListContainer');
-            listContainer.innerHTML = ''; // Xóa sạch danh sách hiện tại
-
-            // Duyệt qua mảng đánh giá mới từ server và dựng lại HTML bằng hàm build có sẵn
-            result.danhgia.forEach(item => {
-                const reviewCard = createReviewItemHTML(item); // Sử dụng lại hàm tạo HTML đã có ở các bước trước
-                listContainer.appendChild(reviewCard);
-            });
-
-            // Reset lại trang phân trang về 1
-            currentPage = 1; 
-
-            // Ẩn/hiện lại nút "Xem thêm" tùy theo kết quả trả về
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            if (loadMoreContainer) {
-                if (result.hasMore) {
-                    loadMoreContainer.classList.remove('hidden');
-                } else {
-                    loadMoreContainer.classList.add('hidden');
-                }
-            }
-        }
-    } catch (error) {
-        console.error("Lỗi khi gọi sắp xếp đánh giá:", error);
-    }
-}
-                        </script>
-                        
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </div>
                     </div>
                 </div>
 
-                <div id="reviewsListContainer" class="divide-y divide-gray-100">
+                <div class="divide-y divide-gray-100">
                     <!-- Đánh giá mẫu -->
                     <%for(item of danhgia){%>
                     <div class="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
@@ -1274,12 +1235,9 @@
 
 
                             </div>
-<button type="button" 
-        onclick="likeReview('<%= item._id %>')" 
-        class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-medium mt-1 cursor-pointer transition">
-    <i class="fa-solid fa-thumbs-up"></i> 
-    Hữu ích (<span id="like-count-<%= item._id %>"><%= item.like || 0 %></span>)
-</button>
+                            <button class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-medium mt-1">
+                                <i class="fa-solid fa-thumbs-up"></i> Hữu ích (<%=item.like || 0%>)
+                            </button>
                         </div>
                         <div class="md:col-span-2 flex md:justify-end items-center justify-between">
                             <button class="text-gray-400 hover:text-gray-600 px-1"><i class="fa-solid fa-ellipsis"></i></button>
@@ -1289,157 +1247,12 @@
                 </div>
             </div>
 
-
-<!-- Nút Xem thêm đánh giá -->
-<div id="loadMoreContainer" class="text-center my-6 <%= hasMore ? '' : 'hidden' %>">
-    <button type="button" 
-            onclick="loadMoreReviews('<%= productId %>')" 
-            class="px-6 py-2.5 border border-gray-300 text-gray-700 font-medium text-sm rounded-lg hover:bg-gray-50 transition shadow-sm">
-        Xem thêm đánh giá <i class="fa-solid fa-chevron-down ml-1.5 text-xs"></i>
-    </button>
-</div> 
-            
             <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3 flex items-center gap-2.5 text-xs text-blue-900 mt-6">
                 <i class="fa-solid fa-shield-halved text-blue-600 text-sm flex-shrink-0"></i>
                 <span>Tất cả đánh giá đều từ khách hàng đã mua sản phẩm, đảm bảo tính xác thực và minh bạch.</span>
             </div>
         </div>
     </div>
-
-<script>
-let currentPage = 1; // Bắt đầu ở trang 1 (vì 10 cái đầu đã render sẵn)
-
-async function loadMoreReviews(productId) {
-    currentPage++; // Tăng lên trang tiếp theo
-
-    try {
-        const response = await fetch(`/api/danh-gia/load-more?id=${productId}&page=${currentPage}`);
-        const result = await response.json();
-
-        if (result.success && result.danhgia.length > 0) {
-            const listContainer = document.getElementById('reviewsListContainer');
-
-            // Duyệt qua mảng đánh giá mới lấy về và dựng HTML để chèn vào cuối danh sách
-            result.danhgia.forEach(item => {
-                const reviewCard = createReviewItemHTML(item);
-                listContainer.appendChild(reviewCard);
-            });
-
-            // Nếu server báo hết dữ liệu (hasMore = false) thì ẩn nút "Xem thêm" đi
-            if (!result.hasMore) {
-                document.getElementById('loadMoreContainer').classList.add('hidden');
-            }
-        } else {
-            // Ẩn nút nếu không còn dữ liệu
-            document.getElementById('loadMoreContainer').classList.add('hidden');
-        }
-    } catch (error) {
-        console.error("Lỗi khi tải thêm đánh giá:", error);
-    }
-}
-
-// Hàm phụ trợ giúp tạo cấu trúc HTML cho mỗi đánh giá mới tải về
-function createReviewItemHTML(item) {
-    const dateObj = new Date(item.createdAt);
-    const formattedDate = !isNaN(dateObj.getTime()) 
-        ? `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`
-        : '';
-
-    let starsHtml = '';
-    const currentRating = Number(item.rating) || 5;
-    for (let i = 1; i <= 5; i++) {
-        const colorClass = i <= currentRating ? 'text-amber-400' : 'text-gray-300';
-        starsHtml += `<i class="fa-solid fa-star ${colorClass}"></i>`;
-    }
-    starsHtml += `<span class="text-gray-400 text-[11px] ml-1">(${currentRating} sao)</span>`;
-
-    let imagesHtml = '';
-    if (item.images && item.images.length > 0) {
-        let imgItems = '';
-        item.images.forEach((imageName, imgIndex) => {
-            imgItems += `
-                <img src="../site/images/danh-gia/${imageName}" 
-                     class="w-20 h-20 rounded-lg object-contain bg-gray-50 border border-gray-200 cursor-pointer p-0.5 hover:opacity-90 transition"
-                     data-images='${JSON.stringify(item.images)}'
-                     data-index="${imgIndex}"
-                     onclick="openImgLightbox(this)">
-            `;
-        });
-        imagesHtml = `<div class="flex gap-2 my-2.5"><div class="flex flex-wrap gap-2 mt-3">${imgItems}</div></div>`;
-    }
-
-    const reviewCard = document.createElement('div');
-    reviewCard.className = 'py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-start';
-    reviewCard.innerHTML = `
-        <div class="md:col-span-3 flex items-start gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center text-blue-500">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div>
-                <h4 class="font-semibold text-gray-900 text-sm">${item.name || 'Khách hàng'}</h4>
-                <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded-full font-medium my-1">
-                    <i class="fa-solid fa-circle-check"></i> Khách hàng đã mua
-                </div>
-                <div class="flex text-amber-400 text-xs gap-0.5 mt-1">
-                    ${starsHtml}
-                </div>
-            </div>
-        </div>
-        <div class="md:col-span-7">
-            <span class="text-xs text-gray-400">${formattedDate}</span>
-            <p class="text-gray-800 text-sm">“${item.content || ''}”</p>
-            ${imagesHtml}
-            <button type="button" onclick="likeReview('${item._id}')" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-medium mt-1">
-                <i class="fa-solid fa-thumbs-up"></i> Hữu ích (<span id="like-count-${item._id}">${item.like || 0}</span>)
-            </button>
-        </div>
-        <div class="md:col-span-2 flex md:justify-end items-center justify-between">
-            <button class="text-gray-400 hover:text-gray-600 px-1"><i class="fa-solid fa-ellipsis"></i></button>
-        </div>
-    `;
-    return reviewCard;
-}
-</script>
-
-
-
-
-  <!-- Hàm xử lý tăng like không load lại trang -->
-<script>
-  
-    async function likeReview(reviewId) {
-        try {
-            const response = await fetch(`/danh-gia?id=${reviewId}`, {
-                method: 'GET' // Hoặc dùng POST tùy theo route của bạn
-            });
-            
-            const result = await response.json();
-
-            if (result.success) {
-                // Tìm thẻ span chứa số like của đánh giá này và tăng lên 1
-                const countSpan = document.getElementById(`like-count-${reviewId}`);
-                if (countSpan) {
-                    let currentLikes = parseInt(countSpan.textContent) || 0;
-                    countSpan.textContent = currentLikes + 1;
-                    
-                    // Thêm hiệu ứng nhấp nháy nhỏ cho sinh động
-                    countSpan.classList.add('text-red-500', 'scale-125');
-                    setTimeout(() => {
-                        countSpan.classList.remove('text-red-500', 'scale-125');
-                    }, 300);
-                }
-            } else {
-                alert(result.message || 'Không thể thực hiện thao tác này.');
-            }
-        } catch (error) {
-            console.error('Lỗi khi tăng like:', error);
-            alert('Có lỗi xảy ra khi kết nối máy chủ.');
-        }
-    }
-</script>
-
-
-
 
 <!-- Lightbox Phóng To Ảnh Riêng Biệt -->
 <div id="imgLightboxModal" class="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center hidden">
@@ -1546,348 +1359,218 @@ document.addEventListener('keydown', function(e) {
 
 
     <!-- HỘP THOẠI MODAL (Được bọc thành thẻ form trỏ đúng route và method GET) -->
-<!-- HỘP THOẠI MODAL -->
-<div id="reviewModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
-    <!-- THÊM onsubmit để xử lý bằng AJAX -->
-    <form onsubmit="submitReviewForm(event)" enctype="multipart/form-data" class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden transform transition-all">
-        
+    <div id="reviewModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
+        <form action="/danh-gia" method="POST" enctype="multipart/form-data" class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden transform transition-all">
+            <!-- THÊM INPUT ẨN ĐỂ CHỨA fullUrl -->
         <input type="hidden" name="fullUrl" value="<%= fullUrl %>">
-        
-        <!-- Modal Header -->
-        <div class="px-6 pt-6 pb-4 border-b border-gray-100 flex items-start justify-between">
-            <div class="flex items-start gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg mt-0.5">
-                    <i class="fa-solid fa-pen-to-square"></i>
+            <!-- Modal Header -->
+            <div class="px-6 pt-6 pb-4 border-b border-gray-100 flex items-start justify-between">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg mt-0.5">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Viết đánh giá của bạn</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Chia sẻ trải nghiệm của bạn để giúp những khách hàng khác có thêm thông tin hữu ích!</p>
+                    </div>
                 </div>
+                <button type="button" onclick="closeReviewModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full transition cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-5 max-h-[70vh] overflow-y-auto">
+                <!-- Chọn số sao (Input ẩn để lưu giá trị rating gửi về server) -->
                 <div>
-                    <h3 class="text-lg font-bold text-gray-900">Viết đánh giá của bạn</h3>
-                    <p class="text-xs text-gray-500 mt-0.5">Chia sẻ trải nghiệm của bạn để giúp những khách hàng khác có thêm thông tin hữu ích!</p>
-                </div>
-            </div>
-            <button type="button" onclick="closeReviewModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-full transition cursor-pointer">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-
-        <!-- Modal Body -->
-        <div class="p-6 space-y-5 max-h-[70vh] overflow-y-auto">
-            <!-- Chọn số sao -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-2">Đánh giá của bạn</label>
-                <div class="flex items-center gap-3">
-                    <div id="starContainer" class="flex text-2xl gap-1 cursor-pointer">
-                        <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="1"></i>
-                        <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="2"></i>
-                        <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="3"></i>
-                        <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="4"></i>
-                        <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="5"></i>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">Đánh giá của bạn</label>
+                    <div class="flex items-center gap-3">
+                        <div id="starContainer" class="flex text-2xl gap-1 cursor-pointer">
+                            <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="1"></i>
+                            <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="2"></i>
+                            <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="3"></i>
+                            <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="4"></i>
+                            <i class="fa-solid fa-star text-amber-400 transition-colors" data-value="5"></i>
+                        </div>
+                        <span id="starText" class="text-xs text-gray-500 font-medium">Tuyệt vời</span>
+                        <input type="hidden" name="rating" id="ratingInput" value="5">
                     </div>
-                    <span id="starText" class="text-xs text-gray-500 font-medium">Tuyệt vời</span>
-                    <input type="hidden" name="rating" id="ratingInput" value="5">
                 </div>
-            </div>
 
-            <!-- Tiêu đề đánh giá -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-1.5">Tiêu đề đánh giá <span class="text-gray-400 font-normal">(không bắt buộc)</span></label>
-                <div class="relative">
-                    <input type="text" id="reviewTitle" name="title" placeholder="Ví dụ: Sản phẩm chất lượng, đáng mua!" maxlength="100" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 transition pr-16">
-                    <span id="titleCount" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-gray-400">0/100</span>
+                <!-- Tiêu đề đánh giá -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-1.5">Tiêu đề đánh giá <span class="text-gray-400 font-normal">(không bắt buộc)</span></label>
+                    <div class="relative">
+                        <input type="text" id="reviewTitle" name="title" placeholder="Ví dụ: Sản phẩm chất lượng, đáng mua!" maxlength="100" class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 transition pr-16">
+                        <span id="titleCount" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-gray-400">0/100</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Nội dung đánh giá -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-1.5">Nội dung đánh giá</label>
-                <div class="relative">
-                    <textarea id="reviewContent" name="content" rows="4" placeholder="Hãy chia sẻ chi tiết về trải nghiệm của bạn với sản phẩm này..." maxlength="1000" class="w-full border border-gray-200 rounded-xl p-3.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 transition resize-none"></textarea>
-                    <span id="contentCount" class="absolute right-3.5 bottom-3 text-xs text-gray-400">0/1000</span>
+                <!-- Nội dung đánh giá -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-1.5">Nội dung đánh giá</label>
+                    <div class="relative">
+                        <textarea id="reviewContent" name="content" rows="4" placeholder="Hãy chia sẻ chi tiết về trải nghiệm của bạn với sản phẩm này..." maxlength="1000" class="w-full border border-gray-200 rounded-xl p-3.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-500 transition resize-none"></textarea>
+                        <span id="contentCount" class="absolute right-3.5 bottom-3 text-xs text-gray-400">0/1000</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Hình ảnh -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-1.5">Hình ảnh/Video <span class="text-gray-400 font-normal">(tối đa 5 ảnh)</span></label>
-                <input type="file" id="imageInput" name="images" accept="image/*" multiple class="hidden">
+                <!-- Hình ảnh/Video -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-1.5">Hình ảnh/Video <span class="text-gray-400 font-normal">(tối đa 5 ảnh)</span></label>
+                    
+                    <!-- Input file mang tên "images" trùng khớp với UploadMiddleware.array("images", 20) -->
+                    <input type="file" id="imageInput" name="images" accept="image/*" multiple class="hidden">
 
-                <div id="imagePreviewContainer" class="flex items-center gap-2 overflow-x-auto pb-1 flex-wrap">
-                    <div id="addImageBtn" onclick="document.getElementById('imageInput').click()" class="w-36 h-20 border-2 border-dashed border-blue-300 bg-blue-50/40 rounded-xl flex flex-col items-center justify-center text-center p-2 cursor-pointer hover:bg-blue-50 transition flex-shrink-0">
-                        <i class="fa-solid fa-camera text-blue-600 text-sm mb-1"></i>
-                        <span class="text-xs font-semibold text-blue-600">Thêm hình ảnh</span>
-                        <span class="text-[9px] text-gray-400">Hỗ trợ JPG, PNG...</span>
+                    <div id="imagePreviewContainer" class="flex items-center gap-2 overflow-x-auto pb-1 flex-wrap">
+                        <div id="addImageBtn" onclick="document.getElementById('imageInput').click()" class="w-36 h-20 border-2 border-dashed border-blue-300 bg-blue-50/40 rounded-xl flex flex-col items-center justify-center text-center p-2 cursor-pointer hover:bg-blue-50 transition flex-shrink-0">
+                            <i class="fa-solid fa-camera text-blue-600 text-sm mb-1"></i>
+                            <span class="text-xs font-semibold text-blue-600">Thêm hình ảnh</span>
+                            <span class="text-[9px] text-gray-400">Hỗ trợ JPG, PNG...</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal Footer -->
-        <div class="px-6 py-4 bg-gray-50/70 border-t border-gray-100 flex items-center justify-end gap-3">
-            <button type="button" onclick="closeReviewModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-100 transition cursor-pointer">
-                Hủy
-            </button>
-            <button type="submit" id="submitReviewBtn" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium flex items-center gap-2 shadow-sm transition cursor-pointer">
-                <i class="fa-solid fa-paper-plane text-xs"></i>
-                <span>Gửi đánh giá</span>
-            </button>
-        </div>
-    </form>
-</div>
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 bg-gray-50/70 border-t border-gray-100 flex items-center justify-end gap-3">
+                <button type="button" onclick="closeReviewModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-100 transition cursor-pointer">
+                    Hủy
+                </button>
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium flex items-center gap-2 shadow-sm transition cursor-pointer">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                    <span>Gửi đánh giá</span>
+                </button>
+            </div>
+
+        </form>
+    </div>
 
     <!-- JAVASCRIPT XỬ LÝ -->
-<script>
-    const modal = document.getElementById('reviewModal');
-    const reviewTitle = document.getElementById('reviewTitle');
-    const titleCount = document.getElementById('titleCount');
-    const reviewContent = document.getElementById('reviewContent');
-    const contentCount = document.getElementById('contentCount');
+    <script>
+        const modal = document.getElementById('reviewModal');
+        const reviewTitle = document.getElementById('reviewTitle');
+        const titleCount = document.getElementById('titleCount');
+        const reviewContent = document.getElementById('reviewContent');
+        const contentCount = document.getElementById('contentCount');
 
-    function openReviewModal() {
-        modal.classList.remove('hidden');
-    }
-
-    function closeReviewModal() {
-        modal.classList.add('hidden');
-    }
-
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeReviewModal();
-        }
-    });
-
-    reviewTitle.addEventListener('input', function() {
-        titleCount.textContent = `${reviewTitle.value.length}/100`;
-    });
-
-    reviewContent.addEventListener('input', function() {
-        contentCount.textContent = `${reviewContent.value.length}/1000`;
-    });
-
-    // Xử lý chọn sao tương tác
-    const stars = document.querySelectorAll('#starContainer i');
-    const starText = document.getElementById('starText');
-    const ratingInput = document.getElementById('ratingInput');
-    let currentRating = 5;
-
-    const ratingLabels = {
-        1: 'Không hài lòng lắm',
-        2: 'Tạm ổn',
-        3: 'Bình thường',
-        4: 'Hài lòng',
-        5: 'Tuyệt vời'
-    };
-
-    stars.forEach((star) => {
-        star.addEventListener('mouseenter', function() {
-            highlightStars(parseInt(this.getAttribute('data-value')));
-        });
-
-        star.addEventListener('mouseleave', function() {
-            highlightStars(currentRating);
-        });
-
-        star.addEventListener('click', function() {
-            currentRating = parseInt(this.getAttribute('data-value'));
-            highlightStars(currentRating);
-            starText.textContent = ratingLabels[currentRating];
-            ratingInput.value = currentRating;
-        });
-    });
-
-    function highlightStars(count) {
-        stars.forEach((s, i) => {
-            if (i < count) {
-                s.classList.remove('text-gray-300');
-                s.classList.add('text-amber-400');
-            } else {
-                s.classList.remove('text-amber-400');
-                s.classList.add('text-gray-300');
-            }
-        });
-    }
-
-    // Xử lý tải lên hình ảnh
-    let dataTransfer = new DataTransfer();
-    const imageInput = document.getElementById('imageInput');
-    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    const addImageBtn = document.getElementById('addImageBtn');
-
-    imageInput.addEventListener('change', function(e) {
-        const files = Array.from(e.target.files);
-        files.forEach(file => {
-            if (dataTransfer.files.length < 5 && file.type.startsWith('image/')) {
-                dataTransfer.items.add(file);
-            }
-        });
-        imageInput.files = dataTransfer.files;
-        renderImages();
-    });
-
-    function renderImages() {
-        const existingPreviews = imagePreviewContainer.querySelectorAll('.image-preview-item');
-        existingPreviews.forEach(item => item.remove());
-
-        Array.from(dataTransfer.files).forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const div = document.createElement('div');
-                div.className = 'image-preview-item relative w-20 h-20 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0 group';
-                div.innerHTML = `
-                    <img src="${e.target.result}" class="w-full h-full object-cover">
-                    <button type="button" onclick="removeImage(${index})" class="absolute top-1 right-1 bg-gray-900/70 hover:bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition cursor-pointer">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                `;
-                imagePreviewContainer.insertBefore(div, addImageBtn);
-            }
-            reader.readAsDataURL(file);
-        });
-
-        if (dataTransfer.files.length >= 5) {
-            addImageBtn.classList.add('hidden');
-        } else {
-            addImageBtn.classList.remove('hidden');
-        }
-    }
-
-    function removeImage(index) {
-        dataTransfer.items.remove(index);
-        imageInput.files = dataTransfer.files;
-        renderImages();
-    }
-
-    // ==========================================
-    // AJAX SUBMIT FORM (KHÔNG LOAD LẠI TRANG)
-    // ==========================================
-    async function submitReviewForm(event) {
-        event.preventDefault(); // Chặn load lại trang mặc định của form
-
-        const formElement = event.target;
-        const submitBtn = document.getElementById('submitReviewBtn');
-        const formData = new FormData(formElement);
-
-        // Đính kèm các file ảnh từ biến dataTransfer vào FormData chuẩn bị gửi đi
-        formData.delete('images');
-        for (let i = 0; i < dataTransfer.files.length; i++) {
-            formData.append('images', dataTransfer.files[i]);
+        function openReviewModal() {
+            modal.classList.remove('hidden');
         }
 
-        try {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-xs"></i> <span>Đang gửi...</span>`;
+        function closeReviewModal() {
+            modal.classList.add('hidden');
+        }
 
-            const response = await fetch('/danh-gia', {
-                method: 'POST',
-                body: formData // Gửi dạng multipart/form-data
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeReviewModal();
+            }
+        });
+
+        reviewTitle.addEventListener('input', function() {
+            titleCount.textContent = `${reviewTitle.value.length}/100`;
+        });
+
+        reviewContent.addEventListener('input', function() {
+            contentCount.textContent = `${reviewContent.value.length}/1000`;
+        });
+
+        // Xử lý chọn sao tương tác
+        const stars = document.querySelectorAll('#starContainer i');
+        const starText = document.getElementById('starText');
+        const ratingInput = document.getElementById('ratingInput');
+        let currentRating = 5;
+
+        const ratingLabels = {
+            1: 'Không hài lòng lắm',
+            2: 'Tạm ổn',
+            3: 'Bình thường',
+            4: 'Hài lòng',
+            5: 'Tuyệt vời'
+        };
+
+        stars.forEach((star) => {
+            star.addEventListener('mouseenter', function() {
+                highlightStars(parseInt(this.getAttribute('data-value')));
             });
 
-            const result = await response.json();
+            star.addEventListener('mouseleave', function() {
+                highlightStars(currentRating);
+            });
 
-            if (result.success) {
-                // 1. Đóng modal và reset form
-                closeReviewModal();
-                formElement.reset();
-                dataTransfer = new DataTransfer();
-                imageInput.files = dataTransfer.files;
-                renderImages();
-                currentRating = 5;
-                highlightStars(5);
-                starText.textContent = 'Tuyệt vời';
-                ratingInput.value = '5';
-
-                // 2. Tự động chèn đánh giá mới vào danh sách trên giao diện ngay lập tức
-                prependNewReviewToDOM(result.newReview);
-
-            } else {
-                alert(result.message || 'Có lỗi xảy ra, vui lòng thử lại.');
-            }
-        } catch (error) {
-            console.error('Lỗi khi gửi đánh giá:', error);
-            alert('Không thể kết nối đến máy chủ.');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-xs"></i> <span>Gửi đánh giá</span>`;
-        }
-    }
-
-    // Hàm render HTML động cho đánh giá mới vừa gửi
-function prependNewReviewToDOM(item) {
-    const listContainer = document.getElementById('reviewsListContainer');
-    if (!listContainer) return;
-
-    // Định dạng ngày DD/MM/YYYY
-    const dateObj = new Date(item.createdAt);
-    const formattedDate = !isNaN(dateObj.getTime()) 
-        ? `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`
-        : '';
-
-    // Tạo vòng lặp sao đánh giá
-    let starsHtml = '';
-    const currentRating = Number(item.rating) || 5;
-    for (let i = 1; i <= 5; i++) {
-        const colorClass = i <= currentRating ? 'text-amber-400' : 'text-gray-300';
-        starsHtml += `<i class="fa-solid fa-star ${colorClass}"></i>`;
-    }
-    starsHtml += `<span class="text-gray-400 text-[11px] ml-1">(${currentRating} sao)</span>`;
-
-    // Tạo phần hiển thị ảnh nếu có
-    let imagesHtml = '';
-    if (item.images && item.images.length > 0) {
-        let imgItems = '';
-        item.images.forEach((imageName, imgIndex) => {
-            imgItems += `
-                <img src="../site/images/danh-gia/${imageName}" 
-                     class="w-20 h-20 rounded-lg object-contain bg-gray-50 border border-gray-200 cursor-pointer p-0.5 hover:opacity-90 transition"
-                     data-images='${JSON.stringify(item.images)}'
-                     data-index="${imgIndex}"
-                     onclick="openImgLightbox(this)">
-            `;
+            star.addEventListener('click', function() {
+                currentRating = parseInt(this.getAttribute('data-value'));
+                highlightStars(currentRating);
+                starText.textContent = ratingLabels[currentRating];
+                ratingInput.value = currentRating; // Lưu giá trị vào input ẩn để gửi lên server
+            });
         });
-        imagesHtml = `<div class="flex gap-2 my-2.5"><div class="flex flex-wrap gap-2 mt-3">${imgItems}</div></div>`;
-    }
 
-    // Khung HTML chuẩn 12 cột
-    const reviewCard = document.createElement('div');
-    reviewCard.className = 'py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-start animate-fade-in';
-    reviewCard.innerHTML = `
-        <div class="md:col-span-3 flex items-start gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center text-blue-500">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div>
-                <h4 class="font-semibold text-gray-900 text-sm">${item.name || 'Khách hàng'}</h4>
-                <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] px-2 py-0.5 rounded-full font-medium my-1">
-                    <i class="fa-solid fa-circle-check"></i> Khách hàng đã mua
-                </div>
-                <div class="flex text-amber-400 text-xs gap-0.5 mt-1">
-                    ${starsHtml}
-                </div>
-            </div>
-        </div>
-        <div class="md:col-span-7">
-            <span class="text-xs text-gray-400">${formattedDate}</span>
-            <p class="text-gray-800 text-sm">“${item.content || ''}”</p>
-            ${imagesHtml}
+        function highlightStars(count) {
+            stars.forEach((s, i) => {
+                if (i < count) {
+                    s.classList.remove('text-gray-300');
+                    s.classList.add('text-amber-400');
+                } else {
+                    s.classList.remove('text-amber-400');
+                    s.classList.add('text-gray-300');
+                }
+            });
+        }
+
+        // Xử lý tải lên hình ảnh (Tối đa 5 ảnh, dùng DataTransfer để cập nhật file vào input)
+        let dataTransfer = new DataTransfer();
+        const imageInput = document.getElementById('imageInput');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const addImageBtn = document.getElementById('addImageBtn');
+
+        imageInput.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
             
-            <!-- SỬA LẠI ĐOẠN NÚT HỮU ÍCH NÀY -->
-            <button type="button" 
-                    onclick="likeReview('${item._id}')" 
-                    class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-medium mt-1 cursor-pointer transition">
-                <i class="fa-solid fa-thumbs-up"></i> 
-                Hữu ích (<span id="like-count-${item._id}">${item.like || 0}</span>)
-            </button>
-        </div>
-        <div class="md:col-span-2 flex md:justify-end items-center justify-between">
-            <button class="text-gray-400 hover:text-gray-600 px-1"><i class="fa-solid fa-ellipsis"></i></button>
-        </div>
-    `;
+            files.forEach(file => {
+                if (dataTransfer.files.length < 5 && file.type.startsWith('image/')) {
+                    dataTransfer.items.add(file);
+                }
+            });
 
-    // Chèn lên đầu danh sách ngay lập tức mà không cần load lại trang
-    listContainer.prepend(reviewCard);
-}
+            imageInput.files = dataTransfer.files;
+            renderImages();
+        });
 
+        function renderImages() {
+            const existingPreviews = imagePreviewContainer.querySelectorAll('.image-preview-item');
+            existingPreviews.forEach(item => item.remove());
 
-</script>
+            Array.from(dataTransfer.files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'image-preview-item relative w-20 h-20 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0 group';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover">
+                        <button type="button" onclick="removeImage(${index})" class="absolute top-1 right-1 bg-gray-900/70 hover:bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition cursor-pointer">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    `;
+                    imagePreviewContainer.insertBefore(div, addImageBtn);
+                }
+                reader.readAsDataURL(file);
+            });
+
+            if (dataTransfer.files.length >= 5) {
+                addImageBtn.classList.add('hidden');
+            } else {
+                addImageBtn.classList.remove('hidden');
+            }
+        }
+
+        function removeImage(index) {
+            dataTransfer.items.remove(index);
+            imageInput.files = dataTransfer.files;
+            renderImages();
+        }
+    </script>
 
     
             </div>

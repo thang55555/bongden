@@ -1595,10 +1595,11 @@ const dsanh = async (req, res) => {
     const tieude = await ImagesModel.find({ note: "02" });
 
     const content = await ImagesModel.find({ note: "01" });
+    const danhgia = await ImagesModel.find({ note: "03" });
 
     res.render("./admin/danh-sach-anh/menu-danh-sach", {
         tieude,
-        content
+        content, danhgia
     });
 };
 
@@ -1619,6 +1620,28 @@ const dsanhtieude = async (req, res) => {
         .limit(limit);
 
     res.render("./admin/danh-sach-anh/danh-sach-anh-tieu-de", {
+        image,
+        page,
+        totalPages
+    });
+};
+const dsanhdanhgia = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 30;
+    const skip = (page - 1) * limit;
+
+    // Đếm tổng số document
+    const total = await ImagesModel.countDocuments({ note: "03" });
+
+    const totalPages = Math.ceil(total / limit);
+
+    // Lấy dữ liệu theo trang
+    const image = await ImagesModel.find({ note: "03" })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    res.render("./admin/danh-sach-anh/danh-sach-anh-danh-gia", {
         image,
         page,
         totalPages
@@ -1875,6 +1898,6 @@ module.exports = {
     deletebaivietdichvu, yeucautuvan, edityeucautuvan, chiasekhachhang, addchiasekhachhang, uploadchiasekhachhang,
     editchiasekhachhang, updatechiasekhachhang, deletechiasekhachhang, video, addvideo, uploadvideo, editvideo,
     updatevideo, deletevideo, search, uploadsanpham2, updatebaiviettintuc2, updatebaivietdichvu2,
-    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, list,
+    thuocloban, editthuocloban, updatethuocloban, dsanh, dsanhtieude, dsanhconent, dsanhdanhgia, list,
     banner, addbanner, uploadbanner, editbanner, updatebanner, deletebanner, order, editorder, hoadon, solanin, adddonhang, donhang
 }
