@@ -31,39 +31,47 @@
 
 
 
+<!-- 1. Preconnect chính xác tới các domain bên thứ ba -->
+<link rel="preconnect" href="https://cdn.tailwindcss.com">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-  <!-- 1. Ưu tiên đọc quy tắc font-display trước tiên -->
-  <style>
-    @font-face {
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: "Font Awesome 6 Free";
-      font-weight: 400;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: "Font Awesome 6 Brands";
-      font-weight: 400;
-      font-display: swap;
-    }
-  </style>
+<!-- 2. Khai báo font-display swap trực tiếp cho FontAwesome để tránh lỗi hiển thị chữ -->
+<style>
+  @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Font Awesome 6 Brands";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2");
+  }
+</style>
 
-  <!-- 2. Khai báo kết nối trước -->
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<!-- 3. Tải bất đồng bộ (async/preload) cho FontAwesome CSS để không chặn render -->
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</noscript>
 
-  <!-- 3. Tailwind CDN có thêm defer -->
-  <script src="https://cdn.tailwindcss.com" ></script>
+<!-- 4. Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- 4. FontAwesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- 5. Alpine.js -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"></script>
-
+<!-- 5. Alpine.js (đã có defer từ trước, rất tốt) -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"></script>
 
 
 
