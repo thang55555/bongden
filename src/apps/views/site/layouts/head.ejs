@@ -30,18 +30,21 @@
 <link rel="preload" fetchpriority="high" as="image" href="../site/images/update/<%=thongtintrang.images%>" type="image/png">
 
 
-<!-- Khai báo kết nối trước tới các CDN quan trọng -->
+<!-- Khai báo kết nối trước -->
 <link rel="preconnect" href="https://cdn.tailwindcss.com">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-<!-- Tailwind CSS Play CDN chuẩn và tối ưu nhất -->
-<script src="https://cdn.tailwindcss.com" ></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- 
-<!-- Thư viện Alpine.js lấy trực tiếp từ CDNJS tối ưu tốc độ cao -->
+<!-- 1. Tailwind Play CDN (Phải dùng thẻ <script> chuẩn thì CSS mới hoạt động) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- 2. FontAwesome (Dùng kỹ thuật tải không chặn render vì đây là file CSS chuẩn) -->
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
+
+<!-- 3. Alpine.js -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"></script>
+
+<!-- 4. Ghi đè font-display cho FontAwesome -->
 <style>
   @font-face {
     font-family: "Font Awesome 6 Free";
@@ -59,6 +62,7 @@
     font-display: swap;
   }
 </style>
+
 
 
   
