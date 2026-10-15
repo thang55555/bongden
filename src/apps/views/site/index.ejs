@@ -204,22 +204,26 @@
         <i class="fa-solid fa-arrow-right text-xs"></i></a>
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-           <% for(item of [...menu1].sort(() => 0.5 - Math.random()).slice(0, 5)){ %>
-      <div
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+    <% for(item of [...menu1].sort(() => 0.5 - Math.random()).slice(0, 5)){ %>
+    <div
         class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition text-center group">
         <div class="h-36 flex items-center justify-center mb-4 overflow-hidden ">
-<a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>">
-          <img src="../site/images/update/<%=item.images%>"
-            alt="<%=item.name%>" class="object-contain h-full group-hover:scale-105 transition duration-300" style="height: 180px;">
-</a>
+            <a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>">
+                <!-- Thêm width và height chuẩn vào đây -->
+                <img src="../site/images/update/<%=item.images%>"
+                     alt="<%=item.name%>" 
+                     width="300" 
+                     height="180"
+                     class="object-contain w-full h-full group-hover:scale-105 transition duration-300">
+            </a>
         </div>
         <h3 class="font-bold text-slate-800 text-sm mb-2"><%=item.name%></h3>
         <a href="/category?danh-muc=<%= item.slug %>&id=<%= item._id %>" class="text-blue-600 text-xs font-semibold inline-flex items-center gap-1 hover:underline">Xem sản
           phẩm <i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-      </div>
-      <% }%>
     </div>
+    <% }%>
+</div>
 
     <!-- Sub-features Bar (Tiết kiệm điện năng, ánh sáng, thân thiện,...) -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
