@@ -1,3 +1,28 @@
+<!-- === KHUNG SKELETON TOÀN TRANG (HIỂN THỊ BAN ĐẦU) === -->
+<div id="global-skeleton" class="w-full min-h-screen bg-white animate-pulse p-4 sm:p-8 space-y-8">
+    <!-- 1. Giả lập phần Hero Banner lớn ở trên -->
+    <div class="w-full h-[400px] bg-slate-200 rounded-2xl"></div>
+
+    <!-- 2. Giả lập tiêu đề mục -->
+    <div class="h-8 bg-slate-200 rounded w-1/4 mx-auto"></div>
+
+    <!-- 3. Giả lập lưới sản phẩm/danh mục (giống các ô bạn đang làm) -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <% for(let i=0; i<5; i++) { %>
+        <div class="bg-white p-4 rounded-2xl border border-slate-100 space-y-4">
+            <div class="h-36 bg-slate-200 rounded-xl w-full"></div>
+            <div class="h-4 bg-slate-200 rounded w-3/4 mx-auto"></div>
+            <div class="h-4 bg-slate-200 rounded w-1/2 mx-auto"></div>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- === NỘI DUNG THẬT CỦA WEBSITE (BAN ĐẦU BỊ ẨN) === -->
+<div id="main-content" class="opacity-0 transition-opacity duration-500">
+
+
+
 <!DOCTYPE html>
 <html lang="vi" class="scroll-smooth">
 
@@ -28,7 +53,7 @@
 
 
   <!-- Tailwind CSS CDN -->
-  <script src="./them/java.js"></script>
+  <script src="./them/java.js" ></script>
   <!-- FontAwesome cho Icons -->
   <link rel="stylesheet" href="./fontawesome-free-6.4.0-web/css/all.min.css">
 
