@@ -7,15 +7,29 @@
     <div id="hero-slider" class="relative w-full h-full min-h-[550px] sm:min-h-[600px] lg:h-[650px] overflow-hidden">
 
       <!-- Slide 1 --> 
-      <% for(item of banner){%>
-      <div
-        class="hero-slide absolute inset-0 flex items-center px-12 sm:px-16 lg:px-24 py-12 w-full h-full opacity-100 translate-x-0 z-10 transition-all duration-700 ease-in-out"
-        style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.1)), url('../site/images/update/<%=item.images%>'); background-size: cover; background-position: center;">
-        <div class="max-w-4xl mx-auto w-full text-center lg:text-left space-y-4 sm:space-y-6">
+<% banner.forEach((item, index) => { %>
+<div
+    class="hero-slide absolute inset-0 flex items-center px-12 sm:px-16 lg:px-24 py-12 w-full h-full opacity-100 translate-x-0 z-10 transition-all duration-700 ease-in-out overflow-hidden">
+    
+    <!-- Thẻ img dùng để tối ưu LCP -->
+    <img src="../site/images/update/<%=item.images%>" 
+         alt="Banner slide"
+         class="absolute inset-0 w-full h-full object-cover -z-10"
+         <% if (index === 0) { %>
+             fetchpriority="high"
+         <% } else { %>
+             loading="lazy"
+         <% } %>
+    >
+
+    <!-- Lớp phủ màu tối gradient -->
+    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-slate-900/10 -z-10"></div>
+
+    <div class="max-w-4xl mx-auto w-full text-center lg:text-left space-y-4 sm:space-y-6 z-20">
         <%-item.content%>
-        </div>
-      </div>
-          <% } %>
+    </div>
+</div>
+<% }) %>
 
 
       <!-- Mũi tên điều hướng Trái / Phải -->
