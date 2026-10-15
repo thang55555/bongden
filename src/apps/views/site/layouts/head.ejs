@@ -39,17 +39,20 @@
 
 
   <style>
-  /* Ép FontAwesome áp dụng chế độ hiển thị swap để không bị chặn render chữ/icon */
+  /* Ghi đè font-display: swap cho FontAwesome 6 */
   @font-face {
     font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 400;
     font-display: swap;
   }
   @font-face {
     font-family: "Font Awesome 6 Brands";
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "Font Awesome 6 Solid";
+    font-weight: 400;
     font-display: swap;
   }
 </style>
