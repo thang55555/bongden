@@ -31,47 +31,38 @@
 
 
 
-<!-- 1. Preconnect chính xác tới các domain bên thứ ba -->
+<!-- ==========================================
+     TỐI ƯU TẢI CSS, FONT VÀ JAVASCRIPT
+     Website: denledhopthanh.com
+========================================== -->
+
+<!-- 1. Kết nối trước tới các CDN -->
 <link rel="preconnect" href="https://cdn.tailwindcss.com">
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-<!-- 2. Khai báo font-display swap trực tiếp cho FontAwesome để tránh lỗi hiển thị chữ -->
-<style>
-  @font-face {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2") format("woff2");
-  }
-  @font-face {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2") format("woff2");
-  }
-  @font-face {
-    font-family: "Font Awesome 6 Brands";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2");
-  }
-</style>
+<link
+  rel="preconnect"
+  href="https://cdnjs.cloudflare.com"
+  crossorigin
+>
 
-<!-- 3. Tải bất đồng bộ (async/preload) cho FontAwesome CSS để không chặn render -->
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</noscript>
-
-<!-- 4. Tailwind CSS CDN -->
+<!-- 2. Tải Tailwind CSS CDN
+     Giữ nguyên để tránh làm mất giao diện hiện tại -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- 5. Alpine.js (đã có defer từ trước, rất tốt) -->
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"></script>
+<!-- 3. Tải Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozmpT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+>
+
+<!-- 4. Alpine.js: trì hoãn thực thi đến khi HTML được phân tích -->
+<script
+  defer
+  src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"
+></script>
 
 
 
