@@ -30,39 +30,67 @@
 <link rel="preload" fetchpriority="high" as="image" href="../site/images/update/<%=thongtintrang.images%>" type="image/png">
 
 
+  <!-- 1. Ưu tiên đọc quy tắc font-display trước tiên -->
 
-<!-- ==========================================
-     TỐI ƯU TẢI CSS, FONT VÀ JAVASCRIPT
-     Website: denledhopthanh.com
-========================================== -->
+  <style>
 
-<!-- 1. Kết nối trước tới các CDN -->
-<link rel="preconnect" href="https://cdn.tailwindcss.com">
+    @font-face {
 
-<link
-  rel="preconnect"
-  href="https://cdnjs.cloudflare.com"
-  crossorigin
->
+      font-family: "Font Awesome 6 Free";
 
-<!-- 2. Tải Tailwind CSS CDN
-     Giữ nguyên để tránh làm mất giao diện hiện tại -->
-<script src="https://cdn.tailwindcss.com"></script>
+      font-weight: 900;
 
-<!-- 3. Tải Font Awesome -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozmpT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
->
+      font-display: swap;
 
-<!-- 4. Alpine.js: trì hoãn thực thi đến khi HTML được phân tích -->
-<script
-  defer
-  src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"
-></script>
+    }
+
+    @font-face {
+
+      font-family: "Font Awesome 6 Free";
+
+      font-weight: 400;
+
+      font-display: swap;
+
+    }
+
+    @font-face {
+
+      font-family: "Font Awesome 6 Brands";
+
+      font-weight: 400;
+
+      font-display: swap;
+
+    }
+
+  </style>
+
+
+
+  <!-- 2. Khai báo kết nối trước -->
+
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+
+
+  <!-- 3. Tailwind CDN có thêm defer -->
+
+  <script src="https://cdn.tailwindcss.com" ></script>
+
+
+
+  <!-- 4. FontAwesome CDN -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+  <!-- 5. Alpine.js -->
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.14.1/cdn.min.js"></script> 
 
 
 
